@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnrrvq0dswj8q"]
+
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="1_8kxpy"]
+[ext_resource type="Script" path="res://scripts/typewritter1.gd" id="2_47nse"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="RichTextLabel" parent="." instance=ExtResource("1_8kxpy")]
+offset_left = 46.0
+offset_top = 32.0
+offset_right = 283.0
+offset_bottom = 72.0
+text = "PRESS X"
+visible_characters = -1
+visible_ratio = 1.0
+script = ExtResource("2_47nse")

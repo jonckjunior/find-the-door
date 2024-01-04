@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwej5wjtgqyc8"]
+
+[ext_resource type="Texture2D" uid="uid://cks2nke4eb7e6" path="res://particles/sprites/spritesheet.png" id="1_qkt0m"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fmioi"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_dvsjp"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.403922)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afagk"]
+gradient = SubResource("Gradient_dvsjp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hnsmr"]
+particle_flag_disable_z = true
+gravity = Vector3(10, 2.08165e-12, 2.08165e-12)
+color_ramp = SubResource("GradientTexture1D_afagk")
+anim_speed_min = 1.5
+anim_speed_max = 1.5
+turbulence_noise_speed = Vector3(50, 50, 2)
+turbulence_noise_speed_random = 4.0
+turbulence_initial_displacement_min = 1.0
+turbulence_initial_displacement_max = 1.0
+
+[node name="EarthParticle" type="GPUParticles2D"]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_fmioi")
+position = Vector2(0, -12)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_hnsmr")
+texture = ExtResource("1_qkt0m")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0

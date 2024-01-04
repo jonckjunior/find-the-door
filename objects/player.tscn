@@ -1,0 +1,139 @@
+[gd_scene load_steps=16 format=3 uid="uid://cr346cwscf8ia"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_ipvcg"]
+[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="2_rkh1q"]
+[ext_resource type="AudioStream" uid="uid://dds3a7vbjkjv" path="res://audios/mixkit-quick-jump-arcade-game-239.wav" id="6_ep8wd"]
+[ext_resource type="AudioStream" uid="uid://cp17n6ggy2upn" path="res://audios/mixkit-sci-fi-game-screech-893.wav" id="7_3kxj5"]
+[ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="9_opuj6"]
+[ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="9_v5njx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_186sp"]
+size = Vector2(12, 11)
+
+[sub_resource type="Shader" id="Shader_mfoue"]
+code = "shader_type canvas_item;
+
+uniform vec2 deformation = vec2(0, 0);
+uniform float sideWaysDeformationFactor = 5.0;
+uniform float knockbackFactor = 0.4;
+
+void vertex() {
+	vec2 deformationStrength = abs(deformation);
+	float sideWaysDeformation = min(deformationStrength.x, deformationStrength.y);
+	float spriteWidth = abs(VERTEX.x);
+	if (sign(VERTEX.y) != sign(deformation.y)) {
+		VERTEX.x += sideWaysDeformation * sideWaysDeformationFactor * spriteWidth * sign(deformation.x);
+	}
+	vec2 scale = 1.0 - deformationStrength;
+	
+	VERTEX.x *= scale.x / scale.y;
+	VERTEX.y *= scale.y / scale.x;
+	VERTEX.xy += deformation * spriteWidth * knockbackFactor;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gx3vk"]
+shader = SubResource("Shader_mfoue")
+shader_parameter/deformation = Vector2(0, 0)
+shader_parameter/sideWaysDeformationFactor = 5.0
+shader_parameter/knockbackFactor = 0.4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cublx"]
+atlas = ExtResource("2_rkh1q")
+region = Rect2(0, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tn4d"]
+atlas = ExtResource("2_rkh1q")
+region = Rect2(64, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fk3y"]
+atlas = ExtResource("2_rkh1q")
+region = Rect2(16, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkig2"]
+atlas = ExtResource("2_rkh1q")
+region = Rect2(32, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x78l"]
+atlas = ExtResource("2_rkh1q")
+region = Rect2(48, 240, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ae2pr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cublx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tn4d")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fk3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkig2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x78l")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+script = ExtResource("1_ipvcg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_186sp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gx3vk")
+sprite_frames = SubResource("SpriteFrames_ae2pr")
+animation = &"running"
+frame_progress = 0.628004
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ep8wd")
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_3kxj5")
+
+[node name="JumpParticle" parent="." instance=ExtResource("9_opuj6")]
+position = Vector2(-1, 6)
+
+[node name="RightWallJump" parent="." instance=ExtResource("9_opuj6")]
+position = Vector2(10, 2)
+
+[node name="LandingParticle" parent="." instance=ExtResource("9_opuj6")]
+position = Vector2(0, 8)
+
+[node name="LeftWallJump" parent="." instance=ExtResource("9_opuj6")]
+position = Vector2(-9, 3)
+
+[node name="DashParticle" parent="." instance=ExtResource("9_v5njx")]
+position = Vector2(1, -6)
+
+[node name="RightRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 4)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="LeftRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 4)
+rotation = -4.71239
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
