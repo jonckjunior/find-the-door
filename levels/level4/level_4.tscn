@@ -1,15 +1,19 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8rx23ynkqgse"]
+[gd_scene load_steps=22 format=3 uid="uid://cw0k562fjb6b4"]
 
-[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_he3ju"]
-[ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_cut6v"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_vk3sp"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_gyk42"]
-[ext_resource type="Script" path="res://scripts/Camera2D.gd" id="5_7crdh"]
-[ext_resource type="Script" path="res://levels/level3/Door3.gd" id="6_fmkto"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_grybd"]
+[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_6wmuv"]
+[ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_fo4my"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_koxrk"]
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_kv2xm"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="5_re8x4"]
+[ext_resource type="Script" path="res://levels/level4/Door4.gd" id="6_qyp5d"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_5hvis"]
+[ext_resource type="Script" path="res://levels/level4/DeathPit.gd" id="8_ml7us"]
+[ext_resource type="Script" path="res://levels/level4/typewritter_4.gd" id="8_mv0ib"]
+[ext_resource type="Script" path="res://levels/level4/PlayerKiller.gd" id="9_cn1ie"]
+[ext_resource type="Script" path="res://levels/level4/PointLight2D.gd" id="11_32afa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ybya"]
-texture = ExtResource("1_he3ju")
+texture = ExtResource("1_6wmuv")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -408,7 +412,7 @@ texture = ExtResource("1_he3ju")
 19:19/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6xsg"]
-texture = ExtResource("2_cut6v")
+texture = ExtResource("2_fo4my")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -815,7 +819,7 @@ sources/0 = SubResource("TileSetAtlasSource_5ybya")
 sources/1 = SubResource("TileSetAtlasSource_f6xsg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_26k5j"]
-texture = ExtResource("1_he3ju")
+texture = ExtResource("1_6wmuv")
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
@@ -2407,7 +2411,7 @@ physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_26k5j")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_em51t"]
-texture = ExtResource("1_he3ju")
+texture = ExtResource("1_6wmuv")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -2815,7 +2819,10 @@ glow_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
 size = Vector2(14, 15)
 
-[node name="LevelX" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rpyxk"]
+size = Vector2(54, 20)
+
+[node name="Level4" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(16, 16)
@@ -2840,24 +2847,19 @@ layer_0/tile_data = PackedInt32Array(589845, 1179648, 2, 524296, 327680, 9, 5898
 
 [node name="ProjectileHolder" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_vk3sp")]
+[node name="Player" parent="." instance=ExtResource("3_koxrk")]
 position = Vector2(23, 168)
-
-[node name="PointLight2D" type="PointLight2D" parent="Player"]
-position = Vector2(14, 1)
-energy = 0.6
-texture = ExtResource("4_gyk42")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(159, 162)
 limit_left = 0
 limit_top = 0
-limit_right = 368
-limit_bottom = 180
+limit_right = 369
+limit_bottom = 224
 limit_smoothed = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
-script = ExtResource("5_7crdh")
+script = ExtResource("5_re8x4")
 target = NodePath("../Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -2870,7 +2872,7 @@ color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 position = Vector2(360.5, 168.5)
 collision_layer = 32768
 collision_mask = 2
-script = ExtResource("6_fmkto")
+script = ExtResource("6_qyp5d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
 position = Vector2(-0.5, 0)
@@ -2878,12 +2880,40 @@ shape = SubResource("RectangleShape2D_rw520")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="RichTextLabel" parent="CanvasLayer" instance=ExtResource("7_grybd")]
+[node name="RichTextLabel" parent="CanvasLayer" instance=ExtResource("7_5hvis")]
 offset_left = 30.0
 offset_top = 30.0
 offset_right = 267.0
 offset_bottom = 70.0
-text = "FOLLOW THE INSTRUCTIONS CAREFULLY.
+text = "READ THE INSTRUCTIONS CAREFULLY.
 FALL IN THE PIT."
+script = ExtResource("8_mv0ib")
+
+[node name="DeathSpike" type="Area2D" parent="." node_paths=PackedStringArray("gameMaster")]
+position = Vector2(0, 15)
+collision_layer = 32768
+collision_mask = 2
+script = ExtResource("8_ml7us")
+gameMaster = NodePath("../GameMaster")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathSpike"]
+position = Vector2(185, 218)
+shape = SubResource("RectangleShape2D_rpyxk")
+
+[node name="GameMaster" type="Node2D" parent="." node_paths=PackedStringArray("player", "typewritter")]
+script = ExtResource("9_cn1ie")
+player = NodePath("../Player")
+typewritter = NodePath("../CanvasLayer/RichTextLabel")
+
+[node name="Timer" type="Timer" parent="GameMaster"]
+wait_time = 1.5
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(37, 169)
+energy = 0.6
+texture = ExtResource("4_kv2xm")
+script = ExtResource("11_32afa")
 
 [connection signal="body_entered" from="Door" to="Door" method="_on_body_entered"]
+[connection signal="body_entered" from="DeathSpike" to="DeathSpike" method="_on_body_entered"]
+[connection signal="timeout" from="GameMaster/Timer" to="GameMaster" method="_on_timer_timeout"]

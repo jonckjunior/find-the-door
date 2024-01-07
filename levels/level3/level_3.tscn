@@ -1,15 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://bkbxc6xexn4ai"]
+[gd_scene load_steps=17 format=3 uid="uid://c4unm31qt6rcj"]
 
-[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_gfuv8"]
-[ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_j6swq"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_tsec3"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_nnp65"]
-[ext_resource type="Script" path="res://scripts/Camera2D.gd" id="5_1nnav"]
-[ext_resource type="Script" path="res://levels/level3/Door3.gd" id="6_e01ee"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_q5dbu"]
+[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_oprri"]
+[ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_i346w"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_l5aoi"]
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_nomsg"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="5_br77b"]
+[ext_resource type="Script" path="res://levels/level3/Door3.gd" id="6_3rrm5"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_av7gm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ybya"]
-texture = ExtResource("1_gfuv8")
+texture = ExtResource("1_oprri")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -408,7 +408,7 @@ texture = ExtResource("1_gfuv8")
 19:19/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6xsg"]
-texture = ExtResource("2_j6swq")
+texture = ExtResource("2_i346w")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -815,7 +815,7 @@ sources/0 = SubResource("TileSetAtlasSource_5ybya")
 sources/1 = SubResource("TileSetAtlasSource_f6xsg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_26k5j"]
-texture = ExtResource("1_gfuv8")
+texture = ExtResource("1_oprri")
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
@@ -2407,7 +2407,7 @@ physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_26k5j")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_em51t"]
-texture = ExtResource("1_gfuv8")
+texture = ExtResource("1_oprri")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -2815,7 +2815,7 @@ glow_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
 size = Vector2(14, 15)
 
-[node name="LevelX" type="Node2D"]
+[node name="Level3" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(16, 16)
@@ -2840,13 +2840,13 @@ layer_0/tile_data = PackedInt32Array(589845, 1179648, 2, 524296, 327680, 9, 5898
 
 [node name="ProjectileHolder" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_tsec3")]
+[node name="Player" parent="." instance=ExtResource("3_l5aoi")]
 position = Vector2(23, 168)
 
 [node name="PointLight2D" type="PointLight2D" parent="Player"]
 position = Vector2(14, 1)
 energy = 0.6
-texture = ExtResource("4_nnp65")
+texture = ExtResource("4_nomsg")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(159, 162)
@@ -2857,7 +2857,7 @@ limit_bottom = 180
 limit_smoothed = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
-script = ExtResource("5_1nnav")
+script = ExtResource("5_br77b")
 target = NodePath("../Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -2870,7 +2870,7 @@ color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 position = Vector2(360.5, 168.5)
 collision_layer = 32768
 collision_mask = 2
-script = ExtResource("6_e01ee")
+script = ExtResource("6_3rrm5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
 position = Vector2(-0.5, 0)
@@ -2878,11 +2878,11 @@ shape = SubResource("RectangleShape2D_rw520")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="RichTextLabel" parent="CanvasLayer" instance=ExtResource("7_q5dbu")]
+[node name="RichTextLabel" parent="CanvasLayer" instance=ExtResource("7_av7gm")]
 offset_left = 30.0
 offset_top = 30.0
 offset_right = 267.0
 offset_bottom = 70.0
-text = "FALL IN THE PIT"
+text = "FALL IN THE PIT."
 
 [connection signal="body_entered" from="Door" to="Door" method="_on_body_entered"]

@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhk8i1r3hct03"]
+
+[ext_resource type="Texture2D" uid="uid://baa3ll8otrl5w" path="res://sprites/animation/player_death/player_dying1.png" id="1_0klgq"]
+[ext_resource type="Texture2D" uid="uid://c5ycm4vebpppc" path="res://sprites/animation/player_death/player_dying2.png" id="2_w5yhu"]
+[ext_resource type="Texture2D" uid="uid://cwqot70ef5aqh" path="res://sprites/animation/player_death/player_dying3.png" id="3_hbitl"]
+[ext_resource type="Texture2D" uid="uid://ber6a3lvglmyc" path="res://sprites/animation/player_death/player_dying4.png" id="4_4rfpw"]
+[ext_resource type="Texture2D" uid="uid://c670d32sgvund" path="res://sprites/animation/player_death/player_dying5.png" id="5_y2bja"]
+[ext_resource type="Texture2D" uid="uid://b5vk31iqk36vk" path="res://sprites/animation/player_death/player_dying6.png" id="6_reajw"]
+[ext_resource type="Texture2D" uid="uid://ehmurudjq8y2" path="res://sprites/animation/player_death/player_dying7.png" id="7_jtndj"]
+[ext_resource type="Script" path="res://scripts/player_death.gd" id="8_e4qft"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nl7o0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0klgq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_w5yhu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hbitl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4rfpw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y2bja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_reajw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jtndj")
+}],
+"loop": false,
+"name": &"death",
+"speed": 4.0
+}]
+
+[node name="PlayerDeath" type="AnimatedSprite2D"]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_nl7o0")
+animation = &"death"
+frame = 3
+frame_progress = 0.627586
+script = ExtResource("8_e4qft")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

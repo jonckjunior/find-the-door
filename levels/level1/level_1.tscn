@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_qsq2h"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_6vxk2"]
 [ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_5pdxb"]
-[ext_resource type="Script" path="res://scripts/Camera2D.gd" id="5_5g3ea"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="5_ytiy2"]
 [ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_kpidv"]
 [ext_resource type="Script" path="res://scripts/Door1.gd" id="7_n67aa"]
 
@@ -2857,7 +2857,7 @@ limit_bottom = 180
 limit_smoothed = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
-script = ExtResource("5_5g3ea")
+script = ExtResource("5_ytiy2")
 target = NodePath("../Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -2884,5 +2884,6 @@ offset_top = 30.0
 offset_right = 267.0
 offset_bottom = 70.0
 text = "PRESS X TO JUMP"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Door" to="Door" method="_on_body_entered"]

@@ -1,11 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://cr346cwscf8ia"]
+[gd_scene load_steps=25 format=3 uid="uid://cr346cwscf8ia"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ipvcg"]
+[ext_resource type="Texture2D" uid="uid://baa3ll8otrl5w" path="res://sprites/animation/player_death/player_dying1.png" id="2_f3px7"]
 [ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="2_rkh1q"]
+[ext_resource type="Texture2D" uid="uid://c5ycm4vebpppc" path="res://sprites/animation/player_death/player_dying2.png" id="3_14m5k"]
+[ext_resource type="Texture2D" uid="uid://cwqot70ef5aqh" path="res://sprites/animation/player_death/player_dying3.png" id="4_j7s5u"]
+[ext_resource type="Texture2D" uid="uid://ber6a3lvglmyc" path="res://sprites/animation/player_death/player_dying4.png" id="5_vst5w"]
 [ext_resource type="AudioStream" uid="uid://dds3a7vbjkjv" path="res://audios/mixkit-quick-jump-arcade-game-239.wav" id="6_ep8wd"]
+[ext_resource type="Texture2D" uid="uid://c670d32sgvund" path="res://sprites/animation/player_death/player_dying5.png" id="6_qfrod"]
+[ext_resource type="AudioStream" uid="uid://b71th3lo52yst" path="res://audios/hitHurt.wav" id="7_2f8wb"]
 [ext_resource type="AudioStream" uid="uid://cp17n6ggy2upn" path="res://audios/mixkit-sci-fi-game-screech-893.wav" id="7_3kxj5"]
+[ext_resource type="Texture2D" uid="uid://b5vk31iqk36vk" path="res://sprites/animation/player_death/player_dying6.png" id="7_nihsd"]
+[ext_resource type="Texture2D" uid="uid://ehmurudjq8y2" path="res://sprites/animation/player_death/player_dying7.png" id="8_utasf"]
 [ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="9_opuj6"]
 [ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="9_v5njx"]
+[ext_resource type="AudioStream" uid="uid://dsdmehhurlyy0" path="res://audios/click.wav" id="15_jurs1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_186sp"]
 size = Vector2(12, 11)
@@ -61,6 +70,32 @@ region = Rect2(48, 240, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_f3px7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_14m5k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j7s5u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vst5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qfrod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_nihsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_utasf")
+}],
+"loop": true,
+"name": &"death",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_cublx")
 }],
 "loop": true,
@@ -87,12 +122,15 @@ animations = [{
 }],
 "loop": true,
 "name": &"running",
-"speed": 5.0
+"speed": 7.0
 }]
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("displacementRayCastsUp", "displacementRayCastsDown") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_ipvcg")
+wallSlideUnlocked = false
+displacementRayCastsUp = [NodePath("RayCasts/UpRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/UpRayCast3"), NodePath("RayCasts/UpRayCast4"), NodePath("RayCasts/UpRayCast5"), NodePath("RayCasts/UpRayCast6")]
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)
@@ -102,14 +140,7 @@ shape = SubResource("RectangleShape2D_186sp")
 texture_filter = 1
 material = SubResource("ShaderMaterial_gx3vk")
 sprite_frames = SubResource("SpriteFrames_ae2pr")
-animation = &"running"
-frame_progress = 0.628004
-
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_ep8wd")
-
-[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_3kxj5")
+animation = &"idle"
 
 [node name="JumpParticle" parent="." instance=ExtResource("9_opuj6")]
 position = Vector2(-1, 6)
@@ -126,14 +157,146 @@ position = Vector2(-9, 3)
 [node name="DashParticle" parent="." instance=ExtResource("9_v5njx")]
 position = Vector2(1, -6)
 
-[node name="RightRayCast" type="RayCast2D" parent="."]
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ep8wd")
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_3kxj5")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_2f8wb")
+
+[node name="RunningSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_jurs1")
+
+[node name="LandingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_jurs1")
+pitch_scale = 0.5
+
+[node name="WallJumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ep8wd")
+pitch_scale = 0.7
+
+[node name="RayCasts" type="Node2D" parent="."]
+
+[node name="UpRayCast1" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-5, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast2" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-3, -1.42109e-14)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast3" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-1, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast4" type="RayCast2D" parent="RayCasts"]
+position = Vector2(1, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast5" type="RayCast2D" parent="RayCasts"]
+position = Vector2(3, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast6" type="RayCast2D" parent="RayCasts"]
+position = Vector2(5, -1.42109e-14)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRightRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(6, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 5)
+
+[node name="UpLeftRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-6, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 5)
+
+[node name="RightRayCast" type="RayCast2D" parent="RayCasts"]
 position = Vector2(0, 4)
 rotation = -1.5708
 target_position = Vector2(2.08165e-12, 12)
 collide_with_areas = true
 
-[node name="LeftRayCast" type="RayCast2D" parent="."]
+[node name="LeftRayCast" type="RayCast2D" parent="RayCasts"]
 position = Vector2(0, 4)
-rotation = -4.71239
+rotation = 1.5708
 target_position = Vector2(2.08165e-12, 12)
 collide_with_areas = true
+
+[node name="RightUpRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, -3)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 9)
+collide_with_areas = true
+
+[node name="LeftUpRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, -3)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 9)
+collide_with_areas = true
+
+[node name="RightRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 3)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 19)
+
+[node name="LeftRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 3)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 19)
+
+[node name="RightDownRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 8)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 9)
+
+[node name="LeftDownRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 8)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 9)
+
+[node name="DownRayCast1" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-5, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast2" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-3, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast3" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-1, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast4" type="RayCast2D" parent="RayCasts"]
+position = Vector2(1, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast5" type="RayCast2D" parent="RayCasts"]
+position = Vector2(3, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast6" type="RayCast2D" parent="RayCasts"]
+position = Vector2(5, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownLeftRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-6, 0)
+target_position = Vector2(2.08165e-12, 15)
+
+[node name="DownRightRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(6, 0)
+target_position = Vector2(2.08165e-12, 15)

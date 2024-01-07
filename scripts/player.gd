@@ -1,27 +1,65 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var dustParticleRaw = load("res://particles/dust_particle_auto_dying.tscn")
+@onready var deathParticleRaw = load("res://particles/death_particle.tscn")
+@onready var playerDeathRaw = load("res://objects/player_death.tscn")
 
+@export var canPlayerMove: bool = true
+@export var dashUnlocked: bool = true
+@export var wallSlideUnlocked: bool = true
+@export var wallJumpUnlocked: bool = true
+@export var displacementRayCastsUp: Array[RayCast2D]
+@export var displacementRayCastsDown: Array[RayCast2D]
+
+# CONST
 const SPEED = 100.0
 const JUMP_VELOCITY = -140.0
 const ACCELERATION = 1.0
 const DASH_FORCE = 250.0
+const gravity = 400.0
+const HALF_GRAVITY_THRESHOLD = 50
+const ADJUST_FEET_CORNER_LIMIT = 100
+const ADJUST_HEAD_CORNER_LIMIT = -100
+const ADJUST_HEAD_CORNER_LIMIT_DASH = 100
+const DEAD_INPUT_THRESHOLD = 0.05
 
-
-var gravity = 400.0
+# PLAYER STATS
 var numberOfJumps = 1
-var jumpCooldown = 0.2
-var isTouchingWall = false
+var numberOfDashes = 1
 
+# COOLDOWNS
+var isDashingCooldown = 0.2
+var jumpCooldown = 0.2
+var jumpBufferTime = 0.2
+var dashCooldown = 1.0
+var sideParticleCooldown : float = 0.05
+var runningSoundCooldown: float = 0.2
+
+
+# FLAGS
+var isTouchingWall = false
 var isJumpBuffered = false
 var wasOnFloor: bool = true
-var jumpBufferTime = 0.2
-var halfGravityThreshold = 50
-var dashCooldown = 1.0
-var sideParticle : float = 0.05
+var isDying: bool = false
+var isDashing: bool = false
+
+# SIGNALS
+signal player_death
+signal dash
+
+func _ready():
+	$AnimatedSprite2D.play("idle")
 
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("death"):
+		die()
+	
+	adjust_head_corner()
+	adjust_head_dash_corner()
+	adjust_feet_dash_corner()
+	
 	handle_animation()
 	environmental_death()
 	refresh_variables(delta)
@@ -31,16 +69,17 @@ func _physics_process(delta):
 	
 	# Add the gravity.
 	if not is_on_floor():
-		var gravityForce = 0.1 if isPlayerAgainstWall and velocity.y > 0 else 1.0
+		var gravityForce = 0.1 if isPlayerAgainstWall and velocity.y > 0  and wallSlideUnlocked else 1.0
 		if isHalfGravityThreshold():
 			gravityForce = 0.5
 		velocity.y += gravity * delta * gravityForce
-		if Input.is_action_pressed("down"):
+		if get_input("down"):
 			velocity.y += gravity * delta
 	
 	# Handle jump.
 	if is_on_floor():
 		numberOfJumps = 1
+		numberOfDashes = 1
 
 	if canJump():
 		$JumpSound.play()
@@ -50,38 +89,40 @@ func _physics_process(delta):
 		numberOfJumps = 0
 		jumpCooldown = 0.2
 		isJumpBuffered = false
-		$JumpSound.pitch_scale = 1.0
 	
-	if Input.is_action_just_released("jump") and velocity.y < JUMP_VELOCITY/10:
-		velocity.y = JUMP_VELOCITY/10
+	#if Input.is_action_just_released("jump") and velocity.y < JUMP_VELOCITY/10:
+		#velocity.y = JUMP_VELOCITY/10
 	
-	if Input.is_action_just_pressed("jump") and not is_on_floor() and not is_on_wall():
+	if get_input_just_pressed("jump") and not is_on_floor() and not is_on_wall():
 		isJumpBuffered = true
 		jumpBufferTime = 0.2
 
-	#handle_wall_jump(isPlayerAgainstWall)
-	wall_slide_particle(delta, isPlayerAgainstWall)
+	wall_slide_particle(delta)
 	handle_movement(delta)
 	handle_dash(delta)
 	squish_and_squash()
 	handle_landing_particle()
+	running_audio(delta)
 	
 	isTouchingWall = is_on_wall()
 	wasOnFloor = is_on_floor()
 
-func wall_slide_particle(delta, isPlayerAgainstWall) -> void:
-	sideParticle = max(sideParticle - delta, 0.0)
-	if sideParticle > 0.0 or is_on_floor():
+func wall_slide_particle(delta) -> void:
+	sideParticleCooldown = max(sideParticleCooldown - delta, 0.0)
+	if sideParticleCooldown > 0.0 or is_on_floor():
+		return
+	
+	if not wallSlideUnlocked:
 		return
 
-	var leftSide = check_side_wall($LeftRayCast, Input.is_action_pressed("left"))
-	var rightSide = check_side_wall($RightRayCast, Input.is_action_pressed("right"))
+	var leftSide = check_side_wall($RayCasts/LeftRayCast, get_input("left"))
+	var rightSide = check_side_wall($RayCasts/RightRayCast, get_input("right"))
 	
 	if not leftSide and not rightSide:
 		return
 	
 	
-	sideParticle = 0.05
+	sideParticleCooldown = 0.05
 	var dustParticle = dustParticleRaw.instantiate()
 	add_sibling(dustParticle)
 	
@@ -91,8 +132,10 @@ func wall_slide_particle(delta, isPlayerAgainstWall) -> void:
 		dustParticle.global_position = $RightWallJump.global_position
 
 func handle_wall_jump_metroid() -> void:
-	var leftSide = check_wall_jump_metroid($LeftRayCast, Input.is_action_pressed("right"))
-	var rightSide = check_wall_jump_metroid($RightRayCast, Input.is_action_pressed("left"))
+	if not wallJumpUnlocked:
+		return
+	var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right"))
+	var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left"))
 	
 	if not leftSide and not rightSide:
 		return
@@ -110,36 +153,33 @@ func handle_wall_jump_metroid() -> void:
 		dustParticle.global_position = $LeftWallJump.global_position
 		
 	
-	jumpCooldown = 0.1
+	jumpCooldown = 0.2
 	isJumpBuffered = false
-	$JumpSound.play()
-	$JumpSound.pitch_scale = 0.7
+	$WallJumpSound.play()
 	velocity = newVelocity
 
 func check_wall_jump_metroid(rayCast, isButtonPressed) -> bool:
 	# in the air, raycast is colliding, is pressing the other direction, is pressing jump
-	return not is_on_floor() and rayCast.is_colliding() and rayCast.get_collider().is_in_group("map") and isButtonPressed and (Input.is_action_just_pressed("jump") or isJumpBuffered)
-
-func handle_wall_jump(isPlayerAgainstWall) -> void:
-	if isPlayerAgainstWall and (not is_on_floor()) and (Input.is_action_just_pressed("jump") or isJumpBuffered):
-		isJumpBuffered = false
-		var directionAgainstWall = get_direction_against_wall()
-		var wallJumpHorizontalForce = -100
-		velocity = Vector2(directionAgainstWall * wallJumpHorizontalForce, JUMP_VELOCITY)
+	return not is_on_floor() and rayCast.is_colliding() and rayCast.get_collider().is_in_group("map") and isButtonPressed and (get_input_just_pressed("jump") or isJumpBuffered)
 
 func handle_dash(delta) -> void:
-	if not Input.is_action_just_pressed("dash") or dashCooldown > 0.0:
+	if not get_input_just_pressed("dash") or dashCooldown > 0.0 or not dashUnlocked or numberOfDashes <= 0:
 		return
-	get_parent().get_node("Camera2D").apply_shake()
+	numberOfDashes = 0
+	dash.emit()
 	dashCooldown = 1.0
 	$DashSound.play()
 	$DashParticle.restart()
-	var directionX = Input.get_axis("left", "right")
-	var directionY = Input.get_axis("up", "down")
+	var directionX = get_input_axis("left", "right")
+	var directionY = get_input_axis("up", "down")
+	if abs(directionX) < DEAD_INPUT_THRESHOLD and abs(directionY) < DEAD_INPUT_THRESHOLD:
+		directionY = -1
 	velocity = Vector2(directionX, directionY).normalized() * Vector2(1.0, 0.75) * DASH_FORCE
+	isDashing = true
+	isDashingCooldown = 0.2
 
 func handle_movement(delta) -> void:
-	var direction = Input.get_axis("left", "right")
+	var direction = get_input_axis("left", "right")
 	var targetSpeed = direction * SPEED
 	var speedDif = targetSpeed - velocity.x
 	
@@ -155,7 +195,7 @@ func appr(val, target, amount) -> float:
 		return min(val + amount, target)
 
 func environmental_death() -> void:
-	if global_position.y > 1000:
+	if global_position.y > 1000.0:
 		get_tree().reload_current_scene()
 
 func refresh_variables(delta) -> void:
@@ -165,12 +205,17 @@ func refresh_variables(delta) -> void:
 	if jumpBufferTime <= 0:
 		jumpBufferTime = 0.2
 		isJumpBuffered = false
+	
+	isDashingCooldown -= delta
+	if isDashingCooldown <= 0:
+		isDashing = false
+		isDashingCooldown = 0
 
 func canJump() -> bool:
-	return (Input.is_action_just_pressed("jump") or isJumpBuffered) and numberOfJumps > 0 and jumpCooldown <= 0
+	return (get_input_just_pressed("jump") or isJumpBuffered) and numberOfJumps > 0 and jumpCooldown <= 0
 
 func isHalfGravityThreshold() -> bool:
-	return abs(velocity.y) < halfGravityThreshold
+	return abs(velocity.y) < HALF_GRAVITY_THRESHOLD
 
 func handle_animation() -> void:
 	if abs(velocity.x) < 20:
@@ -203,15 +248,9 @@ func squish_and_squash() -> void:
 	$AnimatedSprite2D.scale.x = lerp($AnimatedSprite2D.scale.x, newScaleX, 0.2)
 	$AnimatedSprite2D.scale.y = lerp($AnimatedSprite2D.scale.y, newScaleY, 0.2)
 
-func get_direction_against_wall() -> float:
-	if check_side_wall($LeftRayCast, Input.is_action_pressed("left")):
-		return -1.0
-	else:
-		return 1.0
-
 func get_is_player_against_wall() -> bool:
-	var leftSide = check_side_wall($LeftRayCast, Input.is_action_pressed("left"))
-	var rightSide = check_side_wall($RightRayCast, Input.is_action_pressed("right"))
+	var leftSide = check_side_wall($RayCasts/LeftRayCast, get_input("left"))
+	var rightSide = check_side_wall($RayCasts/RightRayCast, get_input("right"))
 	return leftSide or rightSide
 
 func check_side_wall(rayCast, isButtonPressed) -> bool:
@@ -222,3 +261,94 @@ func check_side_wall(rayCast, isButtonPressed) -> bool:
 func handle_landing_particle():
 	if is_on_floor() and not wasOnFloor:
 		$LandingParticle.restart()
+		$LandingSound.play()
+
+func give_controllers_back():
+	canPlayerMove = true
+
+func take_controllers_away():
+	canPlayerMove = false
+
+func get_input(inputStr):
+	if canPlayerMove:
+		return Input.is_action_pressed(inputStr)
+	else:
+		return false
+
+func get_input_just_pressed(inputStr):
+	if canPlayerMove:
+		return Input.is_action_just_pressed(inputStr)
+	else:
+		return false
+
+func get_input_axis(first, second):
+	if canPlayerMove:
+		return Input.get_axis(first, second)
+	else:
+		return 0.0
+
+func die():
+	player_death.emit()
+	$DeathSound.play()
+	isDying = true
+
+	take_controllers_away()
+	visible = false
+	var deathScene = playerDeathRaw.instantiate()
+	deathScene.global_position = global_position
+	add_sibling(deathScene)
+	
+	var deathParticle = deathParticleRaw.instantiate()
+	deathParticle.global_position = global_position
+	deathParticle.restart()
+	add_sibling(deathParticle)
+
+
+func respawn_player(respawnPosition):
+	global_position = respawnPosition
+	give_controllers_back()
+	visible = true
+	isDying = false
+
+func running_audio(delta):
+	runningSoundCooldown = max(runningSoundCooldown - delta, 0.0)
+	if not is_on_floor() or $AnimatedSprite2D.animation != "running":
+		$RunningSound.stop()
+	if is_on_floor() and $AnimatedSprite2D.animation == "running" and not $RunningSound.playing and runningSoundCooldown == 0.0 and abs(velocity.x) > 40:
+		$RunningSound.play()
+		runningSoundCooldown = 0.2
+
+func adjust_head_dash_corner():
+	var headRightCollided = velocity.x > ADJUST_HEAD_CORNER_LIMIT_DASH and $RayCasts/RightUpRayCastDash.is_colliding() and not $RayCasts/RightRayCastDash.is_colliding()
+	var headLeftCollided = velocity.x < -ADJUST_HEAD_CORNER_LIMIT_DASH and $RayCasts/LeftUpRayCastDash.is_colliding() and not $RayCasts/LeftRayCastDash.is_colliding()
+	
+	var feetRightCollided = velocity.x > ADJUST_HEAD_CORNER_LIMIT_DASH and $RayCasts/RightDownRayCastDash.is_colliding() and not $RayCasts/RightRayCastDash.is_colliding()
+	var feetLeftCollided = velocity.x < -ADJUST_HEAD_CORNER_LIMIT_DASH and $RayCasts/LeftDownRayCastDash.is_colliding() and not $RayCasts/LeftRayCastDash.is_colliding()
+	
+	if headRightCollided or headLeftCollided:
+		global_position.y += abs($RayCasts/RightRayCastDash.position.y - $RayCasts/RightUpRayCastDash.position.y)
+	elif feetRightCollided or feetLeftCollided:
+		global_position.y -= abs($RayCasts/RightRayCastDash.position.y - $RayCasts/RightUpRayCastDash.position.y)
+
+func adjust_head_corner():
+	if $RayCasts/UpLeftRayCast.is_colliding():
+		for x in range(3):
+			if not displacementRayCastsUp[x].is_colliding() and velocity.y < ADJUST_HEAD_CORNER_LIMIT and isDashing:
+				global_position.x += displacementRayCastsUp[x].position.x - $RayCasts/UpLeftRayCast.position.x
+				break
+	elif $RayCasts/UpRightRayCast.is_colliding():
+		for x in [5, 4, 3]:
+			if not displacementRayCastsUp[x].is_colliding() and velocity.y < ADJUST_HEAD_CORNER_LIMIT and isDashing:
+				global_position.x -= $RayCasts/UpRightRayCast.position.x - displacementRayCastsUp[x].position.x
+				break
+
+func adjust_feet_dash_corner():
+	if $RayCasts/DownLeftRayCast.is_colliding():
+		for x in range(3):
+			if not displacementRayCastsDown[x].is_colliding() and velocity.y > ADJUST_FEET_CORNER_LIMIT and isDashing:
+				global_position.x += displacementRayCastsDown[x].position.x - $RayCasts/DownLeftRayCast.position.x
+				break
+	elif $RayCasts/DownRightRayCast.is_colliding():
+		for x in [5, 4, 3]:
+			if not displacementRayCastsDown[x].is_colliding() and velocity.y > ADJUST_FEET_CORNER_LIMIT and isDashing:
+				global_position.x -= $RayCasts/DownRightRayCast.position.x - displacementRayCastsDown[x].position.x

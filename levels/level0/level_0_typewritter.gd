@@ -2,6 +2,7 @@ extends RichTextLabel
 
 var textWithoutBBCode = ""
 var isImageThere: bool = false
+var alreadyReset: bool = false
 @export var imageToShow: Sprite2D
 
 func _ready():
@@ -27,6 +28,9 @@ func _on_timer_timeout():
 	visible_characters += 1
 
 func reset(txt):
+	if alreadyReset:
+		return
+	alreadyReset = true
 	text = txt
 	visible_ratio = 0.0
 	visible_characters = 0
