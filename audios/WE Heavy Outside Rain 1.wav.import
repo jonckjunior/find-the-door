@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cdgmks1v18afy"
+path="res://.godot/imported/WE Heavy Outside Rain 1.wav-7e85e7af27f9cebcd8a82f02cec97338.sample"
+
+[deps]
+
+source_file="res://audios/WE Heavy Outside Rain 1.wav"
+dest_files=["res://.godot/imported/WE Heavy Outside Rain 1.wav-7e85e7af27f9cebcd8a82f02cec97338.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

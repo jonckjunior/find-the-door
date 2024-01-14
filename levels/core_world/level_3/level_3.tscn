@@ -1,0 +1,132 @@
+[gd_scene load_steps=19 format=3 uid="uid://chuqbonlb23t4"]
+
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_p23wm"]
+[ext_resource type="PackedScene" uid="uid://na8kndmny374" path="res://levels/core_world/level_3/core_world_3.tscn" id="2_3xolf"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_3u7jg"]
+[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_e7jie"]
+[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="6_xysjv"]
+[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="7_qfpue"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_ijic5"]
+[ext_resource type="Script" path="res://levels/core_world/level_3/typewritter3.gd" id="9_pea4v"]
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="10_bushm"]
+[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="11_cpakn"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="12_kxtjv"]
+[ext_resource type="Script" path="res://levels/GameMaster.gd" id="13_ohcxo"]
+[ext_resource type="PackedScene" uid="uid://duhvgqvvjtuuo" path="res://objects/default_canvas_modulate.tscn" id="14_4wney"]
+[ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="14_7lmex"]
+
+[sub_resource type="Environment" id="Environment_jncfl"]
+background_mode = 3
+glow_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
+size = Vector2(14, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gswb2"]
+size = Vector2(66, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80w7u"]
+size = Vector2(60, 211)
+
+[node name="Level3" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_p23wm")
+player = NodePath("Player")
+
+[node name="core_world_3" parent="." instance=ExtResource("2_3xolf")]
+position = Vector2(-2, -4)
+
+[node name="Player" parent="." instance=ExtResource("4_3u7jg")]
+position = Vector2(56, -88)
+
+[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jncfl")
+
+[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
+position = Vector2(472, -88)
+collision_layer = 32768
+collision_mask = 2
+script = ExtResource("5_e7jie")
+upKeyButton = NodePath("UpKey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_rw520")
+
+[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
+texture_filter = 1
+position = Vector2(0, -22)
+texture = ExtResource("6_xysjv")
+
+[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
+stream = ExtResource("7_qfpue")
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("8_ijic5")]
+clip_contents = false
+offset_left = 216.0
+offset_top = -160.0
+offset_right = 453.0
+offset_bottom = -120.0
+text = "FALL IN THE PIT"
+script = ExtResource("9_pea4v")
+metadata/_edit_use_anchors_ = true
+
+[node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(37, 169)
+energy = 0.6
+texture = ExtResource("10_bushm")
+script = ExtResource("11_cpakn")
+target = NodePath("../Player")
+
+[node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(159, 162)
+limit_left = 24
+limit_top = -297
+limit_right = 504
+limit_bottom = -32
+limit_smoothed = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+script = ExtResource("12_kxtjv")
+target = NodePath("../Player")
+
+[node name="DefaultGameMaster" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player", "typewritter")]
+script = ExtResource("13_ohcxo")
+camera = NodePath("../DefaultCamera")
+player = NodePath("../Player")
+typewritter = NodePath("../DefaultTypeWritter")
+
+[node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
+
+[node name="DefaultPlayerKiller" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("14_7lmex")
+
+[node name="FirstSpike" type="CollisionShape2D" parent="DefaultPlayerKiller"]
+position = Vector2(287, -35)
+shape = SubResource("RectangleShape2D_gswb2")
+
+[node name="TextTrigger" type="Area2D" parent="."]
+position = Vector2(88, -256)
+collision_layer = 32768
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextTrigger"]
+position = Vector2(99, 91.5)
+shape = SubResource("RectangleShape2D_80w7u")
+
+[node name="DefaultCanvasModulate" parent="." instance=ExtResource("14_4wney")]
+
+[connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
+[connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
+[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
+[connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
+[connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
+[connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
+[connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
+[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
+[connection signal="body_entered" from="TextTrigger" to="DefaultTypeWritter" method="_on_text_trigger_body_entered"]
+
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]

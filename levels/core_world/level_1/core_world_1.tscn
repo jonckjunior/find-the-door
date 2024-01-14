@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ercyuluj03hx"]
+
+[ext_resource type="PackedScene" uid="uid://dg1c5kcmxcxuq" path="res://levels/core_world/level_1/core_world_1.tmx" id="1_t1npb"]
+[ext_resource type="Script" path="res://scripts/collision_map_script.gd" id="2_j1coc"]
+
+[node name="core_world_2" instance=ExtResource("1_t1npb")]
+
+[node name="collisions" parent="." index="2"]
+script = ExtResource("2_j1coc")

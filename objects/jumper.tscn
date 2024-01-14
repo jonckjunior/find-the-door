@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8c6avemwn6ql"]
+
+[ext_resource type="Texture2D" uid="uid://dpatbwlyhp1u1" path="res://sprites/jumper_1.png" id="1_5cfau"]
+[ext_resource type="Texture2D" uid="uid://dbmkl27j5888k" path="res://sprites/jumper_2.png" id="2_crtd2"]
+[ext_resource type="Texture2D" uid="uid://hprqo41pq3r7" path="res://sprites/jumper_3.png" id="3_1cqip"]
+[ext_resource type="Script" path="res://scripts/jumper.gd" id="4_wsmsb"]
+[ext_resource type="AudioStream" uid="uid://d06whe2wrb6he" path="res://audios/jumper.wav" id="5_vjql0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nrxx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5cfau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_crtd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1cqip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1cqip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_crtd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_5cfau")
+}],
+"loop": false,
+"name": &"activate",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1cqip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_crtd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_5cfau")
+}],
+"loop": false,
+"name": &"deactivate",
+"speed": 13.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_deqiv"]
+size = Vector2(14, 6)
+
+[node name="Jumper" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_nrxx8")
+animation = &"activate"
+frame = 5
+frame_progress = 1.0
+script = ExtResource("4_wsmsb")
+
+[node name="PlayerImpulse" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 2
+
+[node name="ColliderForPlayer" type="CollisionShape2D" parent="PlayerImpulse"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_deqiv")
+
+[node name="AudioJumper" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_vjql0")
+
+[connection signal="body_entered" from="PlayerImpulse" to="." method="_on_area_2d_body_entered"]

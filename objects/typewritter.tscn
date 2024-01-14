@@ -6,6 +6,7 @@
 
 [node name="RichTextLabel" type="RichTextLabel"]
 texture_filter = 1
+clip_contents = false
 offset_left = 91.0
 offset_top = 90.0
 offset_right = 328.0

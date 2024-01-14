@@ -9,7 +9,7 @@ var shakeStrength: float = 0.0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if target != null:
-		global_position = lerp(global_position, target.global_position, delta * 4)
+		global_position = lerp(global_position, target.global_position, delta * 10)
 	
 	if shakeStrength > 0.0:
 		shakeStrength = lerp(shakeStrength, 0.0, shakeFade * delta)

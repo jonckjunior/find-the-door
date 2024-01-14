@@ -1,19 +1,18 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwtarv7mq65jo"]
+[gd_scene load_steps=26 format=3 uid="uid://cwtarv7mq65jo"]
 
 [ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="1_cukaw"]
-[ext_resource type="Script" path="res://levels/level_default.gd" id="1_x7q0n"]
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_s0pax"]
 [ext_resource type="Texture2D" uid="uid://d2pdkaef3pr57" path="res://sprites/tilemap/monochrome_tilemap_packed.png" id="2_5f2sx"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_hwpwt"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="4_glqwc"]
-[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="5_06hha"]
-[ext_resource type="FontFile" uid="uid://ckfamtjxtth0y" path="res://fonts/Poco.ttf" id="5_wsnyf"]
-[ext_resource type="Script" path="res://levels/RunTimer.gd" id="6_16buj"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_6hy0u"]
-[ext_resource type="Shader" path="res://shaders/screen_transition_shader.gdshader" id="7_7hfes"]
-[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="7_i6bmp"]
-[ext_resource type="Script" path="res://levels/GameMaster.gd" id="7_ljmjp"]
-[ext_resource type="Texture2D" uid="uid://dpaio85da7f8w" path="res://sprites/black_square.png" id="8_p4pif"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="5_yu0et"]
+[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="6_rnvkt"]
+[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="7_4xnhj"]
+[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="8_85l6u"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="9_5l4xf"]
 [ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="9_ufdx6"]
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="14_3uvme"]
+[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="15_1tl6t"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="16_kjnp5"]
+[ext_resource type="Script" path="res://levels/GameMaster.gd" id="17_vqyrw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ybya"]
 texture = ExtResource("1_cukaw")
@@ -4426,20 +4425,14 @@ glow_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
 size = Vector2(14, 15)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_28oy6"]
-shader = ExtResource("7_7hfes")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 30.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gswb2"]
 size = Vector2(48, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ji2sk"]
 size = Vector2(32, 5)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("textureRect", "player")]
-script = ExtResource("1_x7q0n")
-textureRect = NodePath("DefaultCanvasLayer/TextureRect")
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_s0pax")
 player = NodePath("Player")
 
 [node name="Map" type="StaticBody2D" parent="."]
@@ -4455,17 +4448,16 @@ layer_0/tile_data = PackedInt32Array(524296, 720897, 6, 393224, 720897, 6, 32768
 texture_filter = 1
 tile_set = SubResource("TileSet_njwnt")
 format = 2
-layer_0/tile_data = PackedInt32Array(720895, 983040, 13, 786431, 983040, 14, 851967, 983040, 15, 655360, 1048576, 13, 655361, 1048576, 13, 655363, 1048576, 13, 655362, 1048576, 13, 655364, 1048576, 13, 786432, 1048576, 15, 786433, 1048576, 15, 786434, 1048576, 15, 786435, 1048576, 15, 786436, 1048576, 15, 720901, 1048576, 10, 655365, 1048576, 13, 786437, 1048576, 11, 720899, 1048576, 14, 720896, 1048576, 14, 655366, 1048576, 13, 655377, 983040, 13, 655378, 1048576, 13, 655379, 1048576, 13, 655380, 1048576, 9, 786438, 1048576, 15, 786449, 983040, 15, 786450, 1048576, 15, 786451, 1048576, 15, 786452, 1048576, 11, 720916, 1048576, 10, 720915, 1048576, 10, 720894, 1114112, 10, 655381, 1114112, 9, 720917, 1114112, 10, 786453, 1114112, 11, 655358, 1114112, 10, 589822, 1114112, 10, 524286, 1114112, 10, 458750, 1114112, 10, 393214, 1114112, 10, 327678, 1114112, 10, 262142, 1114112, 10, 196606, 1114112, 10, 131070, 1114112, 10, 65534, 1114112, 10, -2, 1114112, 10, -131052, 1048576, 11, -131053, 1048576, 11, -131054, 1048576, 11, -131055, 1048576, 11, -131056, 1048576, 11, -131057, 1048576, 11, -131058, 1048576, 11, -131059, 1048576, 11, -131060, 1048576, 11, -131061, 1048576, 11, -131062, 1048576, 11, -65537, 1048576, 11, -131063, 1048576, 11, -131064, 1048576, 11, -131065, 1048576, 11, -131066, 1048576, 11, -131067, 1048576, 11, -131068, 1048576, 11, -131069, 1048576, 11, -131070, 1048576, 11, -131071, 1048576, 11, -131072, 1048576, 11, -131051, 1048576, 11, -65514, 983040, 10, 22, 983040, 10, 65558, 983040, 10, 131094, 983040, 10, 196630, 983040, 10, 262166, 983040, 10, 327702, 983040, 10, 393238, 983040, 10, 458774, 983040, 10, 524310, 983040, 10, 589846, 983040, 10, 655382, 983040, 10, 720918, 983040, 10, 786454, 983040, 10, 786430, 1114112, 10, 851966, 1114112, 10, 655367, 1048576, 13, 786439, 1048576, 15, 655368, 1114112, 13, 720904, 1114112, 14, 786440, 1114112, 15, 655372, 983040, 13, 720908, 983040, 14, 786444, 983040, 15, 655373, 1048576, 13, 720909, 1048576, 14, 786445, 1048576, 15, 655374, 1114112, 13, 720910, 1114112, 14, 786446, 1114112, 15, 720913, 983040, 14, 720897, 720897, 6, 720898, 720897, 6, 720900, 720897, 6, 720902, 720897, 6, 720903, 720897, 6, 720914, 720897, 6, 327686, 917504, 17, 393222, 917504, 18, 458758, 917504, 19, 327687, 983040, 17, 393223, 983040, 18, 458759, 983040, 19, 327688, 1048576, 17, 393224, 1048576, 18, 458760, 1048576, 19, 655369, 917505, 17, 720905, 917505, 18, 786441, 917505, 19, 655370, 983041, 17, 720906, 983041, 18, 786442, 983041, 19, 655371, 1048577, 17, 720907, 1048577, 18, 786443, 1048577, 19)
+layer_0/tile_data = PackedInt32Array(720895, 983040, 13, 786431, 983040, 14, 851967, 983040, 15, 655360, 1048576, 13, 655361, 1048576, 13, 655363, 1048576, 13, 655362, 1048576, 13, 655364, 1048576, 13, 786432, 1048576, 15, 786433, 1048576, 15, 786434, 1048576, 15, 786435, 1048576, 15, 786436, 1048576, 15, 720901, 1048576, 10, 655365, 1048576, 13, 786437, 1048576, 11, 720899, 1048576, 14, 720896, 1048576, 14, 655366, 1048576, 13, 655377, 983040, 13, 655378, 1048576, 13, 655379, 1048576, 13, 655380, 1048576, 9, 786438, 1048576, 15, 786449, 983040, 15, 786450, 1048576, 15, 786451, 1048576, 15, 786452, 1048576, 11, 720916, 1048576, 10, 720915, 1048576, 10, 720894, 1114112, 10, 655381, 1114112, 9, 720917, 1114112, 10, 786453, 1114112, 11, 655358, 1114112, 10, 589822, 1114112, 10, 524286, 1114112, 10, 458750, 1114112, 10, 393214, 1114112, 10, 327678, 1114112, 10, 262142, 1114112, 10, 196606, 1114112, 10, 131070, 1114112, 10, 65534, 1114112, 10, -2, 1114112, 10, -131052, 1048576, 11, -131053, 1048576, 11, -131054, 1048576, 11, -131055, 1048576, 11, -131056, 1048576, 11, -131057, 1048576, 11, -131058, 1048576, 11, -131059, 1048576, 11, -131060, 1048576, 11, -131061, 1048576, 11, -131062, 1048576, 11, -65537, 1048576, 11, -131063, 1048576, 11, -131064, 1048576, 11, -131065, 1048576, 11, -131066, 1048576, 11, -131067, 1048576, 11, -131068, 1048576, 11, -131069, 1048576, 11, -131070, 1048576, 11, -131071, 1048576, 11, -131072, 1048576, 11, -131051, 1048576, 11, -65514, 983040, 10, 22, 983040, 10, 65558, 983040, 10, 131094, 983040, 10, 196630, 983040, 10, 262166, 983040, 10, 327702, 983040, 10, 393238, 983040, 10, 458774, 983040, 10, 524310, 983040, 10, 589846, 983040, 10, 655382, 983040, 10, 720918, 983040, 10, 786454, 983040, 10, 786430, 1114112, 10, 851966, 1114112, 10, 655367, 1048576, 13, 786439, 1048576, 15, 655368, 1114112, 13, 720904, 1114112, 14, 786440, 1114112, 15, 655372, 983040, 13, 720908, 983040, 14, 786444, 983040, 15, 655373, 1048576, 13, 720909, 1048576, 14, 786445, 1048576, 15, 655374, 1114112, 13, 720910, 1114112, 14, 786446, 1114112, 15, 720913, 983040, 14, 720897, 720897, 6, 720898, 720897, 6, 720900, 720897, 6, 720902, 720897, 6, 720903, 720897, 6, 720914, 720897, 6)
 
 [node name="OtherItems" type="TileMap" parent="Map"]
 texture_filter = 1
 tile_set = SubResource("TileSet_241kb")
 format = 2
-layer_0/tile_data = PackedInt32Array(589845, 1179648, 2, 524296, 327680, 9, 589832, 327680, 10, 589824, 1245184, 2, 786441, 131072, 6, 786442, 131072, 6, 786443, 131072, 6, 786447, 131072, 6, 786448, 131072, 6)
+layer_0/tile_data = PackedInt32Array(524296, 327680, 9, 589832, 327680, 10, 589824, 1245184, 2, 786441, 131072, 6, 786442, 131072, 6, 786443, 131072, 6, 786447, 131072, 6, 786448, 131072, 6, 589844, 1179648, 2)
 
-[node name="Player" parent="." instance=ExtResource("3_hwpwt")]
+[node name="Player" parent="." instance=ExtResource("5_yu0et")]
 position = Vector2(23, 168)
-wallSlideUnlocked = true
 
 [node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jncfl")
@@ -4473,54 +4465,38 @@ environment = SubResource("Environment_jncfl")
 [node name="DefaultCanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 
-[node name="DefaultDoor" type="Area2D" parent="."]
-position = Vector2(360.5, 168.5)
+[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
+position = Vector2(344, 169)
 collision_layer = 32768
 collision_mask = 2
+script = ExtResource("6_rnvkt")
+upKeyButton = NodePath("UpKey")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_rw520")
 
-[node name="DefaultCanvasLayer" type="CanvasLayer" parent="."]
+[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
+texture_filter = 1
+position = Vector2(0, -22)
+texture = ExtResource("7_4xnhj")
 
-[node name="DefaultTypeWritter" parent="DefaultCanvasLayer" instance=ExtResource("7_6hy0u")]
-offset_left = 30.0
-offset_top = 30.0
-offset_right = 267.0
-offset_bottom = 70.0
+[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
+stream = ExtResource("8_85l6u")
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("9_5l4xf")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
 text = "PRESS X TO JUMP"
 metadata/_edit_use_anchors_ = true
-
-[node name="RunTimer" type="RichTextLabel" parent="DefaultCanvasLayer"]
-texture_filter = 1
-offset_left = 273.0
-offset_top = -2.0
-offset_right = 365.0
-offset_bottom = 38.0
-scale = Vector2(0.5, 0.5)
-theme_override_fonts/normal_font = ExtResource("5_wsnyf")
-text = "TIME 22:22:22"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-script = ExtResource("6_16buj")
-
-[node name="TextureRect" type="TextureRect" parent="DefaultCanvasLayer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_28oy6")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("8_p4pif")
 
 [node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(37, 169)
 energy = 0.6
-texture = ExtResource("4_glqwc")
-script = ExtResource("7_i6bmp")
+texture = ExtResource("14_3uvme")
+script = ExtResource("15_1tl6t")
 target = NodePath("../Player")
 
 [node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
@@ -4532,14 +4508,14 @@ limit_bottom = 224
 limit_smoothed = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
-script = ExtResource("5_06hha")
+script = ExtResource("16_kjnp5")
 target = NodePath("../Player")
 
 [node name="DefaultGameMaster" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player", "typewritter")]
-script = ExtResource("7_ljmjp")
+script = ExtResource("17_vqyrw")
 camera = NodePath("../DefaultCamera")
 player = NodePath("../Player")
-typewritter = NodePath("../DefaultCanvasLayer/DefaultTypeWritter")
+typewritter = NodePath("../DefaultTypeWritter")
 respawnPosition = Vector2(23, 168)
 
 [node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
@@ -4559,10 +4535,13 @@ shape = SubResource("RectangleShape2D_ji2sk")
 [connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
 [connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
+[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 [connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
 [connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
 [connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
 [connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 
-[editable path="DefaultCanvasLayer/DefaultTypeWritter"]
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]

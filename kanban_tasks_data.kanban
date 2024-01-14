@@ -1,0 +1,172 @@
+{
+	"categories": [
+		{
+			"uuid": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"title": "Task",
+			"color": "70bafa"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "9a151f16-d85f-4115-96ae-f2114402ee5e",
+			"title": "Todo",
+			"tasks": [
+				"b69c2357-75ef-4e5a-b3c8-2e5839395e95",
+				"a3e0e78c-8aac-4402-bf67-3429373ce7a2",
+				"8f70a3a1-f93e-4e40-8daf-6d74c3c7ab10",
+				"397c8d6d-1067-42a3-8a8d-692eb77e481a",
+				"869d81c7-9b60-4c02-9d00-5910e80fbbce",
+				"0e390674-0573-41b0-b5e9-14e296e3260e",
+				"2530dddb-e0ed-4dca-9e9e-ca43c2bb5e21",
+				"4a918dfb-3096-4581-8414-9d76da01ed4a"
+			]
+		},
+		{
+			"uuid": "91d419a3-25f4-4792-b340-f6c33c8f0b36",
+			"title": "Doing",
+			"tasks": [
+				"4c97c937-8cdd-4e7c-98ee-65a624e6202c",
+				"bed89544-458b-4ed1-8870-ace62d15aa6f"
+			]
+		},
+		{
+			"uuid": "e6f83e3e-b75f-4b06-9f36-8d3e2af35334",
+			"title": "Done",
+			"tasks": [
+				"a13cbb7f-240d-45bb-b9f8-2fccb11d5ce8",
+				"2e1916d7-9c1a-4ad5-a6e0-ea8f0a4a36db",
+				"1222bea1-05f1-4481-974c-48de6865e43e",
+				"ecfc5384-8fe4-4f3d-a571-b37d2be5cec1",
+				"d2960d9d-0bd4-47ea-bbf6-c4ad440b0ece",
+				"b82eb79a-400a-42b6-b949-a625f50ded2a"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "b69c2357-75ef-4e5a-b3c8-2e5839395e95",
+			"title": "Salvar/Load em fases específicas",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "a3e0e78c-8aac-4402-bf67-3429373ce7a2",
+			"title": "Menu de pausa com recomeçar",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "1222bea1-05f1-4481-974c-48de6865e43e",
+			"title": "Contador de morte global e por fase",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "8f70a3a1-f93e-4e40-8daf-6d74c3c7ab10",
+			"title": "Soundtrack",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "bed89544-458b-4ed1-8870-ace62d15aa6f",
+			"title": "feedback visual do cooldown do dash",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "397c8d6d-1067-42a3-8a8d-692eb77e481a",
+			"title": "main menu pra conseguir selecionar qual level entrar",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "869d81c7-9b60-4c02-9d00-5910e80fbbce",
+			"title": "adicionar um tipo de moedinha que o player pode colecionar (talvez uma chave)",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "0e390674-0573-41b0-b5e9-14e296e3260e",
+			"title": "melhorar efeito de quando usa uma porta",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "4c97c937-8cdd-4e7c-98ee-65a624e6202c",
+			"title": "criar o mundo core",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "b82eb79a-400a-42b6-b949-a625f50ded2a",
+			"title": "limitar a gravidade máxima que ele pode atingir",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "d2960d9d-0bd4-47ea-bbf6-c4ad440b0ece",
+			"title": "escrever só uma vez por fase",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "a13cbb7f-240d-45bb-b9f8-2fccb11d5ce8",
+			"title": "fazer os níveis 1-5 do tutorial",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "2530dddb-e0ed-4dca-9e9e-ca43c2bb5e21",
+			"title": "arrumar o script da porta pra seta não aparecer no 100%",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "2e1916d7-9c1a-4ad5-a6e0-ea8f0a4a36db",
+			"title": "fazer o dash ficar mais significativo",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "ecfc5384-8fe4-4f3d-a571-b37d2be5cec1",
+			"title": "fazer os níveis 6-10 do tutorial",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "4a918dfb-3096-4581-8414-9d76da01ed4a",
+			"title": "controlar a altura do pulo",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"9a151f16-d85f-4115-96ae-f2114402ee5e"
+			],
+			[
+				"91d419a3-25f4-4792-b340-f6c33c8f0b36"
+			],
+			[
+				"e6f83e3e-b75f-4b06-9f36-8d3e2af35334"
+			]
+		]
+	}
+}

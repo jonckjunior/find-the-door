@@ -22,6 +22,7 @@ func _on_timer_timeout():
 	visible_characters += 1
 
 func reset():
+	return
 	textWithoutBBCode = remove_bbcode(text)
 	visible_ratio = 0.0
 	visible_characters = 0

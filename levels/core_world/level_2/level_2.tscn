@@ -1,0 +1,117 @@
+[gd_scene load_steps=17 format=3 uid="uid://cbhlr0lyondai"]
+
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_j5um7"]
+[ext_resource type="PackedScene" uid="uid://cisj1rhkq66xd" path="res://levels/core_world/level_2/core_world_2.tscn" id="2_lrb3g"]
+[ext_resource type="PackedScene" uid="uid://duhvgqvvjtuuo" path="res://objects/default_canvas_modulate.tscn" id="2_uwd10"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_8ueef"]
+[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_pyjqr"]
+[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="6_sjrb0"]
+[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="7_op0m0"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_le411"]
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="9_lym34"]
+[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="10_4jjt5"]
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="11_7aw8l"]
+[ext_resource type="Script" path="res://levels/GameMaster.gd" id="12_ty36p"]
+[ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="13_klw87"]
+
+[sub_resource type="Environment" id="Environment_jncfl"]
+background_mode = 3
+glow_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
+size = Vector2(14, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_24k3h"]
+size = Vector2(264, 10)
+
+[node name="Level2" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_j5um7")
+player = NodePath("Player")
+
+[node name="DefaultCanvasModulate" parent="." instance=ExtResource("2_uwd10")]
+
+[node name="core_world_2" parent="." instance=ExtResource("2_lrb3g")]
+position = Vector2(-2, -4)
+
+[node name="Player" parent="." instance=ExtResource("4_8ueef")]
+position = Vector2(56, -88)
+
+[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jncfl")
+
+[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
+position = Vector2(536, -88)
+collision_layer = 32768
+collision_mask = 2
+script = ExtResource("5_pyjqr")
+upKeyButton = NodePath("UpKey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_rw520")
+
+[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
+texture_filter = 1
+position = Vector2(0, -22)
+texture = ExtResource("6_sjrb0")
+
+[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
+stream = ExtResource("7_op0m0")
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("8_le411")]
+offset_left = 224.0
+offset_top = -160.0
+offset_right = 461.0
+offset_bottom = -120.0
+text = "USE THE PLATFORMS"
+metadata/_edit_use_anchors_ = true
+
+[node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(37, 169)
+energy = 0.6
+texture = ExtResource("9_lym34")
+script = ExtResource("10_4jjt5")
+target = NodePath("../Player")
+
+[node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(159, 162)
+limit_left = 23
+limit_top = -297
+limit_right = 569
+limit_bottom = -32
+limit_smoothed = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+script = ExtResource("11_7aw8l")
+target = NodePath("../Player")
+
+[node name="DefaultGameMaster" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player", "typewritter")]
+script = ExtResource("12_ty36p")
+camera = NodePath("../DefaultCamera")
+player = NodePath("../Player")
+typewritter = NodePath("../DefaultTypeWritter")
+respawnPosition = Vector2(23, 168)
+
+[node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
+
+[node name="DefaultPlayerKiller" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("13_klw87")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultPlayerKiller"]
+position = Vector2(387, -33)
+shape = SubResource("RectangleShape2D_24k3h")
+
+[connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
+[connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
+[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
+[connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
+[connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
+[connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
+[connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
+[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
+
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]
