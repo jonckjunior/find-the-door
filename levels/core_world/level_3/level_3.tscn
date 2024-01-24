@@ -61,7 +61,6 @@ texture = ExtResource("6_xysjv")
 stream = ExtResource("7_qfpue")
 
 [node name="DefaultTypeWritter" parent="." instance=ExtResource("8_ijic5")]
-clip_contents = false
 offset_left = 216.0
 offset_top = -160.0
 offset_right = 453.0

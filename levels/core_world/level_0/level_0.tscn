@@ -23,7 +23,7 @@ size = Vector2(14, 15)
 script = ExtResource("1_tdlae")
 player = NodePath("Player")
 
-[node name="core_world_0" parent="." instance=ExtResource("10_c4sxx")]
+[node name="map" parent="." instance=ExtResource("10_c4sxx")]
 position = Vector2(-2, -4)
 
 [node name="Player" parent="." instance=ExtResource("5_h70m7")]
@@ -85,6 +85,7 @@ respawnPosition = Vector2(23, 168)
 [node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
 
 [node name="DefaultCanvasModulate" parent="." instance=ExtResource("11_vsk52")]
+visible = false
 
 [connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]

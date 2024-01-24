@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://0wv6jc50pgnw"]
+
+[ext_resource type="Script" path="res://scripts/MainMenuEffects.gd" id="1_y57xm"]
+[ext_resource type="PackedScene" uid="uid://cfixdoyiqony5" path="res://objects/run_timer.tscn" id="2_auyx8"]
+[ext_resource type="Shader" path="res://menus/ColorRet.gdshader" id="2_u6jeh"]
+[ext_resource type="Texture2D" uid="uid://x4tynwqe2o2h" path="res://sprites/tile_0383.png" id="4_eguv7"]
+[ext_resource type="FontFile" uid="uid://ckfamtjxtth0y" path="res://fonts/Poco.ttf" id="5_san3l"]
+[ext_resource type="Script" path="res://scripts/DeathCounter.gd" id="6_0il4v"]
+[ext_resource type="PackedScene" uid="uid://bsmgaik8axf6j" path="res://menus/pause_menu.tscn" id="7_8nyvv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yryiq"]
+shader = ExtResource("2_u6jeh")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.236
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 0.5
+shader_parameter/roll_size = 0.5
+shader_parameter/roll_variation = 4.01
+shader_parameter/distort_intensity = 0.015
+shader_parameter/noise_opacity = 0.126
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.01
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.23
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[node name="MainMenuEffects" type="Control" node_paths=PackedStringArray("rect")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y57xm")
+rect = NodePath("CanvasLayer/ColorRect")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+z_index = 5
+material = SubResource("ShaderMaterial_yryiq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RunTimer" parent="CanvasLayer" instance=ExtResource("2_auyx8")]
+visible = false
+offset_left = 259.0
+offset_top = 11.0
+offset_right = 351.0
+offset_bottom = 51.0
+
+[node name="DeathCounter" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("spriteDeathCounter")]
+visible = false
+texture_filter = 1
+offset_left = 278.0
+offset_top = 21.0
+offset_right = 378.0
+offset_bottom = 61.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("5_san3l")
+text = "23"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("6_0il4v")
+spriteDeathCounter = NodePath("../Deaths")
+
+[node name="Deaths" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(266, 27)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_eguv7")
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_8nyvv")]

@@ -151,7 +151,6 @@ position = Vector2(-8.5, -34)
 [connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
 [connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]

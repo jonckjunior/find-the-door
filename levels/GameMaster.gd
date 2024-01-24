@@ -25,7 +25,3 @@ func respawn_player():
 
 func _on_player_dash():
 	camera.apply_shake()
-
-func _on_default_player_killer_kill_player():
-	if not player.isDying:
-		player.die()

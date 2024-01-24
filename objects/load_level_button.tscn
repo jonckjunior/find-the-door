@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://br4pm4dfsj6dg"]
+
+[ext_resource type="FontFile" uid="uid://ckfamtjxtth0y" path="res://fonts/Poco.ttf" id="1_un8jb"]
+[ext_resource type="Script" path="res://scripts/load_level_button.gd" id="2_p6hij"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xnuj8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a2yms"]
+
+[node name="LoadLevelButton" type="Button"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_un8jb")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xnuj8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a2yms")
+text = "PLAY"
+script = ExtResource("2_p6hij")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("1_un8jb")
+bbcode_enabled = true
+autowrap_mode = 0
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

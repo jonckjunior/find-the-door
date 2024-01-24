@@ -16,7 +16,7 @@ class_name Player
 
 # CONST
 const SPEED = 100.0
-const JUMP_VELOCITY = -140.0
+const JUMP_VELOCITY = -152.0
 const ACCELERATION = 1.0
 const DASH_FORCE = 135.0
 const gravity = 400.0
@@ -26,6 +26,7 @@ const ADJUST_HEAD_CORNER_LIMIT = -100
 const ADJUST_HEAD_CORNER_LIMIT_DASH = 100
 const DEAD_INPUT_THRESHOLD = 0.05
 const BOOST_CORNER_ADJUSTMENT = 50
+const BASE_DASH_COOLDOWN = 1.0
 
 # PLAYER STATS
 var numberOfJumps = 1
@@ -65,8 +66,10 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("death"):
 		die()
+		
 	
 	handle_dash_trail()
+	handle_dash_visual()
 	adjust_head_corner()
 	adjust_head_dash_corner()
 	adjust_feet_dash_corner()
@@ -180,14 +183,13 @@ func handle_dash(delta) -> void:
 		return
 	numberOfDashes = 0
 	dash.emit()
-	dashCooldown = 1.0
+	dashCooldown = BASE_DASH_COOLDOWN
 	$DashSound.play()
 	$DashParticle.restart()
 	var directionX = get_input_axis("left", "right")
 	var directionY = get_input_axis("up", "down")
 	if abs(directionX) < DEAD_INPUT_THRESHOLD and abs(directionY) < DEAD_INPUT_THRESHOLD:
-		directionY = -1
-		#directionX = -1 if $AnimatedSprite2D.flip_h else 1
+		directionX = -1 if $AnimatedSprite2D.flip_h else 1
 	velocity = Vector2(directionX, directionY).normalized() * Vector2(2.0, 1.0) * DASH_FORCE
 	isDashing = true
 	isDashingCooldown = 0.2
@@ -197,7 +199,7 @@ func handle_movement(delta) -> void:
 	var targetSpeed = direction * SPEED
 	var speedDif = targetSpeed - velocity.x
 	
-	var movement = speedDif * 0.1
+	var movement = speedDif * 0.15
 	
 	velocity.x += movement
 	move_and_slide()
@@ -226,7 +228,7 @@ func refresh_variables(delta) -> void:
 		isJumpBuffered = false
 	
 	isDashingCooldown -= delta
-	if isDashingCooldown <= 0:
+	if isDashingCooldown < 0:
 		isDashing = false
 		isDashingCooldown = 0
 
@@ -264,8 +266,8 @@ func squish_and_squash() -> void:
 		else:
 			newScaleY += 2 - sum
 
-	$AnimatedSprite2D.scale.x = snapped(lerp($AnimatedSprite2D.scale.x, newScaleX, 0.2), 0.001)
-	$AnimatedSprite2D.scale.y = snapped(lerp($AnimatedSprite2D.scale.y, newScaleY, 0.2), 0.001)
+	$AnimatedSprite2D.scale.x = snapped(lerp($AnimatedSprite2D.scale.x, newScaleX, 0.2), 0.02)
+	$AnimatedSprite2D.scale.y = snapped(lerp($AnimatedSprite2D.scale.y, newScaleY, 0.2), 0.02)
 
 func get_is_player_against_wall() -> bool:
 	var leftSide = check_side_wall($RayCasts/LeftRayCast, get_input("left"))
@@ -309,6 +311,7 @@ func get_input_axis(first, second):
 func die():
 	if isDying:
 		return
+	get_node("/root/GameManager").increment_death()
 	velocity = Vector2(0, 0)
 	player_death.emit()
 	$DeathSound.play()
@@ -325,9 +328,6 @@ func die():
 	deathParticle.restart()
 	add_sibling(deathParticle)
 	
-	print(global_position)
-	print(velocity)
-
 
 func respawn_player(respawnPosition):
 	isDying = false
@@ -399,7 +399,7 @@ func handle_dash_trail():
 		add_sibling(trail_instance)
 		trail_instance.transform = $AnimatedSprite2D.transform
 		trail_instance.flip_h = $AnimatedSprite2D.flip_h
-		trail_instance.modulate = Color("003737")
+		trail_instance.modulate = Color("003737") # Color("003737")
 		trail_instance.position = position
 		trail_instance.texture = ($AnimatedSprite2D.sprite_frames as SpriteFrames).get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
 		trailCooldown = 0.05
@@ -407,3 +407,14 @@ func handle_dash_trail():
 func clamp_velocity():
 	velocity.y = min(velocity.y, 400)
 	velocity.y = max(velocity.y, -1000)
+
+func handle_dash_visual():
+	return
+	#$CharacterHorns.scale = $AnimatedSprite2D.scale
+	#$CharacterHorns.modulate = Color("bc2121")
+	#$AnimatedSprite2D.modulate = Color("003737").lightened(0.5)
+	#if numberOfDashes == 0:
+		#$CharacterHorns.modulate = Color("bc2121").lerp("FFFFFF", 0.2)
+	#else:
+		##var weight = (BASE_DASH_COOLDOWN - dashCooldown) / BASE_DASH_COOLDOWN
+		#$CharacterHorns.modulate = Color("bc2121").lerp("FFFFFF", 1)

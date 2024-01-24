@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cr346cwscf8ia"]
+[gd_scene load_steps=26 format=3 uid="uid://cr346cwscf8ia"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ipvcg"]
 [ext_resource type="Texture2D" uid="uid://baa3ll8otrl5w" path="res://sprites/animation/player_death/player_dying1.png" id="2_f3px7"]
@@ -15,9 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="9_opuj6"]
 [ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="9_v5njx"]
 [ext_resource type="AudioStream" uid="uid://dsdmehhurlyy0" path="res://audios/click.wav" id="15_jurs1"]
+[ext_resource type="Texture2D" uid="uid://cytr2pe7ycmrk" path="res://particles/sprites/character_horns.png" id="16_jgkcx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_186sp"]
-size = Vector2(12, 11)
+size = Vector2(10, 10)
 
 [sub_resource type="Shader" id="Shader_mfoue"]
 code = "shader_type canvas_item;
@@ -132,7 +133,7 @@ displacementRayCastsUp = [NodePath("RayCasts/UpRayCast1"), NodePath("RayCasts/Up
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2.5)
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_186sp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -299,3 +300,9 @@ target_position = Vector2(2.08165e-12, 15)
 [node name="DownRightRayCast" type="RayCast2D" parent="RayCasts"]
 position = Vector2(6, 0)
 target_position = Vector2(2.08165e-12, 15)
+
+[node name="CharacterHorns" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(2.08165e-12, 2.5)
+texture = ExtResource("16_jgkcx")

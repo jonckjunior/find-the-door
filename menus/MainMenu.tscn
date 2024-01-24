@@ -1,12 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://0wv6jc50pgnw"]
+[gd_scene load_steps=4 format=3 uid="uid://ci4iipi4iyb7w"]
 
-[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_fy3b8"]
+[ext_resource type="Script" path="res://menus/MainMenu.gd" id="1_wedec"]
+[ext_resource type="Texture2D" uid="uid://dpaio85da7f8w" path="res://sprites/black_square.png" id="3_nioxa"]
+[ext_resource type="PackedScene" uid="uid://cosyoamrs66yj" path="res://menus/main_menu_buttons.tscn" id="5_b8w7w"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fy3b8")
+script = ExtResource("1_wedec")
+playButton = NodePath("VBoxContainer/PlayButton")
+optionsButton = NodePath("VBoxContainer/OptionsButton")
+quitButton = NodePath("VBoxContainer/QuitButton")
+
+[node name="BlackSquare" type="Sprite2D" parent="."]
+position = Vector2(161, 93)
+scale = Vector2(-20.863, 12.3104)
+texture = ExtResource("3_nioxa")
+
+[node name="VBoxContainer" parent="." instance=ExtResource("5_b8w7w")]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 106.0
+offset_right = 118.0
+offset_bottom = 174.0
+script = null
+
+[node name="PlayButton" parent="VBoxContainer" index="0"]
+custom_minimum_size = Vector2(100, 20)
+
+[editable path="VBoxContainer"]

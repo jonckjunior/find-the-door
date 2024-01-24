@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_h3n65"]
 [ext_resource type="PackedScene" uid="uid://bai8eofk8cgxv" path="res://levels/core_world/level_12/core_world_12.tscn" id="2_fmpa0"]
-[ext_resource type="Shader" path="res://TEST/sketch.gdshader" id="3_lnnn5"]
+[ext_resource type="Shader" path="res://scripts/rain_12.gdshader" id="3_lnnn5"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_xm6ym"]
 [ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_wqjuf"]
 [ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="6_ebayr"]
@@ -248,7 +248,6 @@ script = ExtResource("18_b0xje")
 [connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
 [connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="_on_finished"]
 
 [editable path="Player"]

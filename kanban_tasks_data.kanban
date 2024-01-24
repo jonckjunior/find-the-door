@@ -11,14 +11,14 @@
 			"uuid": "9a151f16-d85f-4115-96ae-f2114402ee5e",
 			"title": "Todo",
 			"tasks": [
-				"b69c2357-75ef-4e5a-b3c8-2e5839395e95",
-				"a3e0e78c-8aac-4402-bf67-3429373ce7a2",
 				"8f70a3a1-f93e-4e40-8daf-6d74c3c7ab10",
-				"397c8d6d-1067-42a3-8a8d-692eb77e481a",
 				"869d81c7-9b60-4c02-9d00-5910e80fbbce",
 				"0e390674-0573-41b0-b5e9-14e296e3260e",
 				"2530dddb-e0ed-4dca-9e9e-ca43c2bb5e21",
-				"4a918dfb-3096-4581-8414-9d76da01ed4a"
+				"4a918dfb-3096-4581-8414-9d76da01ed4a",
+				"ea6116f6-d8d9-44c3-861d-bad862825e81",
+				"53f6fb9d-4696-4f9b-b2d5-f52994d0e050",
+				"bed89544-458b-4ed1-8870-ace62d15aa6f"
 			]
 		},
 		{
@@ -26,7 +26,7 @@
 			"title": "Doing",
 			"tasks": [
 				"4c97c937-8cdd-4e7c-98ee-65a624e6202c",
-				"bed89544-458b-4ed1-8870-ace62d15aa6f"
+				"5624973e-8b09-4709-801e-96bdfbac0fcb"
 			]
 		},
 		{
@@ -38,7 +38,16 @@
 				"1222bea1-05f1-4481-974c-48de6865e43e",
 				"ecfc5384-8fe4-4f3d-a571-b37d2be5cec1",
 				"d2960d9d-0bd4-47ea-bbf6-c4ad440b0ece",
-				"b82eb79a-400a-42b6-b949-a625f50ded2a"
+				"b82eb79a-400a-42b6-b949-a625f50ded2a",
+				"7639dc41-983e-45b6-a508-9eff6a912f57",
+				"04b65999-e738-419f-873d-d71d8f563a78",
+				"a657fada-30bf-49f3-9c2d-2c2d594e6527",
+				"b69c2357-75ef-4e5a-b3c8-2e5839395e95",
+				"397c8d6d-1067-42a3-8a8d-692eb77e481a",
+				"aade138c-a42b-4bba-adf2-3543d411929d",
+				"80d53c3b-a331-4062-b699-51bfafe33d16",
+				"51f94193-bc74-43ff-b2df-8c523a8a0c4e",
+				"a3e0e78c-8aac-4402-bf67-3429373ce7a2"
 			]
 		}
 	],
@@ -151,6 +160,69 @@
 		{
 			"uuid": "4a918dfb-3096-4581-8414-9d76da01ed4a",
 			"title": "controlar a altura do pulo",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "7639dc41-983e-45b6-a508-9eff6a912f57",
+			"title": "fazer o boneco escorregar um pouco menos",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "a657fada-30bf-49f3-9c2d-2c2d594e6527",
+			"title": "diminuir a hitbox do player",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "ea6116f6-d8d9-44c3-861d-bad862825e81",
+			"title": "uma fase que força o jogador a ficar pulando e segurnado pra baixo",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "53f6fb9d-4696-4f9b-b2d5-f52994d0e050",
+			"title": "uma fase que força o jogador a ficar pulando depois de usar um jumper",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "04b65999-e738-419f-873d-d71d8f563a78",
+			"title": "botar os botões do menu pra vibrar mais",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "5624973e-8b09-4709-801e-96bdfbac0fcb",
+			"title": "diminuir a hitbox de spikes",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "aade138c-a42b-4bba-adf2-3543d411929d",
+			"title": "fixar bug de transição (eu acho que é quando duas transições são trigadas em sequencia)",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "51f94193-bc74-43ff-b2df-8c523a8a0c4e",
+			"title": "otimizar mostrar o tempo",
+			"description": "",
+			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
+			"steps": []
+		},
+		{
+			"uuid": "80d53c3b-a331-4062-b699-51bfafe33d16",
+			"title": "arrumar o contador de morte",
 			"description": "",
 			"category": "12e371e4-5f84-4b35-b619-c8fee5403fd4",
 			"steps": []

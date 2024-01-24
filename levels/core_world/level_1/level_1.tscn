@@ -32,7 +32,7 @@ size = Vector2(62, 210)
 script = ExtResource("1_eufhx")
 player = NodePath("Player")
 
-[node name="core_world_1" parent="." instance=ExtResource("2_1sjjq")]
+[node name="map" parent="." instance=ExtResource("2_1sjjq")]
 position = Vector2(-2, -4)
 
 [node name="Player" parent="." instance=ExtResource("4_4kkiw")]
@@ -125,9 +125,8 @@ shape = SubResource("RectangleShape2D_310d5")
 [connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
 [connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 [connection signal="body_entered" from="TextTrigger" to="DefaultTypeWritter" method="_on_text_trigger_body_entered"]
 
-[editable path="core_world_1"]
+[editable path="map"]
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]

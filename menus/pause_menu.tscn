@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsmgaik8axf6j"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_gsxxr"]
+[ext_resource type="PackedScene" uid="uid://cppt38a3q2a88" path="res://menus/menu_button.tscn" id="2_twqrr"]
+[ext_resource type="Texture2D" uid="uid://dpaio85da7f8w" path="res://sprites/black_square.png" id="3_esbir"]
+
+[node name="PauseMenu" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_gsxxr")
+
+[node name="BlackSquare" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.709804)
+position = Vector2(163, 92)
+scale = Vector2(21.9153, 12.5853)
+texture = ExtResource("3_esbir")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 124.5
+offset_top = 44.0
+offset_right = 195.5
+offset_bottom = 136.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="ResumeButton" parent="VBoxContainer" instance=ExtResource("2_twqrr")]
+layout_mode = 2
+text = "RESUME"
+
+[node name="RestartButton" parent="VBoxContainer" instance=ExtResource("2_twqrr")]
+layout_mode = 2
+text = "RESTART"
+
+[node name="MainMenuButton" parent="VBoxContainer" instance=ExtResource("2_twqrr")]
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="QuitButton" parent="VBoxContainer" instance=ExtResource("2_twqrr")]
+layout_mode = 2
+text = "QUIT"

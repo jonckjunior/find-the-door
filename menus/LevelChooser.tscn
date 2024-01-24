@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmmfi2apqc2xf"]
+
+[ext_resource type="Texture2D" uid="uid://dpaio85da7f8w" path="res://sprites/black_square.png" id="1_0imq5"]
+[ext_resource type="Script" path="res://menus/GridContainerLevelChooser.gd" id="2_fc81q"]
+[ext_resource type="PackedScene" uid="uid://br4pm4dfsj6dg" path="res://objects/load_level_button.tscn" id="3_y3ihs"]
+
+[node name="LevelChooser" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlackSquare" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+scale = Vector2(20, 11.25)
+texture = ExtResource("1_0imq5")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 5
+script = ExtResource("2_fc81q")
+
+[node name="LoadLevelButton" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton2" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton3" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton4" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton5" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton6" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton7" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton8" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton9" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton10" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton11" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton12" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton13" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton14" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton15" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton16" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton17" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton18" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton19" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
+
+[node name="LoadLevelButton20" parent="GridContainer" instance=ExtResource("3_y3ihs")]
+layout_mode = 2
