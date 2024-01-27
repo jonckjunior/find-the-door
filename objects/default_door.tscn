@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://blnfjatdvt2mg"]
+
+[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="1_7tkrd"]
+[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="2_f2xgh"]
+[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="3_re1of"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
+size = Vector2(14, 15)
+
+[node name="DefaultDoor" type="Area2D" node_paths=PackedStringArray("upKeyButton")]
+position = Vector2(376, -87)
+collision_layer = 0
+script = ExtResource("1_7tkrd")
+upKeyButton = NodePath("UpKey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_rw520")
+
+[node name="UpKey" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -22)
+texture = ExtResource("2_f2xgh")
+
+[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_re1of")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

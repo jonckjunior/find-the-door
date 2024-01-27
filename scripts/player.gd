@@ -59,6 +59,7 @@ func _ready():
 	wallSlideUnlocked = get_node("/root/GameVariables").wallSlideUnlocked
 	wallJumpUnlocked = get_node("/root/GameVariables").wallJumpUnlocked
 	isJumpUnlocked = get_node("/root/GameVariables").isJumpUnlocked
+	canPlayerMove = get_node("/root/GameVariables").canPlayerMove
 
 func _physics_process(delta):
 	if isDying:
@@ -214,10 +215,6 @@ func environmental_death() -> void:
 	if global_position.y > 1000.0:
 		get_tree().reload_current_scene()
 
-#1-> DASH + TRAMPOLIN -> 300, 800, 800, 800, 700, 600, 500, 400, 300, 200, 100
-#2-> TRAMPOLIN + DASH -> 500, 400, 300, 200, 100, 0, 300, 300, 300, 200, 100
-
-
 func refresh_variables(delta) -> void:
 	dashCooldown = max(dashCooldown-delta, 0.0)
 	jumpCooldown = max(jumpCooldown-delta, 0.0)
@@ -311,7 +308,6 @@ func get_input_axis(first, second):
 func die():
 	if isDying:
 		return
-	get_node("/root/GameManager").increment_death()
 	velocity = Vector2(0, 0)
 	player_death.emit()
 	$DeathSound.play()

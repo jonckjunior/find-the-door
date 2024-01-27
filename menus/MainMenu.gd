@@ -1,14 +1,13 @@
 extends Control
 
-@onready var effects = get_node("/root/MainMenuEffects")
+@onready var gameManager = get_node("/root/GameManager")
 @onready var loadedLevelChooser = preload("res://menus/LevelChooser.tscn")
 @export var playButton: Button
 @export var optionsButton: Button
 @export var quitButton: Button
 
 func _ready():
-	effects.activate()
-	effects.isFadingIn = true
+	gameManager.isFadingInMainMenu = true
 	modulate.a = 0.0
 	get_tree().create_tween().tween_property(self, "modulate:a", 1.0, 1.0)
 	
@@ -19,7 +18,7 @@ func _ready():
 	playButton.grab_focus()
 
 func playButtonPressed():
-	await effects.transition(self, loadedLevelChooser)
+	await gameManager.transition_main_menu(self, loadedLevelChooser)
 
 func optionsButtonPressed():
 	pass

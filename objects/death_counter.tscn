@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://da5tk0xx2q1h"]
+
+[ext_resource type="FontFile" uid="uid://ckfamtjxtth0y" path="res://fonts/Poco.ttf" id="1_ea5s8"]
+[ext_resource type="Script" path="res://scripts/DeathCounter.gd" id="2_u2wcb"]
+
+[node name="DeathCounter" type="RichTextLabel"]
+texture_filter = 1
+offset_right = 100.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("1_ea5s8")
+text = "23"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("2_u2wcb")

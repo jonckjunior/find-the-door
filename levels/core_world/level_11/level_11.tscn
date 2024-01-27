@@ -67,9 +67,11 @@ size = Vector2(6, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vfssq"]
 size = Vector2(32, 6)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_ok7yf")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="core_world_11" parent="." instance=ExtResource("2_rrlod")]
 position = Vector2(-2, -4)
@@ -218,7 +220,6 @@ visible = false
 [connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
 [connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]

@@ -20,7 +20,7 @@ func _input(event):
 				player_passed_level.emit()
 				alreadyEmitted = true
 		else:
-			get_parent().get_node("DefaultPlayerKiller").kill_player.emit()
+			get_parent().get_node("Player").die()
 
 func _process(delta):
 	if activated:

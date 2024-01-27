@@ -1,19 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2gapovjcef2x"]
+[gd_scene load_steps=13 format=3 uid="uid://d2gapovjcef2x"]
 
 [ext_resource type="Shader" path="res://shaders/screen_transition_shader.gdshader" id="1_1c5gf"]
 [ext_resource type="Script" path="res://globals/GameManager.gd" id="1_lv232"]
+[ext_resource type="PackedScene" uid="uid://da5tk0xx2q1h" path="res://objects/death_counter.tscn" id="2_behc0"]
 [ext_resource type="Texture2D" uid="uid://dpaio85da7f8w" path="res://sprites/black_square.png" id="2_hhgas"]
+[ext_resource type="PackedScene" uid="uid://cfixdoyiqony5" path="res://objects/run_timer.tscn" id="3_2yv52"]
+[ext_resource type="Texture2D" uid="uid://x4tynwqe2o2h" path="res://sprites/tile_0383.png" id="4_6y1wg"]
+[ext_resource type="PackedScene" uid="uid://uopok6xy78wv" path="res://objects/tv_texture.tscn" id="4_pmv11"]
 [ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="5_khh07"]
+[ext_resource type="Texture2D" uid="uid://l5cwm04w3mq2" path="res://sprites/character_pixelated.png" id="6_0a5tx"]
+[ext_resource type="PackedScene" uid="uid://bsmgaik8axf6j" path="res://menus/pause_menu.tscn" id="7_h8ffa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lnf23"]
 shader = ExtResource("1_1c5gf")
 shader_parameter/progress = 0.0
 shader_parameter/diamondPixelSize = 50.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aqwn8"]
-shader = ExtResource("1_1c5gf")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 10.0
 
 [sub_resource type="Environment" id="Environment_4h2fk"]
 background_mode = 3
@@ -24,8 +25,44 @@ layer = 2
 script = ExtResource("1_lv232")
 textureRect = NodePath("LevelTransition")
 
+[node name="UI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 7.0
+offset_top = -9.0
+offset_right = 7.0
+offset_bottom = -9.0
+
+[node name="DeathCounter" parent="UI" instance=ExtResource("2_behc0")]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 20.0
+offset_right = 378.0
+offset_bottom = 60.0
+
+[node name="RunTimer" parent="UI" instance=ExtResource("3_2yv52")]
+layout_mode = 0
+offset_left = 259.0
+offset_top = 11.0
+offset_right = 351.0
+offset_bottom = 51.0
+
+[node name="Death" type="Sprite2D" parent="UI"]
+texture_filter = 1
+position = Vector2(266, 27)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_6y1wg")
+
+[node name="CharacterTransition" type="Sprite2D" parent="UI"]
+z_index = 5
+texture_filter = 1
+position = Vector2(-60, 4)
+texture = ExtResource("6_0a5tx")
+
+[node name="ColorRect" parent="." instance=ExtResource("4_pmv11")]
+
 [node name="LevelTransition" type="TextureRect" parent="."]
-z_index = 2
 texture_filter = 1
 material = SubResource("ShaderMaterial_lnf23")
 anchors_preset = 15
@@ -35,15 +72,11 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_hhgas")
 
-[node name="PanelChat" type="Sprite2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_aqwn8")
-position = Vector2(161, 93)
-scale = Vector2(20.875, 12.0625)
-texture = ExtResource("2_hhgas")
-
 [node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_khh07")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4h2fk")
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_h8ffa")]
+visible = false

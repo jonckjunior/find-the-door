@@ -83,9 +83,11 @@ shader_parameter/base_rain_speed = 0.1
 shader_parameter/additional_rain_speed = 0.271
 shader_parameter/slant = 0.0750001
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_h3n65")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="core_world_12" parent="." instance=ExtResource("2_fmpa0")]
 position = Vector2(-2, -4)
@@ -125,6 +127,7 @@ script = ExtResource("8_ogcpu")
 metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
+visible = false
 position = Vector2(37, 169)
 energy = 0.6
 texture = ExtResource("9_agiit")
@@ -219,6 +222,7 @@ position = Vector2(160, -88)
 position = Vector2(136, -328)
 
 [node name="DefaultCanvasModulate" parent="." instance=ExtResource("13_dlfwh")]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_3g7o0")

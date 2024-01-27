@@ -4447,9 +4447,11 @@ size = Vector2(7, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lun1k"]
 size = Vector2(32, 6)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_w1pc1")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="Map" type="StaticBody2D" parent="."]
 position = Vector2(16, 16)
@@ -4513,7 +4515,7 @@ script = ExtResource("10_tj6qc")
 target = NodePath("../Player")
 
 [node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(159, 162)
+position = Vector2(166, 114)
 limit_left = -8
 limit_top = -8
 limit_right = 392

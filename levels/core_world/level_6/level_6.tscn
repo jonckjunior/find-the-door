@@ -34,9 +34,11 @@ size = Vector2(16, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7s0e"]
 size = Vector2(329, 6)
 
-[node name="Level6" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="Level6" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_s07oq")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="core_world_6" parent="." instance=ExtResource("2_jb8q8")]
 position = Vector2(-2, -4)

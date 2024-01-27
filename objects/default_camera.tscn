@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://y5gtme1q2f3s"]
+
+[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="1_wtuvo"]
+
+[node name="DefaultCamera" type="Camera2D" node_paths=PackedStringArray("target")]
+position = Vector2(159, 162)
+limit_smoothed = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+script = ExtResource("1_wtuvo")
+target = NodePath("")

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj0dbp71w5lv3"]
+
+[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="1_cmpml"]
+[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="2_woklt"]
+
+[node name="DefaultPointLight" type="PointLight2D" node_paths=PackedStringArray("target")]
+position = Vector2(37, 169)
+energy = 0.6
+texture = ExtResource("1_cmpml")
+script = ExtResource("2_woklt")
+target = NodePath("")

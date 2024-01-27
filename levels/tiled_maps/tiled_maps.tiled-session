@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "automapping.whileDrawing": false,
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "map_0.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 191,
+                "y": -129
+            }
+        },
+        "map_2.tmx": {
+            "scale": 3,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 56.16666666666666,
+                "y": -111.83333333333331
+            }
+        },
+        "map_3.tmx": {
+            "expandedObjectLayers": [
+                3,
+                5,
+                4
+            ],
+            "scale": 2,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 295.75,
+                "y": -106.25
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/jonck/scribble_2d/levels/tiled_maps",
+    "last.imagePath": "/Users/jonck/Downloads/kenney_1-bit-platformer-pack/Tilemap",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+    ],
+    "project": "tiled_maps.tiled-project",
+    "recentFiles": [
+        "map_2.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwrmxvpg4ss0w"]
+
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_abfxo"]
+[ext_resource type="PackedScene" uid="uid://06vj8rkbhpm1" path="res://levels/default_map.tmx" id="2_r1apu"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_rhldk"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_xy8al"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_05d51"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_57jox"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_qwcq1"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_7am86"]
+[ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="9_n7sw8"]
+
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+script = ExtResource("1_abfxo")
+player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
+
+[node name="map" parent="." instance=ExtResource("2_r1apu")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_rhldk")]
+position = Vector2(126, -51)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+
+[node name="DefaultDoor" parent="." node_paths=PackedStringArray("upKeyButton") instance=ExtResource("4_xy8al")]
+upKeyButton = NodePath("../Player/CharacterHorns")
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_05d51")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
+metadata/_edit_use_anchors_ = true
+
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_57jox")]
+target = NodePath("../Player")
+
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_qwcq1")]
+target = NodePath("../Player")
+
+[node name="Lighting" parent="." instance=ExtResource("8_7am86")]
+
+[node name="FallingPlatform" parent="." instance=ExtResource("9_n7sw8")]
+position = Vector2(209, 42)
+
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
+
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]

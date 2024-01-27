@@ -4425,9 +4425,11 @@ glow_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
 size = Vector2(14, 15)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_golbx")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="Map" type="StaticBody2D" parent="."]
 position = Vector2(16, 16)

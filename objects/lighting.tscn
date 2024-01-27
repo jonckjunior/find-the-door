@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu2i73duk0osy"]
+
+[sub_resource type="Environment" id="Environment_jncfl"]
+background_mode = 3
+glow_enabled = true
+
+[node name="Lighting" type="Node2D"]
+
+[node name="DefaultCanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.0846899, 0.0846899, 0.0846899, 1)
+
+[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jncfl")

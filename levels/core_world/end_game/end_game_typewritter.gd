@@ -33,8 +33,7 @@ func reset():
 	$Timer.start()
 
 func get_time():
-	var effects = get_node("/root/MainMenuEffects").get_timer()
-	var totalSeconds = int(effects)
+	var totalSeconds = int((get_node("/root/GameManager") as GameManagerClass).runTime)
 	var seconds = totalSeconds % 60
 	var minutes = (totalSeconds / 60) % 60
 	var hours = (totalSeconds / 3600) % 24

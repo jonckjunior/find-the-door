@@ -4440,9 +4440,11 @@ size = Vector2(46, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y83lk"]
 size = Vector2(6, 126)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_mwo5g")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="Map" type="StaticBody2D" parent="."]
 position = Vector2(16, 16)

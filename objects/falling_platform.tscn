@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://1qqgor4t7hgt"]
+
+[ext_resource type="Texture2D" uid="uid://b8uaeo0ipxw6v" path="res://sprites/tile_0083.png" id="1_b5pyo"]
+[ext_resource type="Script" path="res://scripts/falling_platform.gd" id="1_tsexw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4da05"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onifh"]
+size = Vector2(14, 4)
+
+[node name="FallingPlatform" type="Node2D"]
+script = ExtResource("1_tsexw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_b5pyo")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D" groups=["map"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D" groups=["map"]]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_4da05")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_onifh")
+
+[connection signal="body_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_body_entered"]

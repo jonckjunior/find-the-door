@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cej0nulyg8fvv"]
+
+[ext_resource type="Texture2D" uid="uid://l5cwm04w3mq2" path="res://sprites/character_pixelated.png" id="1_k8lct"]
+[ext_resource type="Script" path="res://test/test_tweener.gd" id="2_xugjx"]
+
+[node name="TestTweener" type="Node2D"]
+
+[node name="CharacterPixelated" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(176, 48)
+texture = ExtResource("1_k8lct")
+script = ExtResource("2_xugjx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 91)

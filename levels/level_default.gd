@@ -4,24 +4,31 @@ extends Node2D
 @export var camera: Camera2D
 @export var typewritter: RichTextLabel
 @export var respawnPosition: Vector2
+@onready var gameManager: GameManagerClass = get_node("/root/GameManager")
 
 func _ready():
 	respawnPosition = player.global_position
 	configure_player_killer()
 	configure_camera()
 	configure_map()
+	camera.global_position = player.global_position
+
+func _process(_delta):
+	await get_tree().process_frame
+	gameManager.new_scene_loaded.emit()
+	
 
 func fade_out_player_death():
-	get_node("/root/GameManager").fade_out()
-	get_node("/root/GameManager").increment_death()
+	gameManager.fade_out()
+	gameManager.increment_death()
 
 func fade_in_player_respawn():
-	get_node("/root/GameManager").fade_in()
+	gameManager.fade_in()
 
 func _on_default_door_player_passed_level():
 	player.take_controllers_away()
 	player.process_mode = Node.PROCESS_MODE_DISABLED
-	get_node("/root/GameManager").load_next_level(get_tree().current_scene.scene_file_path)
+	gameManager.load_next_level(get_tree().current_scene.scene_file_path)
 
 func _on_player_player_death():
 	fade_out_player_death()

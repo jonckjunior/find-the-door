@@ -28,9 +28,11 @@ size = Vector2(64, 9)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80w7u"]
 size = Vector2(60, 211)
 
-[node name="Level4" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="Level4" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_c7wrt")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="core_world_4" parent="." instance=ExtResource("2_k4mtp")]
 position = Vector2(-2, -4)
@@ -78,7 +80,7 @@ script = ExtResource("10_78u3a")
 target = NodePath("../Player")
 
 [node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(159, 162)
+position = Vector2(57, -90)
 limit_left = 23
 limit_top = -297
 limit_right = 504
@@ -127,7 +129,6 @@ shape = SubResource("RectangleShape2D_80w7u")
 [connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultDoor" method="_on_default_player_killer_body_entered"]
 [connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="kill_player" from="DefaultPlayerKiller" to="DefaultGameMaster" method="_on_default_player_killer_kill_player"]
 [connection signal="body_entered" from="TextTrigger" to="DefaultDoor" method="_on_text_trigger_body_entered"]
 [connection signal="body_entered" from="TextTrigger" to="DefaultTypeWritter" method="_on_text_trigger_body_entered"]
 

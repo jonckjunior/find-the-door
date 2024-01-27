@@ -20,11 +20,10 @@ func _on_focus_exited():
 	$RichTextLabel.text = baseText
 
 func _on_pressed():
-	var effects = get_node("/root/MainMenuEffects")
-	if effects.isFadingIn || effects.isFadingOut: return
 	var gameManager = get_node("/root/GameManager")
+	if gameManager.isFadingInMainMenu || gameManager.isFadingOutMainMenu: return
 	var lodadedLevel = load(levelToLoad)
-	await effects.transition(get_parent(), lodadedLevel)
+	await gameManager.transition_main_menu(get_parent(), lodadedLevel)
 
 func refresh():
 	_ready()

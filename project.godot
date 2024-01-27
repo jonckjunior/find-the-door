@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 GameVariables="*res://globals/game_variables.gd"
 GameManager="*res://globals/GameManager.tscn"
-MainMenuEffects="*res://menus/MainMenuEffects.tscn"
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 [display]
 
@@ -34,7 +34,7 @@ project/assembly_name="scribble_2d"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/camera_2d_plus/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/camera_2d_plus/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
 
 [input]
 

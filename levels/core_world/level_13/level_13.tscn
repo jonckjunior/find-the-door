@@ -1,6 +1,6 @@
-[gd_scene load_steps=37 format=3 uid="uid://c0hpxcf0x7hwx"]
+[gd_scene load_steps=38 format=3 uid="uid://c0hpxcf0x7hwx"]
 
-[ext_resource type="Script" path="res://levels/core_world/level_13/level_13.gd" id="1_lflx5"]
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_4ykuy"]
 [ext_resource type="PackedScene" uid="uid://cuty6ykwryfnt" path="res://levels/core_world/level_13/core_world_13.tscn" id="2_auxum"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_l11f2"]
 [ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_k4tus"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ciunxr7ibknxi" path="res://sprites/blank_square.png" id="16_86y6l"]
 [ext_resource type="AudioStream" uid="uid://cdgmks1v18afy" path="res://audios/WE Heavy Outside Rain 1.wav" id="17_memiw"]
 [ext_resource type="Script" path="res://levels/core_world/level_13/AudioStreamPlayer2D.gd" id="18_kp5qm"]
+[ext_resource type="Script" path="res://levels/core_world/level_13/rain_control.gd" id="20_581su"]
 
 [sub_resource type="Environment" id="Environment_jncfl"]
 background_mode = 3
@@ -83,15 +84,17 @@ shader_parameter/base_rain_speed = 0.128
 shader_parameter/additional_rain_speed = 0.279
 shader_parameter/slant = 0.698
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player")]
-script = ExtResource("1_lflx5")
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+script = ExtResource("1_4ykuy")
 player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
 
 [node name="core_world_13" parent="." instance=ExtResource("2_auxum")]
 position = Vector2(-2, -4)
 
 [node name="Player" parent="." instance=ExtResource("4_l11f2")]
-position = Vector2(151, -120)
+position = Vector2(252, -347)
 
 [node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jncfl")
@@ -223,6 +226,7 @@ position = Vector2(64, -349)
 position = Vector2(80, -474)
 
 [node name="DefaultCanvasModulate" parent="." instance=ExtResource("14_0mmag")]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -238,6 +242,10 @@ texture = ExtResource("16_86y6l")
 stream = ExtResource("17_memiw")
 volume_db = -57.633
 script = ExtResource("18_kp5qm")
+
+[node name="rain_control" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("20_581su")
+player = NodePath("../Player")
 
 [connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
