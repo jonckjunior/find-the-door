@@ -9,7 +9,7 @@ size = Vector2(16, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onifh"]
 size = Vector2(14, 4)
 
-[node name="FallingPlatform" type="Node2D"]
+[node name="FallingPlatform" type="Node2D" groups=["reset"]]
 script = ExtResource("1_tsexw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

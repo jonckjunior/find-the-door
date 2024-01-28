@@ -22,8 +22,7 @@ position = Vector2(126, -51)
 collision_layer = 1
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
-[node name="DefaultDoor" parent="." node_paths=PackedStringArray("upKeyButton") instance=ExtResource("4_04k3a")]
-upKeyButton = NodePath("../Player/CharacterHorns")
+[node name="DefaultDoor" parent="." instance=ExtResource("4_04k3a")]
 
 [node name="DefaultTypeWritter" parent="." instance=ExtResource("9_5l4xf")]
 offset_left = 19.0

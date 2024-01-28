@@ -1,159 +1,68 @@
-[gd_scene load_steps=21 format=3 uid="uid://capufe3st0suc"]
+[gd_scene load_steps=10 format=3 uid="uid://dwkh60k1tou7n"]
 
-[ext_resource type="Script" path="res://levels/level_default.gd" id="1_s07oq"]
-[ext_resource type="PackedScene" uid="uid://7p38evw4kd23" path="res://levels/core_world/level_6/core_world_6.tscn" id="2_jb8q8"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_qlqut"]
-[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_hpy35"]
-[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="6_5655s"]
-[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="7_8c7mf"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_xlt68"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="9_0dqq6"]
-[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="10_xxpu8"]
-[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="11_aj7mn"]
-[ext_resource type="Script" path="res://levels/GameMaster.gd" id="12_pwn4d"]
-[ext_resource type="PackedScene" uid="uid://bqv4n667puqw5" path="res://objects/triggered_typewritter.tscn" id="13_5g6yb"]
-[ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="13_741mp"]
-[ext_resource type="PackedScene" uid="uid://duhvgqvvjtuuo" path="res://objects/default_canvas_modulate.tscn" id="14_2e61n"]
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_3xiad"]
+[ext_resource type="PackedScene" uid="uid://6ivsgn5rj5r4" path="res://levels/core_world/level_6/map_6.tscn" id="2_jer4y"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_b0rsq"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_euylm"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_qxu4a"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_5aux3"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_p2d1m"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_5yevl"]
+[ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="9_1rgso"]
 
-[sub_resource type="Environment" id="Environment_jncfl"]
-background_mode = 3
-glow_enabled = true
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
-size = Vector2(14, 15)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6suf"]
-size = Vector2(32, 10)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfhah"]
-size = Vector2(32, 5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k0kyj"]
-size = Vector2(16, 6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7s0e"]
-size = Vector2(329, 6)
-
-[node name="Level6" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
-script = ExtResource("1_s07oq")
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+script = ExtResource("1_3xiad")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 typewritter = NodePath("DefaultTypeWritter")
 
-[node name="core_world_6" parent="." instance=ExtResource("2_jb8q8")]
-position = Vector2(-2, -4)
+[node name="map" parent="." instance=ExtResource("2_jer4y")]
 
-[node name="Player" parent="." instance=ExtResource("4_qlqut")]
-position = Vector2(56, -88)
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_b0rsq")]
+position = Vector2(424, -8)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
-[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_jncfl")
+[node name="DefaultDoor" parent="." instance=ExtResource("4_euylm")]
+position = Vector2(424, -280)
 
-[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
-position = Vector2(424, -296)
-collision_layer = 32768
-collision_mask = 2
-script = ExtResource("5_hpy35")
-upKeyButton = NodePath("UpKey")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_rw520")
-
-[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
-texture_filter = 1
-position = Vector2(0, -22)
-texture = ExtResource("6_5655s")
-
-[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
-stream = ExtResource("7_8c7mf")
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("8_xlt68")]
-offset_left = 106.0
-offset_top = -165.0
-offset_right = 343.0
-offset_bottom = -125.0
-text = "PRESS Z TO DASH"
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_qxu4a")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
 metadata/_edit_use_anchors_ = true
 
-[node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(37, 169)
-energy = 0.6
-texture = ExtResource("9_0dqq6")
-script = ExtResource("10_xxpu8")
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_5aux3")]
 target = NodePath("../Player")
 
-[node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(159, 162)
-limit_left = 23
-limit_top = -377
-limit_right = 585
-limit_bottom = -32
-limit_smoothed = true
-position_smoothing_speed = 10.0
-editor_draw_limits = true
-script = ExtResource("11_aj7mn")
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_p2d1m")]
 target = NodePath("../Player")
 
-[node name="DefaultGameMaster" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player", "typewritter")]
-script = ExtResource("12_pwn4d")
-camera = NodePath("../DefaultCamera")
-player = NodePath("../Player")
-typewritter = NodePath("../DefaultTypeWritter")
-respawnPosition = Vector2(23, 168)
+[node name="Lighting" parent="." instance=ExtResource("8_5yevl")]
 
-[node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
+[node name="FallingPlatform" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(208, -160)
 
-[node name="DefaultPlayerKiller" type="Area2D" parent="."]
-collision_mask = 2
-script = ExtResource("13_741mp")
+[node name="FallingPlatform2" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(208, -16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(320, -96)
-shape = SubResource("RectangleShape2D_q6suf")
+[node name="FallingPlatform3" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(16, -16)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(400, -162.5)
-shape = SubResource("RectangleShape2D_pfhah")
+[node name="FallingPlatform4" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(-16, -96)
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(400, -290)
-shape = SubResource("RectangleShape2D_pfhah")
+[node name="FallingPlatform5" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(0, -160)
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(312, -227)
-shape = SubResource("RectangleShape2D_k0kyj")
+[node name="FallingPlatform6" parent="." instance=ExtResource("9_1rgso")]
+position = Vector2(384, -160)
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(344, -227)
-shape = SubResource("RectangleShape2D_k0kyj")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(420.5, -35)
-shape = SubResource("RectangleShape2D_j7s0e")
-
-[node name="TriggeredTypewritter" parent="." instance=ExtResource("13_5g6yb")]
-offset_left = 360.0
-offset_top = -101.0
-offset_right = 597.0
-offset_bottom = -61.0
-text = "YOU CAN DASH UP TOO"
-
-[node name="CollisionShape2D" parent="TriggeredTypewritter/Area2D" index="0"]
-position = Vector2(-8.5, -34)
-
-[node name="DefaultCanvasModulate" parent="." instance=ExtResource("14_2e61n")]
-
-[connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
-[connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
-[connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
-[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
-[connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
-[connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
-[connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
-[connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
 
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]
-[editable path="TriggeredTypewritter"]

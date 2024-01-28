@@ -17,24 +17,52 @@
             }
         },
         "map_2.tmx": {
-            "scale": 3,
-            "selectedLayer": 4,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 56.16666666666666,
-                "y": -111.83333333333331
+                "x": 202.33333333333331,
+                "y": -90.33333333333331
             }
         },
         "map_3.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 202.5,
+                "y": 6.5
+            }
+        },
+        "map_4.tmx": {
+            "expandedObjectLayers": [
+                5,
+                4
+            ],
+            "scale": 1.5,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 248.33333333333331,
+                "y": -72.33333333333331
+            }
+        },
+        "map_6.tmx": {
+            "scale": 1.0118489583333334,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 187.28091622699785,
+                "y": -83.5104877107193
+            }
+        },
+        "map_7.tmx": {
             "expandedObjectLayers": [
                 3,
                 5,
                 4
             ],
-            "scale": 2,
-            "selectedLayer": 4,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 295.75,
-                "y": -106.25
+                "x": 213.5,
+                "y": -109.5
             }
         }
     },
@@ -49,6 +77,8 @@
     ],
     "project": "tiled_maps.tiled-project",
     "recentFiles": [
+        "map_6.tmx",
+        "map_3.tmx",
         "map_2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",

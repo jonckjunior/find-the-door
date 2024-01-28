@@ -6,12 +6,18 @@ extends Node2D
 @export var respawnPosition: Vector2
 @onready var gameManager: GameManagerClass = get_node("/root/GameManager")
 
+var platformsToReset : Dictionary = {}
+
 func _ready():
 	respawnPosition = player.global_position
 	configure_player_killer()
 	configure_camera()
 	configure_map()
 	camera.global_position = player.global_position
+	
+	var nodesToReset = get_tree().get_nodes_in_group("reset")
+	for node in nodesToReset:
+		platformsToReset[node] = node.global_position
 
 func _process(_delta):
 	await get_tree().process_frame
@@ -34,6 +40,7 @@ func _on_player_player_death():
 	fade_out_player_death()
 	camera.death_shake()
 	await get_tree().create_timer(0.5).timeout
+	reset_platforms()
 	respawn_player()
 
 func respawn_player():
@@ -92,3 +99,8 @@ func configure_camera():
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player") and not body.isDying:
 		body.die()
+
+func reset_platforms():
+	for node in platformsToReset:
+		node.global_position = platformsToReset[node]
+		node.reset()

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://jt3ksqwwfcob"]
+
+[ext_resource type="PackedScene" uid="uid://btq2p6wntgov" path="res://levels/tiled_maps/map_4.tmx" id="1_lqcto"]
+
+[node name="map_4" instance=ExtResource("1_lqcto")]

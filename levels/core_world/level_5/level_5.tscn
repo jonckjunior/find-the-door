@@ -1,133 +1,50 @@
-[gd_scene load_steps=19 format=3 uid="uid://bmod1ll8628o2"]
+[gd_scene load_steps=9 format=3 uid="uid://rhed1uaq33v0"]
 
-[ext_resource type="Script" path="res://levels/level_default.gd" id="1_v6ocf"]
-[ext_resource type="PackedScene" uid="uid://r5kovi3vifgc" path="res://levels/core_world/level_5/core_world_5.tscn" id="2_prxlo"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="4_ov321"]
-[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="5_yixxr"]
-[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="6_dduj2"]
-[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="7_dp3pm"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_pia7c"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="9_au183"]
-[ext_resource type="Script" path="res://levels/core_world/level_5/typewritter5.gd" id="9_bhcvk"]
-[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="10_u6t28"]
-[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="11_lelcj"]
-[ext_resource type="Script" path="res://levels/GameMaster.gd" id="12_gub3j"]
-[ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="13_2wulo"]
-[ext_resource type="PackedScene" uid="uid://duhvgqvvjtuuo" path="res://objects/default_canvas_modulate.tscn" id="14_f0ttk"]
-
-[sub_resource type="Environment" id="Environment_jncfl"]
-background_mode = 3
-glow_enabled = true
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
-size = Vector2(14, 15)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gswb2"]
-size = Vector2(129, 6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pj2m3"]
-size = Vector2(123, 107)
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_f4kcv"]
+[ext_resource type="PackedScene" uid="uid://oexrugtybupk" path="res://levels/core_world/level_5/map_5.tscn" id="2_wkc0j"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_y4tyr"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_jowyu"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_m3v6q"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_qe3je"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_rrjkn"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_iar8q"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
-script = ExtResource("1_v6ocf")
+script = ExtResource("1_f4kcv")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 typewritter = NodePath("DefaultTypeWritter")
 
-[node name="core_world_5" parent="." instance=ExtResource("2_prxlo")]
-position = Vector2(-2, -4)
+[node name="map" parent="." instance=ExtResource("2_wkc0j")]
 
-[node name="Player" parent="." instance=ExtResource("4_ov321")]
-position = Vector2(56, -88)
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_y4tyr")]
+position = Vector2(8, -40)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
-[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_jncfl")
+[node name="DefaultDoor" parent="." instance=ExtResource("4_jowyu")]
+position = Vector2(232, -216)
 
-[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
-position = Vector2(472, -88)
-collision_layer = 32768
-collision_mask = 2
-script = ExtResource("5_yixxr")
-upKeyButton = NodePath("UpKey")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_rw520")
-
-[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
-texture_filter = 1
-position = Vector2(0, -22)
-texture = ExtResource("6_dduj2")
-
-[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
-stream = ExtResource("7_dp3pm")
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("8_pia7c")]
-offset_left = 185.0
-offset_top = -151.0
-offset_right = 422.0
-offset_bottom = -111.0
-text = " "
-script = ExtResource("9_bhcvk")
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_m3v6q")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
 metadata/_edit_use_anchors_ = true
 
-[node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(37, 169)
-energy = 0.6
-texture = ExtResource("9_au183")
-script = ExtResource("10_u6t28")
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_qe3je")]
 target = NodePath("../Player")
 
-[node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(159, 162)
-limit_left = 24
-limit_top = -297
-limit_right = 504
-limit_bottom = -32
-limit_smoothed = true
-position_smoothing_speed = 10.0
-editor_draw_limits = true
-script = ExtResource("11_lelcj")
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_rrjkn")]
+position = Vector2(118, -98)
 target = NodePath("../Player")
 
-[node name="DefaultGameMaster" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player", "typewritter")]
-script = ExtResource("12_gub3j")
-camera = NodePath("../DefaultCamera")
-player = NodePath("../Player")
-typewritter = NodePath("../DefaultTypeWritter")
-respawnPosition = Vector2(23, 168)
+[node name="Lighting" parent="." instance=ExtResource("8_iar8q")]
 
-[node name="RespawnTimer" type="Timer" parent="DefaultGameMaster"]
-
-[node name="DefaultPlayerKiller" type="Area2D" parent="."]
-collision_mask = 2
-script = ExtResource("13_2wulo")
-
-[node name="FirstSpike" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(312, -35)
-shape = SubResource("RectangleShape2D_gswb2")
-
-[node name="TriggerText" type="Area2D" parent="."]
-position = Vector2(144, -216)
-collision_layer = 32768
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerText"]
-position = Vector2(235.5, 147.5)
-shape = SubResource("RectangleShape2D_pj2m3")
-
-[node name="DefaultCanvasModulate" parent="." instance=ExtResource("14_f0ttk")]
-
-[connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
-[connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
-[connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
-[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
-[connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
-[connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
-[connection signal="timeout" from="DefaultGameMaster/RespawnTimer" to="DefaultGameMaster" method="_on_respawn_timer_timeout"]
-[connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
-[connection signal="body_entered" from="TriggerText" to="DefaultTypeWritter" method="_on_trigger_text_body_entered"]
 
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]
