@@ -7,6 +7,8 @@ extends Node2D
 @onready var gameManager: GameManagerClass = get_node("/root/GameManager")
 
 var platformsToReset : Dictionary = {}
+var cameraDict : Dictionary = {}
+var cameraActivated : bool = false
 
 func _ready():
 	respawnPosition = player.global_position
@@ -63,7 +65,7 @@ func configure_player_killer():
 func configure_map():
 	if not has_node("map"):
 		return
-	
+
 	for node in $map.get_children():
 		if node.name == "solid_objects":
 			for child in node.get_children():
@@ -73,28 +75,54 @@ func configure_camera():
 	if not has_node("map"):
 		return
 	
-	var rect = Rect2()
-	var foundCamera: bool = false
-	
 	for child in $map.get_children():
 		if child.name == "camera_limits":
-			foundCamera = true
-			var area = child.get_child(0)
-			assert(area is Area2D)
-			var collisionShape = area.get_child(0)
-			assert(collisionShape is CollisionShape2D)
-			
-			camera.global_position = area.global_position
-			var shape_extents = collisionShape.shape.extents
-			rect = Rect2(camera.global_position, shape_extents * 2)
+			for area2d in child.get_children():
+				assert(area2d is Area2D)
+				var metaList = area2d.get_meta_list()
+				if "is_camera_trigger" in metaList and "camera_number" in metaList:
+					var isCameraTrigger = area2d.get_meta("is_camera_trigger")
+					var cameraNumber = area2d.get_meta("camera_number")
+					if isCameraTrigger == "true":
+						(area2d as Area2D).body_entered.connect(change_camera_limits.bind(cameraNumber))
+					else:
+						cameraDict[cameraNumber] = area2d
+				else:
+					cameraDict["0"] = area2d
+					(area2d as Area2D).body_entered.connect(change_camera_limits.bind("0"))
 
-	if !foundCamera:
-		return
+	change_camera_limits(player, "0")
 
-	camera.limit_left = rect.position.x
-	camera.limit_top = rect.position.y
-	camera.limit_right = rect.end.x
-	camera.limit_bottom = rect.end.y
+func change_camera_limits(body, cameraNumber):
+	var area = cameraDict[cameraNumber]
+	if body.is_in_group("player"):
+		camera.global_position = area.global_position
+		var rect = Rect2()
+		var collisionShape = area.get_child(0)
+		assert(collisionShape is CollisionShape2D)
+		var shape_extents = collisionShape.shape.extents
+		rect = Rect2(camera.global_position, shape_extents * 2)
+		
+		camera.limit_left = rect.position.x
+		camera.limit_top = rect.position.y
+		camera.limit_right = rect.end.x
+		camera.limit_bottom = rect.end.y
+		#get_tree().create_tween().tween_property(camera, "limit_left", rect.position.x, 1).set_trans(Tween.TRANS_CIRC)
+		#get_tree().create_tween().tween_property(camera, "limit_top", rect.position.y, 1).set_trans(Tween.TRANS_CIRC)
+		#get_tree().create_tween().tween_property(camera, "limit_right", rect.end.x, 1).set_trans(Tween.TRANS_CIRC)
+		#get_tree().create_tween().tween_property(camera, "limit_bottom", rect.end.y, 1).set_trans(Tween.TRANS_CIRC)
+		
+		var rect_width = rect.end.x - rect.position.x
+		var rect_height = rect.end.y - rect.position.y
+		
+		var zoom_x = 320.0 / rect_width
+		var zoom_y = 180.0 / rect_height
+		
+		var zoom_factor = max(1.0, max(zoom_x, zoom_y))
+		camera.global_position = area.global_position
+		camera.zoom = Vector2(zoom_factor, zoom_factor)
+		#get_tree().create_tween().tween_property(camera, "zoom", Vector2(zoom_factor, zoom_factor), 0.5)
+		#cameraActivated = true
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player") and not body.isDying:

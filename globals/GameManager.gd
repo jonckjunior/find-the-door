@@ -92,13 +92,11 @@ func load_next_level(currentScene: String) -> void:
 	
 	await new_scene_loaded
 	
-	var instantiatedScene = get_tree().current_scene
-	#instantiatedScene.camera.global_position = instantiatedScene.player.global_position
-	print((instantiatedScene.camera as Camera2D).get_screen_center_position())
-	print(instantiatedScene.camera.global_position)
-	var playerPositionTo = instantiatedScene.player.global_position - (instantiatedScene.camera as Camera2D).get_screen_center_position() + screenDimension - Vector2(0, 0.5)
+	var newScene = get_tree().current_scene
+	
+	var playerPositionTo = newScene.player.global_position - (newScene.camera as Camera2D).get_screen_center_position() + screenDimension - Vector2(0, 0.5)
 
-	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", instantiatedScene.player.scale, 1.5).set_trans(Tween.TRANS_EXPO).finished
+	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", newScene.player.scale, 1.5).set_trans(Tween.TRANS_EXPO).finished
 	await get_tree().create_tween().tween_property($UI/CharacterTransition, "global_position", playerPositionTo, 1.5).set_trans(Tween.TRANS_EXPO).finished
 	
 	fade_in()

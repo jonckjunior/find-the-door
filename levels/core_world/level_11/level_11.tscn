@@ -1,225 +1,48 @@
-[gd_scene load_steps=32 format=3 uid="uid://d1iv3fncshwsk"]
+[gd_scene load_steps=9 format=3 uid="uid://6ywkw6teq7bu"]
 
-[ext_resource type="Script" path="res://levels/level_default.gd" id="1_ok7yf"]
-[ext_resource type="PackedScene" uid="uid://c88yaxptxynvl" path="res://levels/core_world/level_11/core_world_11.tscn" id="2_rrlod"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_kkb0b"]
-[ext_resource type="Script" path="res://scripts/DefaultDoor.gd" id="4_qdsfc"]
-[ext_resource type="Texture2D" uid="uid://d2pq1c2rdadj8" path="res://sprites/up_key.png" id="5_mjcng"]
-[ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="6_onblt"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_rhxa0"]
-[ext_resource type="Texture2D" uid="uid://krgf2u6gdhpc" path="res://sprites/2d_lights_and_shadows_neutral_point_light (1).webp" id="8_f43ow"]
-[ext_resource type="Script" path="res://levels/DefaultPointLightScript.gd" id="9_6yubf"]
-[ext_resource type="Script" path="res://scripts/DefaultCameraScript.gd" id="10_rmhvm"]
-[ext_resource type="PackedScene" uid="uid://c7tu33e7gtglw" path="res://objects/default_game_master.tscn" id="11_dkqde"]
-[ext_resource type="Script" path="res://levels/DefaultPlayerKiller.gd" id="12_t64se"]
-[ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="13_rvqsk"]
-[ext_resource type="PackedScene" uid="uid://duhvgqvvjtuuo" path="res://objects/default_canvas_modulate.tscn" id="14_xvnrn"]
-
-[sub_resource type="Environment" id="Environment_jncfl"]
-background_mode = 3
-glow_enabled = true
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw520"]
-size = Vector2(14, 15)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8epfe"]
-size = Vector2(148, 6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eu3rx"]
-size = Vector2(20, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qonpv"]
-size = Vector2(48, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjkup"]
-size = Vector2(20, 192)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywoko"]
-size = Vector2(96, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfn60"]
-size = Vector2(20, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybv6d"]
-size = Vector2(20, 256)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrljm"]
-size = Vector2(352, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4402b"]
-size = Vector2(7, 142.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bx4y"]
-size = Vector2(7, 95)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwcdb"]
-size = Vector2(9.5, 271)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pul7"]
-size = Vector2(129, 6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8oil"]
-size = Vector2(47, 7)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_75rjm"]
-size = Vector2(6, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vfssq"]
-size = Vector2(32, 6)
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_p8enj"]
+[ext_resource type="PackedScene" uid="uid://06vj8rkbhpm1" path="res://levels/default_map.tmx" id="2_x7ci8"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_6cpj7"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_f5ldk"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_fy6c6"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_nhn0m"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_q6x1k"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_5ogmm"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
-script = ExtResource("1_ok7yf")
+script = ExtResource("1_p8enj")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 typewritter = NodePath("DefaultTypeWritter")
 
-[node name="core_world_11" parent="." instance=ExtResource("2_rrlod")]
-position = Vector2(-2, -4)
+[node name="map" parent="." instance=ExtResource("2_x7ci8")]
 
-[node name="Player" parent="." instance=ExtResource("3_kkb0b")]
-position = Vector2(72, -88)
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_6cpj7")]
+position = Vector2(126, -51)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
-[node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_jncfl")
+[node name="DefaultDoor" parent="." instance=ExtResource("4_f5ldk")]
 
-[node name="DefaultDoor" type="Area2D" parent="." node_paths=PackedStringArray("upKeyButton")]
-position = Vector2(520, -328)
-collision_layer = 32768
-collision_mask = 2
-script = ExtResource("4_qdsfc")
-upKeyButton = NodePath("UpKey")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultDoor"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_rw520")
-
-[node name="UpKey" type="Sprite2D" parent="DefaultDoor"]
-texture_filter = 1
-position = Vector2(0, -22)
-texture = ExtResource("5_mjcng")
-
-[node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="DefaultDoor"]
-stream = ExtResource("6_onblt")
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("7_rhxa0")]
-offset_left = 56.0
-offset_top = -216.0
-offset_right = 336.0
-offset_bottom = -156.0
-text = "THIS ONE IS NOT HARD
-YOU JUST HAVE TO BE GOOD"
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_fy6c6")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
 metadata/_edit_use_anchors_ = true
 
-[node name="DefaultPointLight" type="PointLight2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(37, 169)
-energy = 0.6
-texture = ExtResource("8_f43ow")
-script = ExtResource("9_6yubf")
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_nhn0m")]
 target = NodePath("../Player")
 
-[node name="DefaultCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(159, 162)
-limit_left = 24
-limit_top = -360
-limit_right = 553
-limit_bottom = -32
-limit_smoothed = true
-position_smoothing_speed = 10.0
-editor_draw_limits = true
-script = ExtResource("10_rmhvm")
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_q6x1k")]
 target = NodePath("../Player")
 
-[node name="DefaultGameMaster" parent="." node_paths=PackedStringArray("camera", "player", "typewritter") instance=ExtResource("11_dkqde")]
-camera = NodePath("../DefaultCamera")
-player = NodePath("../Player")
-typewritter = NodePath("../DefaultTypeWritter")
+[node name="Lighting" parent="." instance=ExtResource("8_5ogmm")]
 
-[node name="DefaultPlayerKiller" type="Area2D" parent="."]
-position = Vector2(-16, -1)
-collision_mask = 2
-script = ExtResource("12_t64se")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(250, -82)
-shape = SubResource("RectangleShape2D_8epfe")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(324, -159)
-shape = SubResource("RectangleShape2D_eu3rx")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(344, -219)
-shape = SubResource("RectangleShape2D_qonpv")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(364, -127)
-shape = SubResource("RectangleShape2D_qjkup")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(224, -147)
-shape = SubResource("RectangleShape2D_ywoko")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(180, -167)
-shape = SubResource("RectangleShape2D_kfn60")
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(44, -207)
-shape = SubResource("RectangleShape2D_ybv6d")
-
-[node name="CollisionShape2D8" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(224, -354)
-shape = SubResource("RectangleShape2D_rrljm")
-
-[node name="CollisionShape2D9" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(274, -214.25)
-shape = SubResource("RectangleShape2D_4402b")
-
-[node name="CollisionShape2D10" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(413.5, -303.5)
-shape = SubResource("RectangleShape2D_6bx4y")
-
-[node name="CollisionShape2D11" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(510.25, -182.5)
-shape = SubResource("RectangleShape2D_hwcdb")
-
-[node name="CollisionShape2D12" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(448.5, -34)
-shape = SubResource("RectangleShape2D_7pul7")
-
-[node name="CollisionShape2D13" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(440.5, -252.5)
-shape = SubResource("RectangleShape2D_s8oil")
-
-[node name="CollisionShape2D14" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(467, -279)
-shape = SubResource("RectangleShape2D_75rjm")
-
-[node name="CollisionShape2D15" type="CollisionShape2D" parent="DefaultPlayerKiller"]
-position = Vector2(496, -348)
-shape = SubResource("RectangleShape2D_vfssq")
-
-[node name="Jumper" parent="." instance=ExtResource("13_rvqsk")]
-position = Vector2(280, -103)
-
-[node name="Jumper2" parent="." instance=ExtResource("13_rvqsk")]
-position = Vector2(424, -152)
-
-[node name="DefaultCanvasModulate" parent="." instance=ExtResource("14_xvnrn")]
-visible = false
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="DefaultCanvasModulate2" parent="." instance=ExtResource("14_xvnrn")]
-
-[connection signal="dash" from="Player" to="DefaultGameMaster" method="_on_player_dash"]
-[connection signal="player_death" from="Player" to="DefaultGameMaster" method="_on_player_player_death"]
-[connection signal="body_entered" from="DefaultDoor" to="DefaultDoor" method="_on_body_entered"]
-[connection signal="body_exited" from="DefaultDoor" to="DefaultDoor" method="_on_body_exited"]
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
-[connection signal="fade_in_player_respawn" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_in_player_respawn"]
-[connection signal="fade_out_player_death" from="DefaultGameMaster" to="." method="_on_default_game_master_fade_out_player_death"]
-[connection signal="body_entered" from="DefaultPlayerKiller" to="DefaultPlayerKiller" method="_on_body_entered"]
 
 [editable path="Player"]
 [editable path="DefaultTypeWritter"]

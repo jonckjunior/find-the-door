@@ -27,6 +27,7 @@ const ADJUST_HEAD_CORNER_LIMIT_DASH = 100
 const DEAD_INPUT_THRESHOLD = 0.05
 const BOOST_CORNER_ADJUSTMENT = 50
 const BASE_DASH_COOLDOWN = 1.0
+const MAX_FALL_SPEED = 300.0
 
 # PLAYER STATS
 var numberOfJumps = 1
@@ -401,8 +402,8 @@ func handle_dash_trail():
 		trailCooldown = 0.05
 
 func clamp_velocity():
-	velocity.y = min(velocity.y, 400)
-	velocity.y = max(velocity.y, -1000)
+	velocity.y = min(velocity.y, 250)
+	velocity.y = max(velocity.y, -400)
 
 func handle_dash_visual():
 	return

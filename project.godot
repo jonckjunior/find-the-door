@@ -32,6 +32,12 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="scribble_2d"
 
+[editor]
+
+movie_writer/movie_file="/Users/jonck/scribble_2d/movies/camera_transition.avi"
+movie_writer/disable_vsync=true
+movie_writer/fps=30
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/camera_2d_plus/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
