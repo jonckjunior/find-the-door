@@ -26,11 +26,12 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 position = Vector2(105, -120)
 
 [node name="DefaultTypeWritter" parent="." instance=ExtResource("8_le411")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
+offset_left = 158.0
+offset_top = -173.0
+offset_right = 395.0
+offset_bottom = -133.0
+text = "PRESS JUMP FACING OPPOSITE
+TO A WALL TO WALL JUMP"
 metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_ho04s")]

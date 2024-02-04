@@ -257,9 +257,24 @@
     <property name="type" value="area"/>
    </properties>
   </object>
-  <object id="111" x="-17" y="-11"/>
-  <object id="113" x="113" y="-182" width="14" height="6"/>
-  <object id="114" x="128" y="-127" width="6" height="14"/>
+  <object id="111" x="-17" y="-11">
+   <properties>
+    <property name="godot_node_type" value="area"/>
+    <property name="type" value="area"/>
+   </properties>
+  </object>
+  <object id="113" x="113" y="-182" width="14" height="6">
+   <properties>
+    <property name="godot_node_type" value="area"/>
+    <property name="type" value="area"/>
+   </properties>
+  </object>
+  <object id="114" x="128" y="-127" width="6" height="14">
+   <properties>
+    <property name="godot_node_type" value="area"/>
+    <property name="type" value="area"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="solid_objects">
   <object id="104" x="16" y="-160" width="48" height="48"/>

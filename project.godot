@@ -34,7 +34,8 @@ project/assembly_name="scribble_2d"
 
 [editor]
 
-movie_writer/movie_file="/Users/jonck/scribble_2d/movies/camera_transition.avi"
+movie_writer/mjpeg_quality=0.15
+movie_writer/movie_file="/Users/jonck/scribble_2d/video/video_francisation.avi"
 movie_writer/disable_vsync=true
 movie_writer/fps=30
 

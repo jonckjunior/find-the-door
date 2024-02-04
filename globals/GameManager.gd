@@ -91,6 +91,7 @@ func load_next_level(currentScene: String) -> void:
 	get_tree().change_scene_to_packed(nextScene)
 	
 	await new_scene_loaded
+	print("new scene loaded")
 	
 	var newScene = get_tree().current_scene
 	

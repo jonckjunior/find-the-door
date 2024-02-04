@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bma02ru1hoea8"]
+
+[ext_resource type="Texture2D" uid="uid://gelx2rdajgxq" path="res://sprites/rising_platform.png" id="1_fhfp2"]
+[ext_resource type="Script" path="res://scripts/rising_platform.gd" id="2_na443"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjr0t"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_liq8m"]
+size = Vector2(48.5, 48.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p6vtt"]
+size = Vector2(46, 1)
+
+[node name="RisingPlatform" type="Sprite2D" groups=["reset"]]
+texture_filter = 1
+texture = ExtResource("1_fhfp2")
+script = ExtResource("2_na443")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["map"]]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" groups=["map"]]
+shape = SubResource("RectangleShape2D_wjr0t")
+
+[node name="AreaPlayer" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaPlayer"]
+position = Vector2(0, -0.125)
+shape = SubResource("RectangleShape2D_liq8m")
+
+[node name="AreaStopper" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaStopper"]
+position = Vector2(0, -25.5)
+shape = SubResource("RectangleShape2D_p6vtt")

@@ -409,7 +409,12 @@
     <property name="type" value="area"/>
    </properties>
   </object>
-  <object id="211" x="225" y="-208" width="14" height="6"/>
+  <object id="211" x="225" y="-208" width="14" height="6">
+   <properties>
+    <property name="godot_node_type" value="area"/>
+    <property name="type" value="area"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="solid_objects">
   <object id="184" x="-48" y="-304" width="16" height="320"/>

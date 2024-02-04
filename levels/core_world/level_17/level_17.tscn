@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://cc0bc31k7ns5j"]
+
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_lac3j"]
+[ext_resource type="PackedScene" uid="uid://bj3ge05hfo73i" path="res://levels/core_world/level_17/map_17.tscn" id="2_oc1pk"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_8vff5"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_82yut"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_wv8sg"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_xiu0s"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_17psk"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_khjol"]
+[ext_resource type="PackedScene" uid="uid://bma02ru1hoea8" path="res://objects/rising_platform.tscn" id="9_17hx8"]
+[ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="10_d2ima"]
+
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+script = ExtResource("1_lac3j")
+player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
+
+[node name="map" parent="." instance=ExtResource("2_oc1pk")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_8vff5")]
+position = Vector2(273, -246)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+
+[node name="DefaultDoor" parent="." instance=ExtResource("4_82yut")]
+position = Vector2(408, 72)
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_wv8sg")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
+metadata/_edit_use_anchors_ = true
+
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_xiu0s")]
+target = NodePath("../Player")
+
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_17psk")]
+target = NodePath("../Player")
+
+[node name="Lighting" parent="." instance=ExtResource("8_khjol")]
+
+[node name="RisingPlatform" parent="." instance=ExtResource("9_17hx8")]
+position = Vector2(136, 104)
+
+[node name="RisingPlatform2" parent="." instance=ExtResource("9_17hx8")]
+position = Vector2(200, -192)
+
+[node name="RisingPlatform3" parent="." instance=ExtResource("9_17hx8")]
+position = Vector2(248, -192)
+
+[node name="RisingPlatform4" parent="." instance=ExtResource("9_17hx8")]
+position = Vector2(296, -192)
+
+[node name="RisingPlatform5" parent="." instance=ExtResource("9_17hx8")]
+position = Vector2(344, -192)
+
+[node name="Jumper" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(389, -160)
+
+[node name="Jumper2" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(427, -127)
+
+[node name="Jumper3" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(400, -90)
+
+[node name="Jumper4" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(428, -64)
+
+[node name="Jumper5" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(390, -34)
+
+[node name="Jumper6" parent="." instance=ExtResource("10_d2ima")]
+position = Vector2(418, -9)
+
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
+
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]

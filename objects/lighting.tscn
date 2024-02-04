@@ -5,9 +5,9 @@ background_mode = 3
 glow_enabled = true
 
 [node name="Lighting" type="Node2D"]
+visible = false
 
 [node name="DefaultCanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 
 [node name="DefaultWorldEnvironment" type="WorldEnvironment" parent="."]

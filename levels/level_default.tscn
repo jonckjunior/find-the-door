@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8ath536ftkim"]
+[gd_scene load_steps=11 format=3 uid="uid://8ath536ftkim"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_s0pax"]
 [ext_resource type="PackedScene" uid="uid://06vj8rkbhpm1" path="res://levels/default_map.tmx" id="2_k1gdg"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_lp6xi"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_nuj74"]
 [ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="9_5l4xf"]
+[ext_resource type="PackedScene" uid="uid://bma02ru1hoea8" path="res://objects/rising_platform.tscn" id="9_l260k"]
+[ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="10_4be6i"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="11_wtn7f"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
@@ -23,6 +25,7 @@ collision_layer = 1
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_04k3a")]
+position = Vector2(385, -78)
 
 [node name="DefaultTypeWritter" parent="." instance=ExtResource("9_5l4xf")]
 offset_left = 19.0
@@ -39,6 +42,12 @@ target = NodePath("../Player")
 target = NodePath("../Player")
 
 [node name="Lighting" parent="." instance=ExtResource("11_wtn7f")]
+
+[node name="RisingPlatform" parent="." instance=ExtResource("9_l260k")]
+position = Vector2(292, 12)
+
+[node name="FallingPlatform" parent="." instance=ExtResource("10_4be6i")]
+position = Vector2(199, -63)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

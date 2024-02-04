@@ -59,7 +59,7 @@ script = ExtResource("4_wsmsb")
 
 [node name="PlayerImpulse" type="Area2D" parent="."]
 collision_layer = 32768
-collision_mask = 2
+collision_mask = 3
 
 [node name="ColliderForPlayer" type="CollisionShape2D" parent="PlayerImpulse"]
 position = Vector2(0, 3)

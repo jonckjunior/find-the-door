@@ -17,6 +17,7 @@ class_name Player
 # CONST
 const SPEED = 100.0
 const JUMP_VELOCITY = -152.0
+const WALL_JUMP_VELOCITY = JUMP_VELOCITY - 15.0
 const ACCELERATION = 1.0
 const DASH_FORCE = 135.0
 const gravity = 400.0
@@ -26,7 +27,7 @@ const ADJUST_HEAD_CORNER_LIMIT = -100
 const ADJUST_HEAD_CORNER_LIMIT_DASH = 100
 const DEAD_INPUT_THRESHOLD = 0.05
 const BOOST_CORNER_ADJUSTMENT = 50
-const BASE_DASH_COOLDOWN = 1.0
+const BASE_DASH_COOLDOWN = 0.0
 const MAX_FALL_SPEED = 300.0
 
 # PLAYER STATS
@@ -49,6 +50,7 @@ var isJumpBuffered = false
 var wasOnFloor: bool = true
 var isDying: bool = false
 var isDashing: bool = false
+var isJumping: bool = false
 
 # SIGNALS
 signal player_death
@@ -103,12 +105,13 @@ func _physics_process(delta):
 		if is_on_floor() or not is_on_wall():
 			$JumpParticle.restart()
 		velocity.y = JUMP_VELOCITY
+		isJumping = true
 		numberOfJumps = 0
 		jumpCooldown = 0.2
 		isJumpBuffered = false
 	
-	#if Input.is_action_just_released("jump") and velocity.y < JUMP_VELOCITY/10:
-		#velocity.y = JUMP_VELOCITY/10
+	if Input.is_action_just_released("jump") and isJumping and velocity.y < JUMP_VELOCITY/3:
+		velocity.y = JUMP_VELOCITY/3
 	
 	if get_input_just_pressed("jump") and not is_on_floor() and not is_on_wall():
 		isJumpBuffered = true
@@ -152,8 +155,8 @@ func wall_slide_particle(delta) -> void:
 func handle_wall_jump_metroid() -> void:
 	if not wallJumpUnlocked:
 		return
-	var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right"))
-	var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left"))
+	var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right")) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpDown, get_input("right")) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpUp, get_input("right"))
+	var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left")) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpDown, get_input("left")) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpUp, get_input("left"))
 	
 	if not leftSide and not rightSide:
 		return
@@ -164,10 +167,10 @@ func handle_wall_jump_metroid() -> void:
 	add_sibling(dustParticle)
 	
 	if rightSide:
-		newVelocity = Vector2(-wallJumpHorizontalForce, JUMP_VELOCITY)
+		newVelocity = Vector2(-wallJumpHorizontalForce, WALL_JUMP_VELOCITY)
 		dustParticle.global_position = $RightWallJump.global_position
 	elif leftSide:
-		newVelocity = Vector2(wallJumpHorizontalForce, JUMP_VELOCITY)
+		newVelocity = Vector2(wallJumpHorizontalForce, WALL_JUMP_VELOCITY)
 		dustParticle.global_position = $LeftWallJump.global_position
 		
 	
@@ -183,6 +186,7 @@ func check_wall_jump_metroid(rayCast, isButtonPressed) -> bool:
 func handle_dash(delta) -> void:
 	if not get_input_just_pressed("dash") or dashCooldown > 0.0 or not dashUnlocked or numberOfDashes <= 0:
 		return
+	isJumping = false
 	numberOfDashes = 0
 	dash.emit()
 	dashCooldown = BASE_DASH_COOLDOWN
@@ -315,6 +319,11 @@ func die():
 	isDying = true
 
 	take_controllers_away()
+	
+	dashCooldown = 0.0
+	jumpCooldown = 0.0
+	isJumpBuffered = false
+	
 	visible = false
 	var deathScene = playerDeathRaw.instantiate()
 	deathScene.global_position = global_position
@@ -403,7 +412,7 @@ func handle_dash_trail():
 
 func clamp_velocity():
 	velocity.y = min(velocity.y, 250)
-	velocity.y = max(velocity.y, -400)
+	velocity.y = max(velocity.y, -800)
 
 func handle_dash_visual():
 	return

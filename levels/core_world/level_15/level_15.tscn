@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://dv3ue8g4j4voa"]
+
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_w0tqc"]
+[ext_resource type="PackedScene" uid="uid://oj8okvqct5e3" path="res://levels/core_world/level_15/map_15.tscn" id="2_k4yhp"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_g1nqq"]
+[ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_dbw2e"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_5gxiv"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_madns"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_cu2kx"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_7y2g6"]
+[ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="9_lbftr"]
+
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+script = ExtResource("1_w0tqc")
+player = NodePath("Player")
+camera = NodePath("DefaultCamera")
+typewritter = NodePath("DefaultTypeWritter")
+
+[node name="map" parent="." instance=ExtResource("2_k4yhp")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_g1nqq")]
+position = Vector2(-72, -72)
+collision_layer = 1
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+
+[node name="DefaultDoor" parent="." instance=ExtResource("4_dbw2e")]
+position = Vector2(408, -72)
+
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_5gxiv")]
+offset_left = 19.0
+offset_top = 87.0
+offset_right = 256.0
+offset_bottom = 127.0
+text = "PRESS X TO JUMP"
+metadata/_edit_use_anchors_ = true
+
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_madns")]
+target = NodePath("../Player")
+
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_cu2kx")]
+target = NodePath("../Player")
+
+[node name="Lighting" parent="." instance=ExtResource("8_7y2g6")]
+
+[node name="Jumper" parent="." instance=ExtResource("9_lbftr")]
+position = Vector2(144, -48)
+
+[node name="Jumper2" parent="." instance=ExtResource("9_lbftr")]
+position = Vector2(192, -48)
+
+[node name="Jumper3" parent="." instance=ExtResource("9_lbftr")]
+position = Vector2(240, -48)
+
+[node name="Jumper4" parent="." instance=ExtResource("9_lbftr")]
+position = Vector2(288, -48)
+
+[node name="Jumper5" parent="." instance=ExtResource("9_lbftr")]
+position = Vector2(335, -48)
+
+[connection signal="dash" from="Player" to="." method="_on_player_dash"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
+[connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
+
+[editable path="Player"]
+[editable path="DefaultTypeWritter"]

@@ -8,7 +8,7 @@ extends Node2D
 
 var platformsToReset : Dictionary = {}
 var cameraDict : Dictionary = {}
-var cameraActivated : bool = false
+var activatedCamera : bool = false
 
 func _ready():
 	respawnPosition = player.global_position
@@ -24,7 +24,6 @@ func _ready():
 func _process(_delta):
 	await get_tree().process_frame
 	gameManager.new_scene_loaded.emit()
-	
 
 func fade_out_player_death():
 	gameManager.fade_out()
@@ -42,8 +41,11 @@ func _on_player_player_death():
 	fade_out_player_death()
 	camera.death_shake()
 	await get_tree().create_timer(0.5).timeout
-	reset_platforms()
 	respawn_player()
+
+	#await get_tree().process_frame
+	#await get_tree().process_frame
+	reset_platforms()
 
 func respawn_player():
 	fade_in_player_respawn()
@@ -59,6 +61,7 @@ func configure_player_killer():
 	for player_killer in $map.get_children():
 		if player_killer.name == "player_killer":
 			for area in player_killer.get_children():
+				assert(area is Area2D)
 				if area.has_meta("type") and area.get_meta("type") == "area" and area is Area2D:
 					area.connect("body_entered", _on_Area2D_body_entered)
 
@@ -84,6 +87,7 @@ func configure_camera():
 					var isCameraTrigger = area2d.get_meta("is_camera_trigger")
 					var cameraNumber = area2d.get_meta("camera_number")
 					if isCameraTrigger == "true":
+						print("ligando camera ", cameraNumber)
 						(area2d as Area2D).body_entered.connect(change_camera_limits.bind(cameraNumber))
 					else:
 						cameraDict[cameraNumber] = area2d
@@ -119,10 +123,9 @@ func change_camera_limits(body, cameraNumber):
 		var zoom_y = 180.0 / rect_height
 		
 		var zoom_factor = max(1.0, max(zoom_x, zoom_y))
-		camera.global_position = area.global_position
+		
 		camera.zoom = Vector2(zoom_factor, zoom_factor)
 		#get_tree().create_tween().tween_property(camera, "zoom", Vector2(zoom_factor, zoom_factor), 0.5)
-		#cameraActivated = true
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player") and not body.isDying:
