@@ -24,11 +24,12 @@ var runTime: float = 0.0
 # WORLS STATS
 var coreWorld = []
 var levelsCleared = []
+var coinsCleared = []
 
 var currentScene : String = ""
 
 func _ready():
-	for x in range(14):
+	for x in range(20):
 		coreWorld.append("res://levels/core_world/level_" + str(x) + "/level_" + str(x) + ".tscn")
 	coreWorld.append("res://levels/core_world/end_game/level_end_game.tscn")
 	load_save_file()
@@ -42,6 +43,8 @@ func fade_out():
 	isFadingOut = true
 
 func _process(delta):
+	if currentScene.is_empty():
+		currentScene = get_tree().current_scene.scene_file_path
 	update_time(delta)
 	
 	if isFadingInMainMenu:
@@ -62,7 +65,7 @@ func _process(delta):
 			fade_out_complete.emit()
 		(textureRect.material as ShaderMaterial).set_shader_parameter("progress", transitionProgress)
 
-func load_next_level(currentScene: String) -> void:
+func load_next_level() -> void:
 	var scenePosition = coreWorld.find(currentScene)
 	var nextScene = load(coreWorld[scenePosition + 1])
 	
@@ -89,6 +92,7 @@ func load_next_level(currentScene: String) -> void:
 	await fade_out_complete
 	
 	get_tree().change_scene_to_packed(nextScene)
+	currentScene = coreWorld[scenePosition + 1]
 	
 	await new_scene_loaded
 	print("new scene loaded")
@@ -118,7 +122,8 @@ func load_save_file():
 	if not FileAccess.file_exists("user://savegame.save"):
 		for world in coreWorld:
 			levelsCleared.append(false)
-		return # Error! We don't have a save to load.
+			coinsCleared.append(false)
+		return
 
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.READ)
 	while save_game.get_position() < save_game.get_length():
@@ -133,12 +138,18 @@ func load_save_file():
 		var node_data = json.get_data()
 		print(node_data)
 		levelsCleared = node_data["levelsCleared"]
+		coinsCleared = node_data["coinsCleared"] if node_data.has("coinsCleared") else []
 		totalNumberOfDeaths = node_data["numberOfDeaths"]
 		gameVariables.dashUnlocked = node_data["dashUnlocked"]
 		gameVariables.wallSlideUnlocked = node_data["wallSlideUnlocked"]
 		gameVariables.wallJumpUnlocked = node_data["wallJumpUnlocked"]
 		gameVariables.isJumpUnlocked = node_data["isJumpUnlocked"]
 		runTime = node_data["runTime"]
+		
+		while levelsCleared.size() < coreWorld.size() - 1:
+			levelsCleared.append(false)
+		while coinsCleared.size() < levelsCleared.size():
+			coinsCleared.append(false)
 
 func save_file():
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
@@ -159,6 +170,7 @@ func transition_to_packed(packedScene: PackedScene):
 func get_save_data() -> Dictionary:
 	return {
 		"levelsCleared" : levelsCleared,
+		"coinsCleared" : coinsCleared,
 		"numberOfDeaths" : totalNumberOfDeaths,
 		"dashUnlocked" : gameVariables.dashUnlocked,
 		"wallSlideUnlocked" : gameVariables.wallSlideUnlocked,
@@ -216,3 +228,13 @@ func get_player_position_for_scene(camera: Camera2D, player: Player) -> Vector2:
 	var node_global_position = player.global_position
 	var relative_position = node_global_position - camera_screen_center
 	return relative_position
+
+func register_coin() -> void:
+	var scenePosition = coreWorld.find(currentScene)
+	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
+	coinsCleared[scenePosition] = true
+
+func has_coin(fromScene: String) -> bool:
+	var scenePosition = coreWorld.find(fromScene)
+	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
+	return coinsCleared[scenePosition]

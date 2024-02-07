@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bo0lhdm1fybv"]
+[gd_scene load_steps=11 format=3 uid="uid://bo0lhdm1fybv"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_ia8hk"]
 [ext_resource type="PackedScene" uid="uid://jt3ksqwwfcob" path="res://levels/core_world/level_4/map_4.tscn" id="2_6rw5b"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_o6pvs"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_fbokb"]
 [ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="9_lny6p"]
+[ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="10_ki3j5"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_ia8hk")
@@ -50,6 +51,9 @@ position = Vector2(258, -106)
 
 [node name="FallingPlatform3" parent="." instance=ExtResource("9_lny6p")]
 position = Vector2(316, -51)
+
+[node name="Coin" parent="." instance=ExtResource("10_ki3j5")]
+position = Vector2(90, -26)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

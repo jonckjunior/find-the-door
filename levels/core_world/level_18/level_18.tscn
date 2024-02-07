@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bec0r33bboodc"]
+[gd_scene load_steps=17 format=3 uid="uid://bec0r33bboodc"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_3eapk"]
 [ext_resource type="PackedScene" uid="uid://pnd46j1v18ii" path="res://levels/core_world/level_18/map_18.tscn" id="2_cc4ma"]
@@ -9,7 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_s618s"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_28vrg"]
 [ext_resource type="PackedScene" uid="uid://bma02ru1hoea8" path="res://objects/rising_platform.tscn" id="9_8poc6"]
-[ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="10_ne0t8"]
+[ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="10_ctowb"]
+[ext_resource type="Texture2D" uid="uid://c8q62jvromkpo" path="res://sprites/one_spike.png" id="10_ocbkp"]
+[ext_resource type="Script" path="res://levels/core_world/level_18/Area2DMoving.gd" id="11_keeqb"]
+[ext_resource type="PackedScene" uid="uid://bhmvocdg716l1" path="res://objects/one_way_platform.tscn" id="13_lksy3"]
+[ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="14_qpky8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orsxb"]
+size = Vector2(46, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjf00"]
+size = Vector2(46, 6)
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_3eapk")
@@ -20,12 +30,12 @@ typewritter = NodePath("DefaultTypeWritter")
 [node name="map" parent="." instance=ExtResource("2_cc4ma")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_cn64j")]
-position = Vector2(126, -51)
+position = Vector2(152, 120)
 collision_layer = 1
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_eb4sb")]
-position = Vector2(385, -78)
+position = Vector2(152, -792)
 
 [node name="DefaultTypeWritter" parent="." instance=ExtResource("5_vlht1")]
 offset_left = 19.0
@@ -43,11 +53,83 @@ target = NodePath("../Player")
 
 [node name="Lighting" parent="." instance=ExtResource("8_28vrg")]
 
-[node name="RisingPlatform" parent="." instance=ExtResource("9_8poc6")]
-position = Vector2(292, 12)
+[node name="RisingPlatform2" parent="." instance=ExtResource("9_8poc6")]
+position = Vector2(152, -83)
 
-[node name="FallingPlatform" parent="." instance=ExtResource("10_ne0t8")]
-position = Vector2(199, -63)
+[node name="OneSpike7" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-20, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike8" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-12, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike9" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-4, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike10" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(4, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike11" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(12, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike12" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(20, 27.5)
+rotation = -3.14159
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-20, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike2" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-12, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike3" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(-4, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike4" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(4, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike5" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(12, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="OneSpike6" type="Sprite2D" parent="RisingPlatform2"]
+position = Vector2(20, -27.5)
+texture = ExtResource("10_ocbkp")
+
+[node name="Area2D" type="Area2D" parent="RisingPlatform2"]
+collision_layer = 0
+script = ExtResource("11_keeqb")
+
+[node name="CollisionShapeTop" type="CollisionShape2D" parent="RisingPlatform2/Area2D"]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_orsxb")
+
+[node name="CollisionShapeDown" type="CollisionShape2D" parent="RisingPlatform2/Area2D"]
+position = Vector2(0, 27)
+shape = SubResource("RectangleShape2D_qjf00")
+
+[node name="Jumper" parent="." instance=ExtResource("10_ctowb")]
+position = Vector2(152, 92)
+
+[node name="OneWayPlatform" parent="." instance=ExtResource("13_lksy3")]
+position = Vector2(152, -24)
+
+[node name="Coin" parent="." instance=ExtResource("14_qpky8")]
+position = Vector2(152, -753)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

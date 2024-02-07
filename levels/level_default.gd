@@ -1,4 +1,5 @@
 extends Node2D
+class_name LevelManager
 
 @export var player: Player
 @export var camera: Camera2D
@@ -35,7 +36,11 @@ func fade_in_player_respawn():
 func _on_default_door_player_passed_level():
 	player.take_controllers_away()
 	player.process_mode = Node.PROCESS_MODE_DISABLED
-	gameManager.load_next_level(get_tree().current_scene.scene_file_path)
+	
+	if player.coin != null:
+		gameManager.register_coin()
+	
+	gameManager.load_next_level()
 
 func _on_player_player_death():
 	fade_out_player_death()
@@ -43,8 +48,6 @@ func _on_player_player_death():
 	await get_tree().create_timer(0.5).timeout
 	respawn_player()
 
-	#await get_tree().process_frame
-	#await get_tree().process_frame
 	reset_platforms()
 
 func respawn_player():
@@ -134,4 +137,4 @@ func _on_Area2D_body_entered(body):
 func reset_platforms():
 	for node in platformsToReset:
 		node.global_position = platformsToReset[node]
-		node.reset()
+		node.reset()	

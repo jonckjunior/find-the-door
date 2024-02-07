@@ -1,12 +1,14 @@
 extends RichTextLabel
 
+@onready var gameManager: GameManagerClass = get_node("/root/GameManager")
+
 var textWithoutBBCode = ""
 var waitTime = 0.05
 
+
 func _ready():
-	var gameManager = get_node("/root/GameManager")
 	gameManager.visible = false
-	text += "  " + str(get_time())
+	text = "DEVELOPED BY: BRUTE STUDIOS\nYOUR BEST TIME WAS [rainbow]" + str(get_time()) + "[/rainbow] \nAND YOU COLLECTED [rainbow]" + get_coins() +  "[/rainbow] COINS \n [shake]THANK YOU FOR PLAYING![/shake]"
 	$Timer.start()
 	textWithoutBBCode = remove_bbcode(text)
 	visible_ratio = 0.0
@@ -31,6 +33,15 @@ func reset():
 	$Timer.stop()
 	$Timer.wait_time = waitTime
 	$Timer.start()
+
+func get_coins():
+	var total = gameManager.coinsCleared.size()
+	var collected = 0
+	for coin in gameManager.coinsCleared:
+		if coin:
+			collected += 1
+	
+	return str(collected) + "/" + str(total)
 
 func get_time():
 	var totalSeconds = int((get_node("/root/GameManager") as GameManagerClass).runTime)

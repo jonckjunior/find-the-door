@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rhed1uaq33v0"]
+[gd_scene load_steps=10 format=3 uid="uid://rhed1uaq33v0"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_f4kcv"]
 [ext_resource type="PackedScene" uid="uid://oexrugtybupk" path="res://levels/core_world/level_5/map_5.tscn" id="2_wkc0j"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_qe3je"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_rrjkn"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_iar8q"]
+[ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_trnje"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
 script = ExtResource("1_f4kcv")
@@ -42,6 +43,9 @@ position = Vector2(118, -98)
 target = NodePath("../Player")
 
 [node name="Lighting" parent="." instance=ExtResource("8_iar8q")]
+
+[node name="Coin" parent="." instance=ExtResource("9_trnje")]
+position = Vector2(434, -289)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

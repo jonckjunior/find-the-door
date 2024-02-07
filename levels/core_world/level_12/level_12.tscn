@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://rhhyso4w28fj"]
+[gd_scene load_steps=11 format=3 uid="uid://rhhyso4w28fj"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_jnktg"]
 [ext_resource type="PackedScene" uid="uid://css8w54h4tq4x" path="res://levels/core_world/level_12/map_12.tscn" id="2_k20xt"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_obmu5"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_2wag5"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_1187l"]
+[ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="10_g3ohe"]
 [ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="14_5bt50"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
@@ -19,7 +20,7 @@ typewritter = NodePath("DefaultTypeWritter")
 [node name="map" parent="." instance=ExtResource("2_k20xt")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_73btd")]
-position = Vector2(200, -536)
+position = Vector2(392, -88)
 collision_layer = 1
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
@@ -47,6 +48,9 @@ position = Vector2(240, -96)
 
 [node name="Jumper2" parent="." instance=ExtResource("14_5bt50")]
 position = Vector2(208, -336)
+
+[node name="Coin" parent="." instance=ExtResource("10_g3ohe")]
+position = Vector2(434, -362)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

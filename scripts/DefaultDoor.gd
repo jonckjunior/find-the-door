@@ -7,6 +7,7 @@ var canPressUpAndLeave: bool = false
 var alreadyEmitted = false
 
 signal player_passed_level
+signal player_got_coin
 
 func _ready():
 	upKeyButton.modulate.a = 0

@@ -4,7 +4,7 @@ var tweenPosition: Tween
 var tweenCollision: Tween
 
 func _on_area_2d_body_entered(body):
-	reset()
+	#reset()
 	if body.is_in_group("player"):
 		var target = global_position.y + 1000
 		tweenPosition = get_tree().create_tween()
@@ -12,9 +12,6 @@ func _on_area_2d_body_entered(body):
 		
 		tweenCollision = get_tree().create_tween()
 		tweenCollision.tween_callback($Sprite2D/StaticBody2D/CollisionShape2D.set_deferred.bind("disabled", true)).set_delay(0.2)
-
-func _process(_delta):
-	print($Sprite2D/StaticBody2D/CollisionShape2D.disabled)
 
 func reset():
 	if tweenCollision:

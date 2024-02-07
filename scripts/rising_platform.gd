@@ -5,7 +5,7 @@ extends Sprite2D
 @onready var areaStopper = $AreaStopper
 
 const RISING_VELOCITY: float = 30.0
-const LAST_TOUCH_TREHSHOLD = 1.0
+const LAST_TOUCH_TREHSHOLD = 400.0
 
 var activated: bool = false
 var lastTouchTimer: float = LAST_TOUCH_TREHSHOLD
@@ -26,12 +26,10 @@ func _process(delta):
 
 func on_body_enter_stopper(body):
 	if body.is_in_group("map"):
-		print("tocou teto")
 		touchedCeiling = true
 
 func on_body_entered(body):
 	if body.is_in_group("player") and not body.isDying:
-		print("player tocou")
 		activated = true
 		lastTouchTimer = 0.0
 

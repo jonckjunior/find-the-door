@@ -30,6 +30,9 @@ const BOOST_CORNER_ADJUSTMENT = 50
 const BASE_DASH_COOLDOWN = 0.0
 const MAX_FALL_SPEED = 300.0
 
+# COIN
+var coin: Coin = null
+
 # PLAYER STATS
 var numberOfJumps = 1
 var numberOfDashes = 1

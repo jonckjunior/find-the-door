@@ -17,6 +17,7 @@ texture_filter = 1
 texture = ExtResource("1_b5pyo")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D" groups=["map"]]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D" groups=["map"]]
 position = Vector2(0, -4)

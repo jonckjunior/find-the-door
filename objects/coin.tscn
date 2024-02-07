@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3k6xyvigc5k"]
+
+[ext_resource type="Script" path="res://scripts/coin.gd" id="1_wmhft"]
+[ext_resource type="Texture2D" uid="uid://bpimmyg2vtwx4" path="res://sprites/coin_moving_1.png" id="2_517yr"]
+[ext_resource type="Texture2D" uid="uid://c377cc0c5l8vx" path="res://sprites/coin_moving_2.png" id="3_lbex8"]
+[ext_resource type="Texture2D" uid="uid://boypidiqsng7h" path="res://sprites/coin_moving_3.png" id="4_yeeio"]
+[ext_resource type="Texture2D" uid="uid://bcfaafqixdi45" path="res://sprites/coin_moving_4.png" id="5_p2bf1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lu15f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_517yr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lbex8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yeeio")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p2bf1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h00s7"]
+size = Vector2(7, 8)
+
+[node name="Coin" type="Node2D" groups=["reset"]]
+script = ExtResource("1_wmhft")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lu15f")
+frame_progress = 0.600739
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_h00s7")
