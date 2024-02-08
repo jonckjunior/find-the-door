@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2gapovjcef2x"]
+[gd_scene load_steps=17 format=3 uid="uid://d2gapovjcef2x"]
 
 [ext_resource type="Shader" path="res://shaders/screen_transition_shader.gdshader" id="1_1c5gf"]
 [ext_resource type="Script" path="res://globals/GameManager.gd" id="1_lv232"]
@@ -9,7 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://uopok6xy78wv" path="res://objects/tv_texture.tscn" id="4_pmv11"]
 [ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="5_khh07"]
 [ext_resource type="Texture2D" uid="uid://l5cwm04w3mq2" path="res://sprites/character_pixelated.png" id="6_0a5tx"]
+[ext_resource type="Texture2D" uid="uid://bxp2yyms1lvmx" path="res://sprites/dialogue.png" id="6_mcyyk"]
 [ext_resource type="PackedScene" uid="uid://bsmgaik8axf6j" path="res://menus/pause_menu.tscn" id="7_h8ffa"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_qpdok"]
+[ext_resource type="Script" path="res://scripts/typewritter_dialogue.gd" id="9_sauo2"]
+[ext_resource type="Texture2D" uid="uid://cukalvtp1rbwi" path="res://sprites/zezin_head.png" id="12_scv1h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lnf23"]
 shader = ExtResource("1_1c5gf")
@@ -59,6 +63,36 @@ z_index = 5
 texture_filter = 1
 position = Vector2(-60, 4)
 texture = ExtResource("6_0a5tx")
+
+[node name="Talk" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect2" type="ColorRect" parent="Talk"]
+offset_top = 120.0
+offset_right = 40.0
+offset_bottom = 160.0
+scale = Vector2(8.02524, 1.24939)
+color = Color(0, 0, 0, 1)
+
+[node name="Dialogue" type="Sprite2D" parent="Talk"]
+position = Vector2(160, 144)
+texture = ExtResource("6_mcyyk")
+
+[node name="ZezinHead" type="Sprite2D" parent="Talk"]
+texture_filter = 1
+position = Vector2(24, 144)
+scale = Vector2(2, 2)
+texture = ExtResource("12_scv1h")
+
+[node name="RichTextLabel" parent="Talk" instance=ExtResource("8_qpdok")]
+offset_left = 42.0
+offset_top = 123.0
+offset_right = 592.0
+offset_bottom = 203.0
+scale = Vector2(0.5, 0.5)
+text = "Me, at the Door? Oh, I asked for the Guardian’s life story. It was either that or the recipe for the perfect apple pie. What I saw was a tapestry of time, a quilt sewn with the threads of eternity. A bit heavy, really, should’ve gone with the pie."
+autowrap_mode = 3
+script = ExtResource("9_sauo2")
 
 [node name="ColorRect" parent="." instance=ExtResource("4_pmv11")]
 

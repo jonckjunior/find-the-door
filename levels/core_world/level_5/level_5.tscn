@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://rhed1uaq33v0"]
+[gd_scene load_steps=9 format=3 uid="uid://rhed1uaq33v0"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_f4kcv"]
 [ext_resource type="PackedScene" uid="uid://oexrugtybupk" path="res://levels/core_world/level_5/map_5.tscn" id="2_wkc0j"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_y4tyr"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_jowyu"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_m3v6q"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_qe3je"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_rrjkn"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_iar8q"]
@@ -14,7 +13,7 @@
 script = ExtResource("1_f4kcv")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
+typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_wkc0j")]
 
@@ -25,15 +24,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_jowyu")]
 position = Vector2(232, -216)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_m3v6q")]
-offset_left = 5.0
-offset_top = -160.0
-offset_right = 242.0
-offset_bottom = -120.0
-text = "PRESS Z
-TO DASH"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_qe3je")]
 target = NodePath("../Player")
@@ -52,4 +42,3 @@ position = Vector2(434, -289)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

@@ -1,0 +1,40 @@
+extends RichTextLabel
+
+@onready var gameManager: GameManagerClass = get_node("/root/GameManager")
+var textWithoutBBCode = ""
+var waitTime = 0.05
+var isCurrentTextFinished: bool = false
+
+signal show_next_dialogue
+
+func show_dialogue(txt: String):
+	isCurrentTextFinished = false
+	text = txt
+	reset()
+
+func _process(_delta):
+	if visible_ratio == 1.0:
+		isCurrentTextFinished = true
+	
+	if Input.is_action_pressed("jump") and isCurrentTextFinished:
+		show_next_dialogue.emit()
+
+func remove_bbcode(txt: String) -> String:
+	var regex = RegEx.new()
+	regex.compile("\\[\\/?.+?\\]")
+	return regex.sub(txt, "", true)
+
+func _on_timer_timeout():
+	if visible_ratio == 1.0:
+		return
+	if (textWithoutBBCode[visible_characters] != ' '):
+		$AudioStreamPlayer2D.play()
+	visible_characters += 1
+
+func reset():
+	textWithoutBBCode = remove_bbcode(text)
+	visible_ratio = 0.0
+	visible_characters = 0
+	$Timer.stop()
+	$Timer.wait_time = waitTime
+	$Timer.start()

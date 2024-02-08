@@ -140,7 +140,8 @@ shape = SubResource("RectangleShape2D_186sp")
 texture_filter = 1
 material = SubResource("ShaderMaterial_gx3vk")
 sprite_frames = SubResource("SpriteFrames_ae2pr")
-animation = &"idle"
+animation = &"running"
+frame_progress = 0.863003
 
 [node name="JumpParticle" parent="." instance=ExtResource("9_opuj6")]
 position = Vector2(-1, 6)

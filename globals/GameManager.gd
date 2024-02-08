@@ -8,6 +8,8 @@ signal new_scene_loaded
 @export var textureRect: TextureRect
 @onready var gameVariables : GameVariablesClass = get_node("/root/GameVariables")
 @onready var rect : ColorRect = $ColorRect
+@onready var talk = get_node("Talk")
+@onready var typewritter = get_node("Talk/RichTextLabel")
 
 #TRANSITION STATS
 var isFadingIn: bool = false
@@ -27,12 +29,16 @@ var levelsCleared = []
 var coinsCleared = []
 
 var currentScene : String = ""
+var dialoguesToShow : Dialogues
 
 func _ready():
 	for x in range(20):
 		coreWorld.append("res://levels/core_world/level_" + str(x) + "/level_" + str(x) + ".tscn")
 	coreWorld.append("res://levels/core_world/end_game/level_end_game.tscn")
 	load_save_file()
+	
+	dialoguesToShow = load("res://scripts/all_dialogues.gd").new() as Dialogues
+	add_child(dialoguesToShow)
 	
 func fade_in():
 	transitionProgress = 1.0
@@ -224,17 +230,35 @@ func transition_main_menu(fromObject: Object, sceneToTransitionTo: PackedScene):
 
 func get_player_position_for_scene(camera: Camera2D, player: Player) -> Vector2:
 	var camera_screen_center = camera.get_screen_center_position()
-	print("camera_screen_center = ", camera_screen_center, camera.position, player.position)
 	var node_global_position = player.global_position
 	var relative_position = node_global_position - camera_screen_center
 	return relative_position
 
 func register_coin() -> void:
-	var scenePosition = coreWorld.find(currentScene)
-	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
+	var scenePosition = get_scene_position(currentScene)
 	coinsCleared[scenePosition] = true
 
 func has_coin(fromScene: String) -> bool:
-	var scenePosition = coreWorld.find(fromScene)
-	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
+	var scenePosition = get_scene_position(fromScene)
 	return coinsCleared[scenePosition]
+
+func enter_dialogue(player: Player):
+	player.take_controllers_away()
+	await get_tree().create_timer(1.0).timeout
+	var scenePosition = get_scene_position(currentScene)
+	talk.visible = true
+	
+	for dialogue in dialoguesToShow.dialogues_traveler[scenePosition]:
+		typewritter.show_dialogue(dialogue)
+		print(dialogue)
+		await typewritter.show_next_dialogue
+	
+	talk.visible = false
+	await get_tree().create_timer(0.5).timeout
+	
+	player.give_controllers_back()
+
+func get_scene_position(scene: String) -> int:
+	var scenePosition = coreWorld.find(scene)
+	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
+	return scenePosition

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://2lvm2smybiq"]
+[gd_scene load_steps=9 format=3 uid="uid://2lvm2smybiq"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_lce0q"]
 [ext_resource type="PackedScene" uid="uid://daim1om4t4a57" path="res://levels/core_world/level_1/map_1.tscn" id="2_71jk2"]
@@ -6,15 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_4jm2a"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_jk3jv"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_3dwga"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="7_2867p"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_73nhy"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="11_clr4v"]
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_lce0q")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
 
 [node name="map" parent="." instance=ExtResource("2_71jk2")]
 
@@ -25,14 +23,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_4jm2a")]
 position = Vector2(121, -168)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("7_2867p")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_jk3jv")]
 target = NodePath("../Player")
@@ -51,4 +41,3 @@ position = Vector2(437, -24)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

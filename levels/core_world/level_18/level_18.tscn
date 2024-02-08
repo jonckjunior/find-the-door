@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bec0r33bboodc"]
+[gd_scene load_steps=16 format=3 uid="uid://bec0r33bboodc"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_3eapk"]
 [ext_resource type="PackedScene" uid="uid://pnd46j1v18ii" path="res://levels/core_world/level_18/map_18.tscn" id="2_cc4ma"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_cn64j"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_eb4sb"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_vlht1"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_ismq5"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_s618s"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_28vrg"]
@@ -25,7 +24,7 @@ size = Vector2(46, 6)
 script = ExtResource("1_3eapk")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
+typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_cc4ma")]
 
@@ -36,14 +35,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_eb4sb")]
 position = Vector2(152, -792)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_vlht1")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_ismq5")]
 target = NodePath("../Player")
@@ -136,4 +127,3 @@ position = Vector2(152, -753)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

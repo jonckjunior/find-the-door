@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://6ywkw6teq7bu"]
+[gd_scene load_steps=10 format=3 uid="uid://6ywkw6teq7bu"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_p8enj"]
 [ext_resource type="PackedScene" uid="uid://dxnr207f0ypgp" path="res://levels/core_world/level_11/map_11.tscn" id="2_eq2p4"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_6cpj7"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_f5ldk"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_fy6c6"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_nhn0m"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_q6x1k"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_5ogmm"]
@@ -15,7 +14,7 @@
 script = ExtResource("1_p8enj")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
+typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_eq2p4")]
 
@@ -26,14 +25,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_f5ldk")]
 position = Vector2(424, -200)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_fy6c6")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_nhn0m")]
 target = NodePath("../Player")
@@ -60,4 +51,3 @@ position = Vector2(160, -305)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

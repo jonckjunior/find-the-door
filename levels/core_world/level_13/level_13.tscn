@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bt7x8beyduhih"]
+[gd_scene load_steps=11 format=3 uid="uid://bt7x8beyduhih"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_jagrl"]
 [ext_resource type="PackedScene" uid="uid://sqabnfeisps7" path="res://levels/core_world/level_13/map_13.tscn" id="2_thnfb"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_tvsjr"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_4v44v"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_ue21i"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_no4le"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_lttuf"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_x63yb"]
@@ -16,7 +15,7 @@
 script = ExtResource("1_jagrl")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
+typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_thnfb")]
 
@@ -27,14 +26,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_4v44v")]
 position = Vector2(296, -248)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_ue21i")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_no4le")]
 target = NodePath("../Player")
@@ -78,4 +69,3 @@ position = Vector2(320, -608)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

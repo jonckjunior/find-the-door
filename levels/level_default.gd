@@ -3,7 +3,6 @@ class_name LevelManager
 
 @export var player: Player
 @export var camera: Camera2D
-@export var typewritter: RichTextLabel
 @export var respawnPosition: Vector2
 @onready var gameManager: GameManagerClass = get_node("/root/GameManager")
 
@@ -52,7 +51,6 @@ func _on_player_player_death():
 
 func respawn_player():
 	fade_in_player_respawn()
-	typewritter.reset()
 	player.respawn_player(respawnPosition)
 
 func _on_player_dash():
@@ -137,4 +135,4 @@ func _on_Area2D_body_entered(body):
 func reset_platforms():
 	for node in platformsToReset:
 		node.global_position = platformsToReset[node]
-		node.reset()	
+		node.reset()

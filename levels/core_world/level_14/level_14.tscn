@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://11665le87s52"]
+[gd_scene load_steps=10 format=3 uid="uid://11665le87s52"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_vtiqg"]
 [ext_resource type="PackedScene" uid="uid://r8w0c3rxsvho" path="res://levels/core_world/level_14/map_14.tscn" id="2_sco73"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_0ivhc"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_siw8x"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_rjnpp"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_vurtr"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_n7vu7"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_vapl5"]
@@ -15,7 +14,7 @@
 script = ExtResource("1_vtiqg")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
+typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_sco73")]
 
@@ -26,14 +25,6 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_siw8x")]
 position = Vector2(88, -40)
-
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_rjnpp")]
-offset_left = 19.0
-offset_top = 87.0
-offset_right = 256.0
-offset_bottom = 127.0
-text = "PRESS X TO JUMP"
-metadata/_edit_use_anchors_ = true
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_vurtr")]
 target = NodePath("../Player")
@@ -87,4 +78,3 @@ position = Vector2(419, -194)
 [connection signal="player_passed_level" from="DefaultDoor" to="." method="_on_default_door_player_passed_level"]
 
 [editable path="Player"]
-[editable path="DefaultTypeWritter"]

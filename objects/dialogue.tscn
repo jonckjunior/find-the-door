@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfgw5ltl8jl31"]
+
+[ext_resource type="Texture2D" uid="uid://bxp2yyms1lvmx" path="res://sprites/dialogue.png" id="1_soeip"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="2_25rit"]
+
+[node name="Dialogue" type="Node2D"]
+
+[node name="Dialogue" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_soeip")
+
+[node name="RichTextLabel" parent="." instance=ExtResource("2_25rit")]
+offset_left = -47.0
+offset_top = -21.0
+offset_right = 143.0
+offset_bottom = 59.0
+scale = Vector2(0.5, 0.5)
+text = "Life’s a parade of doors, some open, some closed, and some just stuck because someone forgot the oil."
+fit_content = false
+autowrap_mode = 3
