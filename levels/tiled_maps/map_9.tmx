@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="7" nextobjectid="216">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="7" nextobjectid="218">
  <editorsettings>
   <export format="tmx"/>
  </editorsettings>
@@ -260,7 +260,7 @@
 1610612859,2684354877,0,0,0,0,0,0,0,1610613053,2684354683,1610612859,299,0,0,0,
 0,2684354877,0,0,0,0,0,0,0,1610613053,2684354683,1610612859,299,0,0,0,
 0,2684354877,0,0,0,0,0,0,0,1610613053,2684354683,1610612859,299,0,0,0,
-1610612859,2684354877,0,0,0,0,0,0,0,1610613053,2684354683,1610612859,319,0,0,0,
+0,2684354877,0,0,0,0,0,0,0,1610613053,2684354683,1610612859,319,0,0,0,
 1610612859,2684354877,0,0,0,0,0,0,0,1610613053,0,0,0,0,0,0
 </chunk>
    <chunk x="16" y="-16" width="16" height="16">
@@ -355,12 +355,6 @@
    <property name="godot_node_type" value="area"/>
    <property name="type" value="area"/>
   </properties>
-  <object id="187" x="10" y="-31" width="6" height="30">
-   <properties>
-    <property name="godot_node_type" value="area"/>
-    <property name="type" value="area"/>
-   </properties>
-  </object>
   <object id="188" x="-32" y="-47" width="6" height="46">
    <properties>
     <property name="godot_node_type" value="area"/>
@@ -428,6 +422,12 @@
    </properties>
   </object>
   <object id="215" x="241" y="-182" width="202" height="6">
+   <properties>
+    <property name="godot_node_type" value="area"/>
+    <property name="type" value="area"/>
+   </properties>
+  </object>
+  <object id="217" x="10" y="-15" width="6" height="14">
    <properties>
     <property name="godot_node_type" value="area"/>
     <property name="type" value="area"/>

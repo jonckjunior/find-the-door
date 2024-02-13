@@ -22,7 +22,7 @@ collision_layer = 1
 displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_4jm2a")]
-position = Vector2(121, -168)
+position = Vector2(121, -169)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_jk3jv")]
 target = NodePath("../Player")

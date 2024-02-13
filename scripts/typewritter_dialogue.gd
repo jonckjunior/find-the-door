@@ -6,6 +6,7 @@ var waitTime = 0.05
 var isCurrentTextFinished: bool = false
 
 signal show_next_dialogue
+signal show_next_dialogue_button
 
 func show_dialogue(txt: String):
 	isCurrentTextFinished = false
@@ -15,6 +16,7 @@ func show_dialogue(txt: String):
 func _process(_delta):
 	if visible_ratio == 1.0:
 		isCurrentTextFinished = true
+		show_next_dialogue_button.emit()
 	
 	if Input.is_action_pressed("jump") and isCurrentTextFinished:
 		show_next_dialogue.emit()

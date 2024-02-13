@@ -10,10 +10,13 @@ config_version=5
 
 [application]
 
-config/name="scribble_2d"
+config/name="Find The Door"
 run/main_scene="res://menus/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://sprites/DALL·E 2024-02-11 16.17.40 - Modify the logo for BRUTE STUDIOS to combine specific elements from the initial design and recent feedback. Retain the original design's core concept .png"
+config/icon="res://sprites/game_icon.png"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 

@@ -15,20 +15,29 @@ class_name Player
 @export var displacementRayCastsDown: Array[RayCast2D]
 
 # CONST
-const SPEED = 100.0
-const JUMP_VELOCITY = -152.0
-const WALL_JUMP_VELOCITY = JUMP_VELOCITY - 15.0
+const SPEED = 300.0
+const JUMP_VELOCITY = -140.0
+const WALL_JUMP_VELOCITY = -152 - 15.0
 const ACCELERATION = 1.0
-const DASH_FORCE = 135.0
-const gravity = 400.0
-const HALF_GRAVITY_THRESHOLD = 50
+const DASH_FORCE = 40.0
+const gravity = 460.0
+const HALF_GRAVITY_THRESHOLD = 25
 const ADJUST_FEET_CORNER_LIMIT = 100
 const ADJUST_HEAD_CORNER_LIMIT = -100
 const ADJUST_HEAD_CORNER_LIMIT_DASH = 100
 const DEAD_INPUT_THRESHOLD = 0.05
 const BOOST_CORNER_ADJUSTMENT = 50
-const BASE_DASH_COOLDOWN = 0.0
+const BASE_DASH_COOLDOWN = 0.2
 const MAX_FALL_SPEED = 300.0
+const DASH_CORRECTION_TIME_BASE = 0.1
+const DIRECTIONAL_BUFFER_TIME_BASE = 0.2
+const PLAYER_AGAINS_WALL_TIME_BASE = 10.0
+const SUPER_DASH_HORIZONTAL_BOOST = -45.0
+const SUPER_DASH_VERTICAL = 25
+const SUPER_DASH_VERTICAL_HORIZONTAL_BOOST = -30
+const VERTICAL_GRAVITY = 80
+const IS_SUPER_DASHING_TIME = 0.25
+const SUPER_DASH_WALLJUMP = -19
 
 # COIN
 var coin: Coin = null
@@ -45,6 +54,11 @@ var dashCooldown = 1.0
 var sideParticleCooldown : float = 0.05
 var runningSoundCooldown: float = 0.2
 var trailCooldown: float = 0.05
+var dashCorrectionTime: float = 0.0
+var directionalRightBufferTime = 0.0
+var directionalLeftBufferTime = 0.0
+var playerAgainstWallTimer = 0.0
+var timeSinceDash = 0.0
 
 
 # FLAGS
@@ -54,6 +68,13 @@ var wasOnFloor: bool = true
 var isDying: bool = false
 var isDashing: bool = false
 var isJumping: bool = false
+var isDashGrounded: bool = false
+
+
+var superDashingTimer: float = 0.0
+var isHyperDashingTimer: float = 0.0
+
+var dashForce: Vector2 = Vector2.ZERO
 
 # SIGNALS
 signal player_death
@@ -70,11 +91,18 @@ func _ready():
 func _physics_process(delta):
 	if isDying:
 		return
+
+	dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 130 * delta, 0.0)
+	dashForce.y = sign(dashForce.y) * max(abs(dashForce.y) - 340 * delta, 0.0)
 	
 	if Input.is_action_just_pressed("death"):
 		die()
-		
 	
+	if Input.is_action_pressed("left"):
+		directionalLeftBufferTime = DIRECTIONAL_BUFFER_TIME_BASE
+	if Input.is_action_just_pressed("right"):
+		directionalRightBufferTime = DIRECTIONAL_BUFFER_TIME_BASE
+
 	handle_dash_trail()
 	handle_dash_visual()
 	adjust_head_corner()
@@ -88,22 +116,59 @@ func _physics_process(delta):
 	var isPlayerAgainstWall = get_is_player_against_wall()
 	handle_wall_jump_metroid()
 	
+	if not isPlayerAgainstWall:
+		playerAgainstWallTimer = PLAYER_AGAINS_WALL_TIME_BASE
+	else:
+		playerAgainstWallTimer = max(playerAgainstWallTimer - delta, 0.0)
+	
 	# Add the gravity.
 	if not is_on_floor() and not isDashing:
-		var gravityForce = 0.1 if isPlayerAgainstWall and velocity.y > 0  and wallSlideUnlocked else 1.0
-		if isHalfGravityThreshold():
-			gravityForce = 0.5
-		velocity.y += gravity * delta * gravityForce
-		if get_input("down"):
+		if isPlayerAgainstWall and velocity.y > 0 and wallSlideUnlocked:
 			velocity.y += gravity * delta
+			if get_input("down"):
+				velocity.y += gravity * delta
+			velocity.y *= 0.8
+		else:
+			var gravityForce = 0.5 if isHalfGravityThreshold() else 1.0
+			velocity.y += gravity * delta * gravityForce
+			if get_input("down"):
+				velocity.y += gravity * delta * 0.5
 	
 	# Handle jump.
 	if is_on_floor():
 		numberOfJumps = 1
-		if not isDashing:
+		if isDashingCooldown < 0.1:
 			numberOfDashes = 1
 
-	if canJump():
+	var leftRayCast: RayCast2D = $RayCasts/DownLeftRayCast
+	var rightRayCast: RayCast2D = $RayCasts/DownRightRayCast
+	if canJump() and isDashing and isDashGrounded and timeSinceDash > 0.02 and timeSinceDash <= 0.2: #and leftRayCast.is_colliding() and leftRayCast.get_collider().is_in_group("map") and not rightRayCast.is_colliding():
+		#if isDashing:
+			#super dash-jump
+		if get_input("down"):
+			print("tipo 1")
+			superDashingTimer = IS_SUPER_DASHING_TIME
+			print("dashForce = ", dashForce)
+			
+			dashForce.x *= 1.2
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.2, SUPER_DASH_VERTICAL_HORIZONTAL_BOOST * 1.2)
+			
+			isJumping = true
+			numberOfJumps = 0
+			jumpCooldown = 0.2
+			isJumpBuffered = false
+			
+		else:
+			#velocity.x *= 1.2
+			print("tipo 2")
+			superDashingTimer = IS_SUPER_DASHING_TIME
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 0.8, SUPER_DASH_VERTICAL_HORIZONTAL_BOOST * 1.2)
+
+			isJumping = true
+			numberOfJumps = 0
+			jumpCooldown = 0.2
+			isJumpBuffered = false
+	elif canJump() and timeSinceDash > 0.1:
 		$JumpSound.play()
 		if is_on_floor() or not is_on_wall():
 			$JumpParticle.restart()
@@ -121,8 +186,8 @@ func _physics_process(delta):
 		jumpBufferTime = 0.2
 
 	wall_slide_particle(delta)
-	handle_movement(delta)
 	handle_dash(delta)
+	handle_movement(delta)
 	squish_and_squash()
 	handle_landing_particle()
 	running_audio(delta)
@@ -146,7 +211,7 @@ func wall_slide_particle(delta) -> void:
 		return
 	
 	
-	sideParticleCooldown = 0.05
+	sideParticleCooldown = 0.1
 	var dustParticle = dustParticleRaw.instantiate()
 	add_sibling(dustParticle)
 	
@@ -158,8 +223,10 @@ func wall_slide_particle(delta) -> void:
 func handle_wall_jump_metroid() -> void:
 	if not wallJumpUnlocked:
 		return
-	var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right")) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpDown, get_input("right")) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpUp, get_input("right"))
-	var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left")) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpDown, get_input("left")) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpUp, get_input("left"))
+	#var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right") or directionalRightBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpDown, get_input("right") or directionalRightBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpUp, get_input("right") or directionalRightBufferTime > 0.0)
+	#var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left") or directionalLeftBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpDown, get_input("left") or directionalLeftBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpUp, get_input("left") or directionalLeftBufferTime > 0.0)
+	var leftSide = check_wall_jump_metroid($RayCasts/LeftRayCast, get_input("right") or directionalRightBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpDown, get_input("right")) or check_wall_jump_metroid($RayCasts/LeftRayCastWallJumpUp, get_input("right"))
+	var rightSide = check_wall_jump_metroid($RayCasts/RightRayCast, get_input("left") or directionalLeftBufferTime > 0.0) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpDown, get_input("left")) or check_wall_jump_metroid($RayCasts/RightRayCastWallJumpUp, get_input("left"))
 	
 	if not leftSide and not rightSide:
 		return
@@ -169,13 +236,17 @@ func handle_wall_jump_metroid() -> void:
 	var dustParticle = dustParticleRaw.instantiate()
 	add_sibling(dustParticle)
 	
+	var newVelocityY: float
+
+	if timeSinceDash > 0.1 and timeSinceDash < 0.5:
+		dashForce.y += SUPER_DASH_WALLJUMP
+	
 	if rightSide:
 		newVelocity = Vector2(-wallJumpHorizontalForce, WALL_JUMP_VELOCITY)
 		dustParticle.global_position = $RightWallJump.global_position
 	elif leftSide:
 		newVelocity = Vector2(wallJumpHorizontalForce, WALL_JUMP_VELOCITY)
 		dustParticle.global_position = $LeftWallJump.global_position
-		
 	
 	jumpCooldown = 0.2
 	isJumpBuffered = false
@@ -187,8 +258,16 @@ func check_wall_jump_metroid(rayCast, isButtonPressed) -> bool:
 	return not is_on_floor() and rayCast.is_colliding() and rayCast.get_collider().is_in_group("map") and isButtonPressed and (get_input_just_pressed("jump") or isJumpBuffered)
 
 func handle_dash(delta) -> void:
+	#if dashCorrectionTime > 0.0:
+		#var directionX = get_input_axis("left", "right")
+		#var directionY = get_input_axis("up", "down")
+		#if abs(directionX) < DEAD_INPUT_THRESHOLD and abs(directionY) < DEAD_INPUT_THRESHOLD:
+			#directionX = -1 if $AnimatedSprite2D.flip_h else 1
+		#velocity = Vector2(directionX, directionY).normalized() * Vector2(2.0, 1.0) * DASH_FORCE
 	if not get_input_just_pressed("dash") or dashCooldown > 0.0 or not dashUnlocked or numberOfDashes <= 0:
 		return
+	
+	isDashGrounded = is_on_floor()
 	isJumping = false
 	numberOfDashes = 0
 	dash.emit()
@@ -199,19 +278,36 @@ func handle_dash(delta) -> void:
 	var directionY = get_input_axis("up", "down")
 	if abs(directionX) < DEAD_INPUT_THRESHOLD and abs(directionY) < DEAD_INPUT_THRESHOLD:
 		directionX = -1 if $AnimatedSprite2D.flip_h else 1
-	velocity = Vector2(directionX, directionY).normalized() * Vector2(2.0, 1.0) * DASH_FORCE
+	dashForce += Vector2(directionX, directionY).normalized() * DASH_FORCE * Vector2(1.0, 0.56 * 1.7)
+	
+	velocity = Vector2.ZERO
+
 	isDashing = true
 	isDashingCooldown = 0.2
+	dashCorrectionTime = DASH_CORRECTION_TIME_BASE
+	timeSinceDash = 0.0
 
 func handle_movement(delta) -> void:
-	var direction = get_input_axis("left", "right")
-	var targetSpeed = direction * SPEED
+	var direction = sign(dashForce.x) if absf(dashForce.x) > 1 else get_input_axis("left", "right")
+	var targetSpeed = direction * get_max_speed() * 0.35
+	
 	var speedDif = targetSpeed - velocity.x
 	
 	var movement = speedDif * 0.15
 	
+	
 	velocity.x += movement
+	
+	velocity += dashForce
 	move_and_slide()
+
+func get_max_speed() -> float:
+	if superDashingTimer > 0.0:
+		return SPEED
+	elif isDashing:
+		return SPEED 
+	else:
+		return SPEED
 
 func appr(val, target, amount) -> float:
 	if val > target:
@@ -224,9 +320,14 @@ func environmental_death() -> void:
 		get_tree().reload_current_scene()
 
 func refresh_variables(delta) -> void:
+	timeSinceDash += delta
+	superDashingTimer = max(superDashingTimer-delta, 0.0)
+	directionalLeftBufferTime = max(directionalLeftBufferTime-delta, 0.0)
+	directionalRightBufferTime = max(directionalRightBufferTime-delta, 0.0)
 	dashCooldown = max(dashCooldown-delta, 0.0)
 	jumpCooldown = max(jumpCooldown-delta, 0.0)
 	trailCooldown = max(trailCooldown-delta, 0.0)
+	dashCorrectionTime = max(dashCorrectionTime-delta, 0.0)
 	jumpBufferTime -= delta
 	if jumpBufferTime <= 0:
 		jumpBufferTime = 0.2
@@ -258,21 +359,21 @@ func handle_animation() -> void:
 		$AnimatedSprite2D.flip_h = true
 
 func squish_and_squash() -> void:
-	var maxX = DASH_FORCE * 1.5
-	var maxY = DASH_FORCE * 1.5
+	var maxX = DASH_FORCE * 5.5
+	var maxY = DASH_FORCE * 5.5
 	
 	var newScaleY = 1 - min(abs(velocity.x), maxX) / maxX * 0.5
 	var newScaleX = 1 - min(abs(velocity.y), maxY) / maxY * 0.5
 	
 	var sum = newScaleX + newScaleY
 	if sum < 2:
-		if newScaleX > newScaleY:
+		if newScaleX >= newScaleY:
 			newScaleX += 2 - sum
 		else:
 			newScaleY += 2 - sum
 
-	$AnimatedSprite2D.scale.x = snapped(lerp($AnimatedSprite2D.scale.x, newScaleX, 0.2), 0.02)
-	$AnimatedSprite2D.scale.y = snapped(lerp($AnimatedSprite2D.scale.y, newScaleY, 0.2), 0.02)
+	$AnimatedSprite2D.scale.x = snapped(lerp($AnimatedSprite2D.scale.x, newScaleX, 0.2), 0.04)
+	$AnimatedSprite2D.scale.y = snapped(lerp($AnimatedSprite2D.scale.y, newScaleY, 0.2), 0.04)
 
 func get_is_player_against_wall() -> bool:
 	var leftSide = check_side_wall($RayCasts/LeftRayCast, get_input("left"))
@@ -317,6 +418,7 @@ func die():
 	if isDying:
 		return
 	velocity = Vector2(0, 0)
+	dashForce = Vector2(0, 0)
 	player_death.emit()
 	$DeathSound.play()
 	isDying = true
@@ -344,6 +446,7 @@ func respawn_player(respawnPosition):
 	global_position = respawnPosition
 	give_controllers_back()
 	visible = true
+	print("deu respawn")
 
 func running_audio(delta):
 	runningSoundCooldown = max(runningSoundCooldown - delta, 0.0)
@@ -354,6 +457,9 @@ func running_audio(delta):
 		runningSoundCooldown = 0.2
 
 func adjust_head_dash_corner():
+	if not isDashing or isDashGrounded:
+		return
+	
 	var headRightCollided = velocity.x > ADJUST_HEAD_CORNER_LIMIT_DASH and is_colliding_with_map($RayCasts/RightUpRayCastDash) and not is_colliding_with_map($RayCasts/RightRayCastDash) and isDashing
 	var headLeftCollided = velocity.x < -ADJUST_HEAD_CORNER_LIMIT_DASH and is_colliding_with_map($RayCasts/LeftUpRayCastDash) and not is_colliding_with_map($RayCasts/LeftRayCastDash) and isDashing
 	
@@ -368,6 +474,9 @@ func adjust_head_dash_corner():
 		velocity.x += BOOST_CORNER_ADJUSTMENT if feetRightCollided else -BOOST_CORNER_ADJUSTMENT
 
 func adjust_head_corner():
+	if not isDashing or isDashGrounded:
+		return
+
 	if is_colliding_with_map($RayCasts/UpLeftRayCast):
 		for x in range(3):
 			if not is_colliding_with_map(displacementRayCastsUp[x]) and velocity.y < ADJUST_HEAD_CORNER_LIMIT and isDashing:

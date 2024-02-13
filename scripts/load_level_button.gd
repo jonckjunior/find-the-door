@@ -23,7 +23,7 @@ func _on_pressed():
 	var gameManager = get_node("/root/GameManager")
 	if gameManager.isFadingInMainMenu || gameManager.isFadingOutMainMenu: return
 	var lodadedLevel = load(levelToLoad)
-	await gameManager.transition_main_menu(get_parent(), lodadedLevel)
+	await gameManager.transition_main_menu(get_parent(), lodadedLevel, levelToLoad)
 
 func refresh():
 	_ready()

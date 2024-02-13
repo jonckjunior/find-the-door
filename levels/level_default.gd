@@ -8,7 +8,6 @@ class_name LevelManager
 
 var platformsToReset : Dictionary = {}
 var cameraDict : Dictionary = {}
-var activatedCamera : bool = false
 
 func _ready():
 	respawnPosition = player.global_position
@@ -21,16 +20,9 @@ func _ready():
 	for node in nodesToReset:
 		platformsToReset[node] = node.global_position
 
-func _process(_delta):
-	await get_tree().process_frame
-	gameManager.new_scene_loaded.emit()
-
 func fade_out_player_death():
 	gameManager.fade_out()
 	gameManager.increment_death()
-
-func fade_in_player_respawn():
-	gameManager.fade_in()
 
 func _on_default_door_player_passed_level():
 	player.take_controllers_away()
@@ -44,13 +36,12 @@ func _on_default_door_player_passed_level():
 func _on_player_player_death():
 	fade_out_player_death()
 	camera.death_shake()
-	await get_tree().create_timer(0.5).timeout
+	await gameManager.fade_out_complete
 	respawn_player()
-
 	reset_platforms()
 
 func respawn_player():
-	fade_in_player_respawn()
+	gameManager.fade_in()
 	player.respawn_player(respawnPosition)
 
 func _on_player_dash():

@@ -1,22 +1,40 @@
 extends Node2D
 
-var tweenPosition: Tween
-var tweenCollision: Tween
+const SHAKING_STATE_TIME = 0.2
+const STATIC_TIME = 0.2
+
+var shakingState: bool = false
+var shakingStateTimer: float = 0.0
+
+var fallingState: bool = false
+
+var staticTimer: float = 0.0
+
+
+func _process(delta):
+	staticTimer += delta
+	
+	if shakingState:
+		shakingStateTimer += delta
+	
+	if shakingStateTimer > SHAKING_STATE_TIME:
+		fallingState = true
+		$Sprite2D/StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+		shakingState = false
+	
+	if fallingState:
+		global_position.y += 100 * delta
 
 func _on_area_2d_body_entered(body):
-	#reset()
-	if body.is_in_group("player"):
-		var target = global_position.y + 1000
-		tweenPosition = get_tree().create_tween()
-		tweenPosition.tween_property(self, "global_position:y", target, 5).set_delay(0.2)
-		
-		tweenCollision = get_tree().create_tween()
-		tweenCollision.tween_callback($Sprite2D/StaticBody2D/CollisionShape2D.set_deferred.bind("disabled", true)).set_delay(0.2)
+	if body.is_in_group("player") and staticTimer > STATIC_TIME:
+		shakingState = true
+		print(body.global_position)
+		print(global_position)
 
 func reset():
-	if tweenCollision:
-		tweenCollision.kill()
-	if tweenPosition:
-		tweenPosition.kill()
+	staticTimer = 0.0
+	shakingState = false
+	fallingState = false
+	shakingStateTimer = 0.0
 	
 	$Sprite2D/StaticBody2D/CollisionShape2D.set_deferred("disabled", false)

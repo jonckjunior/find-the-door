@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dntmasepjdo0d"]
+
+[ext_resource type="Texture2D" uid="uid://dyyvlcb67co8u" path="res://sprites/wind_turbine_1.png" id="1_u1500"]
+[ext_resource type="Texture2D" uid="uid://d2fpf1mi82h0o" path="res://sprites/wind_turbine_2.png" id="2_1qtc0"]
+[ext_resource type="Script" path="res://scripts/wind_turbine.gd" id="3_k6y4n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_urwc2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u1500")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_1qtc0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="WindTurbine" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_urwc2")
+frame_progress = 0.830341
+script = ExtResource("3_k6y4n")

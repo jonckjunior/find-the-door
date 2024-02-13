@@ -20,11 +20,10 @@ size = Vector2(46, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uqqvc"]
 size = Vector2(46, 6)
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_a3ymq")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("")
 
 [node name="map" parent="." instance=ExtResource("2_wals4")]
 

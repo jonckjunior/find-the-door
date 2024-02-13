@@ -17,11 +17,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 195.99999999999997,
-                "y": -104.33333333333331
+                "x": 207,
+                "y": -90.75
             }
         },
         "map_1.tmx": {
@@ -33,7 +33,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 238.66666666666663,
-                "y": -77.66666666666669
+                "y": -77.66666666666663
             }
         },
         "map_10.tmx": {
@@ -117,8 +117,8 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 80.66666666666663,
-                "y": -57
+                "x": 79.99999999999997,
+                "y": -90.33333333333331
             }
         },
         "map_17.tmx": {
@@ -127,11 +127,11 @@
                 6,
                 5
             ],
-            "scale": 1.5,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 304.66666666666663,
-                "y": -63.666666666666686
+                "x": 226,
+                "y": 29.5
             }
         },
         "map_18.tmx": {
@@ -174,6 +174,19 @@
                 "y": -4.5
             }
         },
+        "map_20.tmx": {
+            "expandedObjectLayers": [
+                3,
+                6,
+                5
+            ],
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 165.99999999999997,
+                "y": -69.66666666666663
+            }
+        },
         "map_3.tmx": {
             "expandedObjectLayers": [
                 4,
@@ -182,8 +195,8 @@
             "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 239.5,
-                "y": 118.75
+                "x": 155,
+                "y": 8.75
             }
         },
         "map_4.tmx": {
@@ -196,8 +209,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 172.75,
-                "y": -83
+                "x": 207,
+                "y": -76.75
             }
         },
         "map_5.tmx": {
@@ -207,16 +220,16 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": -33,
-                "y": -135.33333333333331
+                "x": 116.33333333333331,
+                "y": -83.33333333333331
             }
         },
         "map_6.tmx": {
             "scale": 1.116,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 177.86738351254482,
-                "y": -81.54121863799281
+                "x": 258.0645161290322,
+                "y": -99.01433691756267
             }
         },
         "map_7.tmx": {
@@ -228,8 +241,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 219.99999999999997,
-                "y": -205.66666666666669
+                "x": 220.33333333333337,
+                "y": -205.33333333333331
             }
         },
         "map_8.tmx": {
@@ -251,25 +264,26 @@
                 5
             ],
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 225.99999999999997,
-                "y": -105
+                "x": 144.66666666666663,
+                "y": -169.66666666666663
             }
         },
         "map_end_game.tmx": {
             "expandedObjectLayers": [
+                4,
                 3
             ],
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 191.99999999999997,
-                "y": -135.66666666666669
+                "x": 191.33333333333331,
+                "y": -169
             }
         },
         "objects.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 4,
             "scaleInEditor": 1
         }
     },
@@ -290,18 +304,18 @@
     ],
     "project": "tiled_maps.tiled-project",
     "recentFiles": [
-        "map_1.tmx",
+        "map_18.tmx",
+        "black.tsx",
+        "objects.tsx",
+        "map_end_game.tmx",
+        "map_17.tmx",
+        "map_16.tmx",
+        "map_15.tmx",
+        "map_14.tmx",
+        "map_13.tmx",
+        "map_12.tmx",
         "map_10.tmx",
-        "map_9.tmx",
-        "map_6.tmx",
-        "map_8.tmx",
-        "map_2.tmx",
-        "map_3.tmx",
-        "map_4.tmx",
-        "map_0.tmx",
-        "map_5.tmx",
-        "map_19.tmx",
-        "map_15.tmx"
+        "map_9.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

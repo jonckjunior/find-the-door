@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://o3wumbgnceh0"]
+
+[ext_resource type="Shader" path="res://objects/wind_test.gdshader" id="1_uo18w"]
+[ext_resource type="Texture2D" uid="uid://cs717ufqrtfvh" path="res://sprites/lateral_black_square.png" id="2_0etwg"]
+[ext_resource type="Script" path="res://scripts/wind_lateral.gd" id="3_qylln"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xhwc7"]
+shader = ExtResource("1_uo18w")
+shader_parameter/rain_amount = 100.0
+shader_parameter/near_rain_length = 0.01
+shader_parameter/far_rain_length = 0.01
+shader_parameter/near_rain_width = 1.0
+shader_parameter/far_rain_width = 0.5
+shader_parameter/near_rain_transparency = 1.0
+shader_parameter/far_rain_transparency = 0.75
+shader_parameter/rain_color = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/base_rain_speed = 0.1
+shader_parameter/additional_rain_speed = 0.1
+shader_parameter/slant = 4.75e-08
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcauv"]
+size = Vector2(176, 32)
+
+[node name="WindLateralArea" type="Area2D"]
+script = ExtResource("3_qylln")
+
+[node name="WindTest" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_xhwc7")
+position = Vector2(-4.77987e-06, 1.14441e-05)
+rotation = -1.5708
+scale = Vector2(0.997593, 0.982192)
+texture = ExtResource("2_0etwg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.30364e-14, 2.6226e-06)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_lcauv")

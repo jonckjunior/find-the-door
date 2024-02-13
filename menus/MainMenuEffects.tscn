@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://0wv6jc50pgnw"]
+[gd_scene load_steps=5 format=3 uid="uid://baaeew2ca51ee"]
 
 [ext_resource type="Script" path="res://scripts/MainMenuEffects.gd" id="1_y57xm"]
 [ext_resource type="PackedScene" uid="uid://cfixdoyiqony5" path="res://objects/run_timer.tscn" id="2_auyx8"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://da5tk0xx2q1h" path="res://objects/death_counter.tscn" id="4_tkhbl"]
 
 [node name="MainMenuEffects" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +16,7 @@ grow_vertical = 2
 script = ExtResource("1_y57xm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="RunTimer" parent="CanvasLayer" instance=ExtResource("2_auyx8")]
 visible = false

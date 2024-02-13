@@ -9,11 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="9_5l4xf"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="11_wtn7f"]
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_s0pax")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
 
 [node name="map" parent="." instance=ExtResource("2_k1gdg")]
 

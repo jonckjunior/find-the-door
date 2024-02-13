@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://ehmurudjq8y2" path="res://sprites/animation/player_death/player_dying7.png" id="8_utasf"]
 [ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="9_opuj6"]
 [ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="9_v5njx"]
+[ext_resource type="Texture2D" uid="uid://cgkpumkslrldr" path="res://sprites/playeer_running_3.png" id="10_wq00y"]
+[ext_resource type="Texture2D" uid="uid://cbjrm36ykh020" path="res://sprites/player_running_2.png" id="11_dvlek"]
 [ext_resource type="AudioStream" uid="uid://dsdmehhurlyy0" path="res://audios/click.wav" id="15_jurs1"]
 [ext_resource type="Texture2D" uid="uid://cytr2pe7ycmrk" path="res://particles/sprites/character_horns.png" id="16_jgkcx"]
 
@@ -58,14 +60,6 @@ region = Rect2(64, 240, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8fk3y"]
 atlas = ExtResource("2_rkh1q")
 region = Rect2(16, 240, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rkig2"]
-atlas = ExtResource("2_rkh1q")
-region = Rect2(32, 240, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4x78l"]
-atlas = ExtResource("2_rkh1q")
-region = Rect2(48, 240, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ae2pr"]
 animations = [{
@@ -116,10 +110,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_8fk3y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rkig2")
+"texture": ExtResource("10_wq00y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4x78l")
+"texture": ExtResource("11_dvlek")
 }],
 "loop": true,
 "name": &"running",
@@ -140,8 +134,7 @@ shape = SubResource("RectangleShape2D_186sp")
 texture_filter = 1
 material = SubResource("ShaderMaterial_gx3vk")
 sprite_frames = SubResource("SpriteFrames_ae2pr")
-animation = &"running"
-frame_progress = 0.863003
+animation = &"idle"
 
 [node name="JumpParticle" parent="." instance=ExtResource("9_opuj6")]
 position = Vector2(-1, 6)

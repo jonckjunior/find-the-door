@@ -18,7 +18,7 @@ func _ready():
 	playButton.grab_focus()
 
 func playButtonPressed():
-	await gameManager.transition_main_menu(self, loadedLevelChooser)
+	await gameManager.transition_main_menu(self, loadedLevelChooser, "res://menus/LevelChooser.tscn")
 
 func optionsButtonPressed():
 	pass

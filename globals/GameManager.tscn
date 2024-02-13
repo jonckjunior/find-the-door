@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d2gapovjcef2x"]
+[gd_scene load_steps=21 format=3 uid="uid://d2gapovjcef2x"]
 
 [ext_resource type="Shader" path="res://shaders/screen_transition_shader.gdshader" id="1_1c5gf"]
 [ext_resource type="Script" path="res://globals/GameManager.gd" id="1_lv232"]
@@ -8,12 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://x4tynwqe2o2h" path="res://sprites/tile_0383.png" id="4_6y1wg"]
 [ext_resource type="PackedScene" uid="uid://uopok6xy78wv" path="res://objects/tv_texture.tscn" id="4_pmv11"]
 [ext_resource type="AudioStream" uid="uid://bnqo5ec4af7uc" path="res://audios/use_door.wav" id="5_khh07"]
+[ext_resource type="Script" path="res://scripts/CurrentLevel.gd" id="5_r1phl"]
 [ext_resource type="Texture2D" uid="uid://l5cwm04w3mq2" path="res://sprites/character_pixelated.png" id="6_0a5tx"]
+[ext_resource type="Script" path="res://scripts/NumberOfCoins.gd" id="6_22gga"]
 [ext_resource type="Texture2D" uid="uid://bxp2yyms1lvmx" path="res://sprites/dialogue.png" id="6_mcyyk"]
 [ext_resource type="PackedScene" uid="uid://bsmgaik8axf6j" path="res://menus/pause_menu.tscn" id="7_h8ffa"]
 [ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="8_qpdok"]
 [ext_resource type="Script" path="res://scripts/typewritter_dialogue.gd" id="9_sauo2"]
+[ext_resource type="FontFile" uid="uid://ckfamtjxtth0y" path="res://fonts/Poco.ttf" id="10_46a2u"]
 [ext_resource type="Texture2D" uid="uid://cukalvtp1rbwi" path="res://sprites/zezin_head.png" id="12_scv1h"]
+[ext_resource type="Script" path="res://scripts/typewritter_guardian.gd" id="13_ng8e8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lnf23"]
 shader = ExtResource("1_1c5gf")
@@ -31,6 +35,7 @@ textureRect = NodePath("LevelTransition")
 
 [node name="UI" type="Control" parent="."]
 visible = false
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = 7.0
@@ -52,6 +57,33 @@ offset_top = 11.0
 offset_right = 351.0
 offset_bottom = 51.0
 
+[node name="CurrentLevel" type="RichTextLabel" parent="UI"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 11.0
+offset_right = 73.0
+offset_bottom = 51.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("10_46a2u")
+text = "WORLD 2-1"
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("5_r1phl")
+
+[node name="NumberOfCoins" type="RichTextLabel" parent="UI"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 19.0
+offset_right = 57.0
+offset_bottom = 59.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("10_46a2u")
+text = "COINS"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("6_22gga")
+
 [node name="Death" type="Sprite2D" parent="UI"]
 texture_filter = 1
 position = Vector2(266, 27)
@@ -59,9 +91,10 @@ scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_6y1wg")
 
 [node name="CharacterTransition" type="Sprite2D" parent="UI"]
+visible = false
 z_index = 5
 texture_filter = 1
-position = Vector2(-60, 4)
+position = Vector2(150, 172)
 texture = ExtResource("6_0a5tx")
 
 [node name="Talk" type="Node2D" parent="."]
@@ -94,6 +127,20 @@ text = "Me, at the Door? Oh, I asked for the Guardian’s life story. It was eit
 autowrap_mode = 3
 script = ExtResource("9_sauo2")
 
+[node name="PressXText" type="RichTextLabel" parent="Talk"]
+texture_filter = 1
+offset_left = 270.0
+offset_top = 154.0
+offset_right = 360.0
+offset_bottom = 194.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("10_46a2u")
+bbcode_enabled = true
+text = "[pulse freq=1.5] PRESS JUMP"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
 [node name="ColorRect" parent="." instance=ExtResource("4_pmv11")]
 
 [node name="LevelTransition" type="TextureRect" parent="."]
@@ -106,6 +153,37 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_hhgas")
 
+[node name="GuardianTalk" type="Node2D" parent="."]
+visible = false
+
+[node name="PressXTextGuardian" type="RichTextLabel" parent="GuardianTalk"]
+texture_filter = 1
+offset_left = 213.0
+offset_top = 143.0
+offset_right = 303.0
+offset_bottom = 183.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/normal_font = ExtResource("10_46a2u")
+bbcode_enabled = true
+text = "[pulse freq=1.5] PRESS JUMP"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="GuardianText" parent="GuardianTalk" instance=ExtResource("8_qpdok")]
+offset_left = 58.0
+offset_top = 18.0
+offset_right = 458.0
+offset_bottom = 268.0
+scale = Vector2(0.5, 0.5)
+text = "YOUR JORNEY NECESSITATES MORE THAN WHAT LIES WITHIN. THUS, WITH RESERVATION, I BESTOW UPON YOU SURGE.
+
+PRESS 'Z' TO WIELD THIS FORCE — USE IT WISELY, FOR ITS POWER IS IMMENSE AND NOT WITHOUT CONSEQUENCE.
+"
+fit_content = false
+autowrap_mode = 3
+script = ExtResource("13_ng8e8")
+
 [node name="AudioDoorUse" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_khh07")
 
@@ -114,3 +192,5 @@ environment = SubResource("Environment_4h2fk")
 
 [node name="PauseMenu" parent="." instance=ExtResource("7_h8ffa")]
 visible = false
+
+[editable path="GuardianTalk/GuardianText"]

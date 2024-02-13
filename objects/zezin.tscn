@@ -1,0 +1,337 @@
+[gd_scene load_steps=27 format=3 uid="uid://c2eotrevapnbj"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_ebbia"]
+[ext_resource type="Texture2D" uid="uid://baa3ll8otrl5w" path="res://sprites/animation/player_death/player_dying1.png" id="2_m7i4h"]
+[ext_resource type="Texture2D" uid="uid://c5ycm4vebpppc" path="res://sprites/animation/player_death/player_dying2.png" id="3_kekai"]
+[ext_resource type="Texture2D" uid="uid://cwqot70ef5aqh" path="res://sprites/animation/player_death/player_dying3.png" id="4_smik1"]
+[ext_resource type="Texture2D" uid="uid://ber6a3lvglmyc" path="res://sprites/animation/player_death/player_dying4.png" id="5_xsac0"]
+[ext_resource type="Texture2D" uid="uid://c670d32sgvund" path="res://sprites/animation/player_death/player_dying5.png" id="6_yfqpq"]
+[ext_resource type="Texture2D" uid="uid://b5vk31iqk36vk" path="res://sprites/animation/player_death/player_dying6.png" id="7_fon2i"]
+[ext_resource type="Texture2D" uid="uid://ehmurudjq8y2" path="res://sprites/animation/player_death/player_dying7.png" id="8_n8uup"]
+[ext_resource type="Texture2D" uid="uid://ct6rok6ynm7ly" path="res://sprites/zezinho_1.png" id="9_72k07"]
+[ext_resource type="Texture2D" uid="uid://dw63irdveq4ut" path="res://sprites/zezinho_2.png" id="9_jus2n"]
+[ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="9_stsqx"]
+[ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="10_dngq8"]
+[ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="11_5naw8"]
+[ext_resource type="AudioStream" uid="uid://dds3a7vbjkjv" path="res://audios/mixkit-quick-jump-arcade-game-239.wav" id="12_y823k"]
+[ext_resource type="AudioStream" uid="uid://cp17n6ggy2upn" path="res://audios/mixkit-sci-fi-game-screech-893.wav" id="13_p57ir"]
+[ext_resource type="AudioStream" uid="uid://b71th3lo52yst" path="res://audios/hitHurt.wav" id="14_b3myq"]
+[ext_resource type="AudioStream" uid="uid://dsdmehhurlyy0" path="res://audios/click.wav" id="15_ud13j"]
+[ext_resource type="Texture2D" uid="uid://cytr2pe7ycmrk" path="res://particles/sprites/character_horns.png" id="16_mnvus"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_186sp"]
+size = Vector2(8, 9)
+
+[sub_resource type="Shader" id="Shader_mfoue"]
+code = "shader_type canvas_item;
+
+uniform vec2 deformation = vec2(0, 0);
+uniform float sideWaysDeformationFactor = 5.0;
+uniform float knockbackFactor = 0.4;
+
+void vertex() {
+	vec2 deformationStrength = abs(deformation);
+	float sideWaysDeformation = min(deformationStrength.x, deformationStrength.y);
+	float spriteWidth = abs(VERTEX.x);
+	if (sign(VERTEX.y) != sign(deformation.y)) {
+		VERTEX.x += sideWaysDeformation * sideWaysDeformationFactor * spriteWidth * sign(deformation.x);
+	}
+	vec2 scale = 1.0 - deformationStrength;
+	
+	VERTEX.x *= scale.x / scale.y;
+	VERTEX.y *= scale.y / scale.x;
+	VERTEX.xy += deformation * spriteWidth * knockbackFactor;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gx3vk"]
+shader = SubResource("Shader_mfoue")
+shader_parameter/deformation = Vector2(0, 0)
+shader_parameter/sideWaysDeformationFactor = 5.0
+shader_parameter/knockbackFactor = 0.4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tn4d"]
+atlas = ExtResource("9_stsqx")
+region = Rect2(64, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fk3y"]
+atlas = ExtResource("9_stsqx")
+region = Rect2(16, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkig2"]
+atlas = ExtResource("9_stsqx")
+region = Rect2(32, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x78l"]
+atlas = ExtResource("9_stsqx")
+region = Rect2(48, 240, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ae2pr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m7i4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kekai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_smik1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xsac0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_yfqpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_fon2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_n8uup")
+}],
+"loop": true,
+"name": &"death",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_72k07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jus2n")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tn4d")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fk3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkig2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x78l")
+}],
+"loop": true,
+"name": &"running",
+"speed": 7.0
+}]
+
+[node name="Zezin" type="CharacterBody2D" node_paths=PackedStringArray("displacementRayCastsUp", "displacementRayCastsDown") groups=["player"]]
+collision_layer = 2
+script = ExtResource("1_ebbia")
+displacementRayCastsUp = [NodePath("RayCasts/UpRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/UpRayCast3"), NodePath("RayCasts/UpRayCast4"), NodePath("RayCasts/UpRayCast5"), NodePath("RayCasts/UpRayCast6")]
+displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_186sp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gx3vk")
+sprite_frames = SubResource("SpriteFrames_ae2pr")
+animation = &"idle"
+frame_progress = 0.992151
+
+[node name="JumpParticle" parent="." instance=ExtResource("10_dngq8")]
+position = Vector2(-1, 6)
+
+[node name="RightWallJump" parent="." instance=ExtResource("10_dngq8")]
+position = Vector2(10, 2)
+
+[node name="LandingParticle" parent="." instance=ExtResource("10_dngq8")]
+position = Vector2(0, 8)
+
+[node name="LeftWallJump" parent="." instance=ExtResource("10_dngq8")]
+position = Vector2(-9, 3)
+
+[node name="DashParticle" parent="." instance=ExtResource("11_5naw8")]
+position = Vector2(1, -6)
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_y823k")
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_p57ir")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_b3myq")
+
+[node name="RunningSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_ud13j")
+
+[node name="LandingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_ud13j")
+pitch_scale = 0.5
+
+[node name="WallJumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_y823k")
+pitch_scale = 0.7
+
+[node name="RayCasts" type="Node2D" parent="."]
+
+[node name="UpRayCast1" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-5, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast2" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-3, -1.42109e-14)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast3" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-1, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast4" type="RayCast2D" parent="RayCasts"]
+position = Vector2(1, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast5" type="RayCast2D" parent="RayCasts"]
+position = Vector2(3, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRayCast6" type="RayCast2D" parent="RayCasts"]
+position = Vector2(5, -1.42109e-14)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 15)
+collide_with_areas = true
+
+[node name="UpRightRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(6, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 5)
+
+[node name="UpLeftRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-6, 0)
+rotation = 3.14159
+target_position = Vector2(2.08165e-12, 5)
+
+[node name="RightRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 4)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="RightRayCastWallJumpDown" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 6)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="RightRayCastWallJumpUp" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-4.54747e-13, 2)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="LeftRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 4)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="LeftRayCastWallJumpDown" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 6)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="LeftRayCastWallJumpUp" type="RayCast2D" parent="RayCasts"]
+position = Vector2(4.54747e-13, 2)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 12)
+collide_with_areas = true
+
+[node name="RightUpRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, -3)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 9)
+collide_with_areas = true
+
+[node name="LeftUpRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, -3)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 9)
+collide_with_areas = true
+
+[node name="RightRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 3)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 19)
+
+[node name="LeftRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 3)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 19)
+
+[node name="RightDownRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 8)
+rotation = -1.5708
+target_position = Vector2(2.08165e-12, 9)
+
+[node name="LeftDownRayCastDash" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, 8)
+rotation = 1.5708
+target_position = Vector2(2.08165e-12, 9)
+
+[node name="DownRayCast1" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-5, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast2" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-3, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast3" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-1, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast4" type="RayCast2D" parent="RayCasts"]
+position = Vector2(1, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast5" type="RayCast2D" parent="RayCasts"]
+position = Vector2(3, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownRayCast6" type="RayCast2D" parent="RayCasts"]
+position = Vector2(5, 0)
+target_position = Vector2(2.08165e-12, 20)
+
+[node name="DownLeftRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-6, 0)
+target_position = Vector2(2.08165e-12, 15)
+
+[node name="DownRightRayCast" type="RayCast2D" parent="RayCasts"]
+position = Vector2(6, 0)
+target_position = Vector2(2.08165e-12, 15)
+
+[node name="CharacterHorns" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(2.08165e-12, 2.5)
+texture = ExtResource("16_mnvus")
+
+[node name="OneWayMarker" type="Marker2D" parent="."]
+position = Vector2(0, 8)

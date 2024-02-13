@@ -3,13 +3,15 @@ class_name GameManagerClass
 
 signal fade_out_complete
 signal fade_in_complete
-signal new_scene_loaded
+signal transition_dialogue_complete
 
 @export var textureRect: TextureRect
 @onready var gameVariables : GameVariablesClass = get_node("/root/GameVariables")
 @onready var rect : ColorRect = $ColorRect
 @onready var talk = get_node("Talk")
 @onready var typewritter = get_node("Talk/RichTextLabel")
+@onready var guardianTypewritter = get_node("GuardianTalk/GuardianText")
+@onready var playerDialoguePosition = $UI/CharacterTransition.global_position
 
 #TRANSITION STATS
 var isFadingIn: bool = false
@@ -43,6 +45,7 @@ func _ready():
 func fade_in():
 	transitionProgress = 1.0
 	isFadingIn = true
+	print("comecou fade in")
 
 func fade_out():
 	transitionProgress = 0.0
@@ -59,13 +62,14 @@ func _process(delta):
 		fade_out_main_menu(delta)
 
 	if isFadingIn:
-		transitionProgress = max(transitionProgress - delta * 4.0, 0.0)
+		transitionProgress = max(transitionProgress - delta * 2.0, 0.0)
 		if transitionProgress == 0.0:
 			isFadingIn = false
 			fade_in_complete.emit()
+			print("acabou fade in")
 		(textureRect.material as ShaderMaterial).set_shader_parameter("progress", transitionProgress)
 	elif isFadingOut:
-		transitionProgress = min(transitionProgress + delta * 4.0, 1.0)
+		transitionProgress = min(transitionProgress + delta * 2.0, 1.0)
 		if transitionProgress == 1.0:
 			isFadingOut = false
 			fade_out_complete.emit()
@@ -100,11 +104,13 @@ func load_next_level() -> void:
 	get_tree().change_scene_to_packed(nextScene)
 	currentScene = coreWorld[scenePosition + 1]
 	
-	await new_scene_loaded
-	print("new scene loaded")
+	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", Vector2(1.0, 1.0), 1.5).set_trans(Tween.TRANS_EXPO)
+	await get_tree().create_tween().tween_property($UI/CharacterTransition, "global_position", playerDialoguePosition, 1.5).set_trans(Tween.TRANS_EXPO).finished
+	
+	handle_dialogue(scenePosition)
+	await transition_dialogue_complete
 	
 	var newScene = get_tree().current_scene
-	
 	var playerPositionTo = newScene.player.global_position - (newScene.camera as Camera2D).get_screen_center_position() + screenDimension - Vector2(0, 0.5)
 
 	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", newScene.player.scale, 1.5).set_trans(Tween.TRANS_EXPO).finished
@@ -219,7 +225,7 @@ func fade_out_main_menu(delta):
 	if newValue == 1.0:
 		isFadingOutMainMenu = false
 
-func transition_main_menu(fromObject: Object, sceneToTransitionTo: PackedScene):
+func transition_main_menu(fromObject: Object, sceneToTransitionTo: PackedScene, levelToLoad: String):
 	if isFadingInMainMenu || isFadingOutMainMenu:
 		return
 
@@ -227,6 +233,7 @@ func transition_main_menu(fromObject: Object, sceneToTransitionTo: PackedScene):
 	await get_tree().create_tween().tween_property(fromObject, "modulate:a", 0.0, 1.0).finished
 	isFadingInMainMenu = true
 	transition_to_packed(sceneToTransitionTo)
+	currentScene = levelToLoad
 
 func get_player_position_for_scene(camera: Camera2D, player: Player) -> Vector2:
 	var camera_screen_center = camera.get_screen_center_position()
@@ -247,11 +254,14 @@ func enter_dialogue(player: Player):
 	await get_tree().create_timer(1.0).timeout
 	var scenePosition = get_scene_position(currentScene)
 	talk.visible = true
+	$Talk/PressXText.visible = false
 	
 	for dialogue in dialoguesToShow.dialogues_traveler[scenePosition]:
 		typewritter.show_dialogue(dialogue)
-		print(dialogue)
+		await typewritter.show_next_dialogue_button
+		$Talk/PressXText.visible = true
 		await typewritter.show_next_dialogue
+		$Talk/PressXText.visible = false
 	
 	talk.visible = false
 	await get_tree().create_timer(0.5).timeout
@@ -262,3 +272,19 @@ func get_scene_position(scene: String) -> int:
 	var scenePosition = coreWorld.find(scene)
 	assert(scenePosition >= 0 && scenePosition < coreWorld.size())
 	return scenePosition
+
+func handle_dialogue(scenePosition: int):
+	await get_tree().create_timer(1.0).timeout
+	$GuardianTalk.visible = true
+	$GuardianTalk/PressXTextGuardian.visible = false
+
+	for dialogue in dialoguesToShow.dialogues_guardian[scenePosition]:
+		guardianTypewritter.show_dialogue(dialogue)
+		await guardianTypewritter.show_next_dialogue_button
+		$GuardianTalk/PressXTextGuardian.visible = true
+		await guardianTypewritter.show_next_dialogue
+		$GuardianTalk/PressXTextGuardian.visible = false
+
+	$GuardianTalk.visible = false
+	await get_tree().create_timer(0.5).timeout
+	transition_dialogue_complete.emit()
