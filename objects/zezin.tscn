@@ -142,7 +142,7 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_gx3vk")
 sprite_frames = SubResource("SpriteFrames_ae2pr")
 animation = &"idle"
-frame_progress = 0.992151
+frame_progress = 0.467095
 
 [node name="JumpParticle" parent="." instance=ExtResource("10_dngq8")]
 position = Vector2(-1, 6)

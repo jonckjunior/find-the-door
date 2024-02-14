@@ -327,3 +327,6 @@ texture = ExtResource("16_jgkcx")
 
 [node name="OneWayMarker" type="Marker2D" parent="."]
 position = Vector2(0, 8)
+
+[node name="HookHand" type="Marker2D" parent="."]
+position = Vector2(5, 5)

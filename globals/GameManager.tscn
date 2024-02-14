@@ -142,6 +142,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ColorRect" parent="." instance=ExtResource("4_pmv11")]
+visible = false
 
 [node name="LevelTransition" type="TextureRect" parent="."]
 texture_filter = 1
