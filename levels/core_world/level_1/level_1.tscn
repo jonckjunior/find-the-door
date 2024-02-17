@@ -25,7 +25,27 @@ displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCast
 position = Vector2(712, -184)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_jk3jv")]
+visible = false
 target = NodePath("../Player")
+
+[node name="DefaultPointLight2" parent="." instance=ExtResource("6_jk3jv")]
+position = Vector2(25, -88)
+script = null
+
+[node name="DefaultPointLight3" parent="." instance=ExtResource("6_jk3jv")]
+position = Vector2(247, -118)
+energy = 0.2
+script = null
+
+[node name="DefaultPointLight4" parent="." instance=ExtResource("6_jk3jv")]
+position = Vector2(378, -200)
+energy = 0.2
+script = null
+
+[node name="DefaultPointLight5" parent="." instance=ExtResource("6_jk3jv")]
+position = Vector2(664, -200)
+energy = 0.2
+script = null
 
 [node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_3dwga")]
 position = Vector2(180, -110)

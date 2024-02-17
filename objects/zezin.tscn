@@ -13,9 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://bgpml0lh1osmo" path="res://sprites/tilemap/monochrome_tilemap_transparent_packed.png" id="9_stsqx"]
 [ext_resource type="PackedScene" uid="uid://ds3bcv05nbg6w" path="res://particles/another_earth_particle.tscn" id="10_dngq8"]
 [ext_resource type="PackedScene" uid="uid://dwej5wjtgqyc8" path="res://particles/earth_particle.tscn" id="11_5naw8"]
+[ext_resource type="Texture2D" uid="uid://cq1nivsbwkhev" path="res://particles/sprites/walk-0.png" id="12_ddqis"]
 [ext_resource type="AudioStream" uid="uid://dds3a7vbjkjv" path="res://audios/mixkit-quick-jump-arcade-game-239.wav" id="12_y823k"]
+[ext_resource type="Texture2D" uid="uid://ciqaaae3sspin" path="res://particles/sprites/walk-2.png" id="13_b6k28"]
 [ext_resource type="AudioStream" uid="uid://cp17n6ggy2upn" path="res://audios/mixkit-sci-fi-game-screech-893.wav" id="13_p57ir"]
 [ext_resource type="AudioStream" uid="uid://b71th3lo52yst" path="res://audios/hitHurt.wav" id="14_b3myq"]
+[ext_resource type="Texture2D" uid="uid://egbqlpkb2aka" path="res://particles/sprites/walk-1.png" id="14_dhjsa"]
 [ext_resource type="AudioStream" uid="uid://dsdmehhurlyy0" path="res://audios/click.wav" id="15_ud13j"]
 [ext_resource type="Texture2D" uid="uid://cytr2pe7ycmrk" path="res://particles/sprites/character_horns.png" id="16_mnvus"]
 
@@ -52,18 +55,6 @@ shader_parameter/knockbackFactor = 0.4
 [sub_resource type="AtlasTexture" id="AtlasTexture_3tn4d"]
 atlas = ExtResource("9_stsqx")
 region = Rect2(64, 240, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8fk3y"]
-atlas = ExtResource("9_stsqx")
-region = Rect2(16, 240, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rkig2"]
-atlas = ExtResource("9_stsqx")
-region = Rect2(32, 240, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4x78l"]
-atlas = ExtResource("9_stsqx")
-region = Rect2(48, 240, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ae2pr"]
 animations = [{
@@ -114,13 +105,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8fk3y")
+"texture": ExtResource("12_ddqis")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rkig2")
+"texture": ExtResource("13_b6k28")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4x78l")
+"texture": ExtResource("14_dhjsa")
 }],
 "loop": true,
 "name": &"running",
@@ -141,8 +132,8 @@ shape = SubResource("RectangleShape2D_186sp")
 texture_filter = 1
 material = SubResource("ShaderMaterial_gx3vk")
 sprite_frames = SubResource("SpriteFrames_ae2pr")
-animation = &"idle"
-frame_progress = 0.467095
+animation = &"running"
+frame_progress = 0.441806
 
 [node name="JumpParticle" parent="." instance=ExtResource("10_dngq8")]
 position = Vector2(-1, 6)
