@@ -1,23 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://s0iniioc0wis"]
+[gd_scene load_steps=5 format=3 uid="uid://s0iniioc0wis"]
 
 [ext_resource type="Texture2D" uid="uid://chlig6ey8kdat" path="res://sprites/hook_middle.png" id="1_5k75t"]
+[ext_resource type="Script" path="res://scripts/hook.gd" id="1_68t37"]
 [ext_resource type="Texture2D" uid="uid://owafmqrkfqdt" path="res://sprites/hook_end.png" id="2_uhlu3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1dau"]
+size = Vector2(8, 16)
 
 [node name="Hook" type="Node2D"]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_68t37")
 
 [node name="Links" type="Sprite2D" parent="."]
 texture_repeat = 2
-scale = Vector2(-1.74279, -3.21931)
+rotation = -1.5708
 texture = ExtResource("1_5k75t")
 region_enabled = true
 region_rect = Rect2(2.08165e-12, 2.08165e-12, 16, 48)
 
-[node name="Tip" type="CharacterBody2D" parent="."]
-position = Vector2(0, 85)
+[node name="Tip" type="Area2D" parent="."]
+position = Vector2(8, 2.08165e-12)
 collision_layer = 0
 
 [node name="Hook" type="Sprite2D" parent="Tip"]
+rotation = -1.5708
 texture = ExtResource("2_uhlu3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tip"]
+position = Vector2(4, -2.08165e-12)
+shape = SubResource("RectangleShape2D_l1dau")

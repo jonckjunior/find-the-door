@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3vy05rlph1pa"]
+[gd_scene load_steps=10 format=3 uid="uid://d3vy05rlph1pa"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_p3pm3"]
 [ext_resource type="PackedScene" uid="uid://y8yasj72rq6o" path="res://levels/core_world/level_0/map_0.tscn" id="2_dq4aa"]
@@ -7,19 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_b3nci"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_415xr"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_s4iu2"]
+[ext_resource type="PackedScene" uid="uid://s0iniioc0wis" path="res://objects/hook.tscn" id="9_0i8sh"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="11_848y1"]
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
+[node name="LevelX2" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_p3pm3")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 
 [node name="map" parent="." instance=ExtResource("2_dq4aa")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_kreax")]
+[node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_kreax")]
 position = Vector2(24, -57)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+hook = NodePath("../Hook")
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_othmo")]
 position = Vector2(360, -56)
@@ -34,6 +35,10 @@ target = NodePath("../Player")
 
 [node name="Coin" parent="." instance=ExtResource("11_848y1")]
 position = Vector2(6, -217)
+
+[node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_0i8sh")]
+position = Vector2(129, -88)
+player = NodePath("../Player")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

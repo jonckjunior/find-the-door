@@ -5,14 +5,16 @@ class_name Player
 @onready var deathParticleRaw = load("res://particles/death_particle.tscn")
 @onready var playerDeathRaw = load("res://objects/player_death.tscn")
 @onready var dash_trail_scene = load("res://objects/DashTrailScene.tscn")
+@onready var hookHand: Marker2D = $HookHand
 
 @export var canPlayerMove: bool = true
 @export var dashUnlocked: bool = false
 @export var wallSlideUnlocked: bool = false
 @export var wallJumpUnlocked: bool = false
 @export var isJumpUnlocked: bool = false
-@export var displacementRayCastsUp: Array[RayCast2D]
-@export var displacementRayCastsDown: Array[RayCast2D]
+@onready var displacementRayCastsUp: Array[RayCast2D] = [$RayCasts/UpRayCast1, $RayCasts/UpRayCast2, $RayCasts/UpRayCast3, $RayCasts/UpRayCast4, $RayCasts/UpRayCast5, $RayCasts/UpRayCast6]
+@onready var displacementRayCastsDown: Array[RayCast2D] = [$RayCasts/DownRayCast1, $RayCasts/DownRayCast2, $RayCasts/DownRayCast3, $RayCasts/DownRayCast4, $RayCasts/DownRayCast5, $RayCasts/DownRayCast6]
+@export var hook: GrapplingHook
 
 # CONST
 const SPEED = 300.0
@@ -98,7 +100,8 @@ func _physics_process(delta):
 	if velocity.y >= 0:
 		dashForce.y = 0
 
-	dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 20 * delta, 0.0)
+	dashForce.x *= delta * 56
+	#dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 20 * delta, 0.0)
 	dashForce.y = sign(dashForce.y) * max(abs(dashForce.y) - 340 * delta, 0.0)
 	
 	if Input.is_action_just_pressed("death"):
@@ -331,11 +334,15 @@ func handle_movement(delta) -> void:
 	
 	var movement = speedDif * 0.15
 	
+	if hook and hook.isFixed:
+		movement = 0
+	
 	
 	velocity.x += movement
-	
-	dashForce.x *= 0.9
 	velocity += dashForce
+	
+	if hook and hook.isFixed:
+		velocity = hook.get_new_velocity(velocity)
 	
 	move_and_slide()
 

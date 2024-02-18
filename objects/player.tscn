@@ -120,11 +120,9 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("displacementRayCastsUp", "displacementRayCastsDown") groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_ipvcg")
-displacementRayCastsUp = [NodePath("RayCasts/UpRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/UpRayCast3"), NodePath("RayCasts/UpRayCast4"), NodePath("RayCasts/UpRayCast5"), NodePath("RayCasts/UpRayCast6")]
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/UpRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.5)
