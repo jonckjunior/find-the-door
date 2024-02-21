@@ -18,11 +18,23 @@
                 4,
                 3
             ],
-            "scale": 2,
+            "scale": 0.4418,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 288.59212313263913,
+                "y": -246.7179719330013
+            }
+        },
+        "map_0_backup.tmx": {
+            "expandedObjectLayers": [
+                4,
+                3
+            ],
+            "scale": 1.5158,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 206.5,
-                "y": -90.75
+                "x": 188.34938646259403,
+                "y": -106.21454017680429
             }
         },
         "map_1.tmx": {
@@ -31,11 +43,11 @@
                 3,
                 5
             ],
-            "scale": 2,
-            "selectedLayer": 4,
+            "scale": 0.7982,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 226,
-                "y": -77.25
+                "x": 368.9551490854423,
+                "y": -120.27060886995741
             }
         },
         "map_10.tmx": {
@@ -103,10 +115,10 @@
                 5
             ],
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 246.66666666666663,
-                "y": 19
+                "x": 247,
+                "y": 19.333333333333343
             }
         },
         "map_16.tmx": {
@@ -119,8 +131,8 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 79.99999999999997,
-                "y": -90.33333333333331
+                "x": 0.33333333333337123,
+                "y": -128
             }
         },
         "map_17.tmx": {
@@ -132,8 +144,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 226,
-                "y": 29.5
+                "x": 270.5,
+                "y": -38
             }
         },
         "map_18.tmx": {
@@ -146,8 +158,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 139,
-                "y": -323.5
+                "x": 128.5,
+                "y": -384
             }
         },
         "map_19.tmx": {
@@ -172,8 +184,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 226,
-                "y": -77.25
+                "x": 225.75,
+                "y": -77
             }
         },
         "map_2.tmx": {

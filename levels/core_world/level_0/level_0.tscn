@@ -29,6 +29,7 @@ position = Vector2(360, -56)
 target = NodePath("../Player")
 
 [node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_415xr")]
+zoom = Vector2(0.5, 0.5)
 target = NodePath("../Player")
 
 [node name="Lighting" parent="." instance=ExtResource("8_s4iu2")]

@@ -74,6 +74,7 @@ var isJumping: bool = false
 var isDashGrounded: bool = false
 var crouchedDash: bool = false
 var dashAngle: Vector2 = Vector2.ZERO
+var isSwinging: bool = false
 
 
 var superDashingTimer: float = 0.0
@@ -98,10 +99,11 @@ func _physics_process(delta):
 		return
 	
 	if velocity.y >= 0:
-		dashForce.y = 0
+		dashForce.y = 0	
 
-	dashForce.x *= delta * 56
+	#dashForce.x *= pow(0.15, delta)
 	#dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 20 * delta, 0.0)
+	dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 100 * delta, 0.0)
 	dashForce.y = sign(dashForce.y) * max(abs(dashForce.y) - 340 * delta, 0.0)
 	
 	if Input.is_action_just_pressed("death"):
@@ -141,14 +143,15 @@ func _physics_process(delta):
 				velocity.y += gravity * delta
 			velocity.y *= 0.8
 		else:
-			var gravityForce = 0.5 if isHalfGravityThreshold() else 1.0
+			var gravityForce = 0.5 if isHalfGravityThreshold() and not (hook and hook.isFixed) else 1.0
 			velocity.y += gravity * delta * gravityForce
-			if get_input("down"):
+			if not (hook and hook.isFixed) and get_input("down"):
 				velocity.y += gravity * delta * 0.5
 	
 	# Handle jump.
 	if is_on_floor():
 		numberOfJumps = 1
+		isSwinging = false
 		if isDashingCooldown < 0.1:
 			numberOfDashes = 1
 
@@ -185,7 +188,7 @@ func handle_jump() -> void:
 			print("velocity = ", velocity)
 			dashForce.x *= 1.1
 			#get_tree().create_tween().tween_property(self, "dashForce", dashForce + Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.8, 0.0), 0.1)
-			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 2.5, -28)
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.3, -28)
 			velocity.y = 0
 			isJumpBuffered = false
 			
@@ -195,7 +198,7 @@ func handle_jump() -> void:
 			print("velocity = ", velocity)
 			superDashingTimer = IS_SUPER_DASHING_TIME
 			
-			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.8, -34)
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1), -34)
 			velocity.y = 0
 			isJumpBuffered = false
 	elif canJump() and (is_on_floor() or (timeSinceFloor < 0.2 and timeSinceDash > 0.5)):
@@ -328,29 +331,33 @@ func handle_dash(delta) -> void:
 
 func handle_movement(delta) -> void:
 	var direction = sign(dashForce.x) if absf(dashForce.x) > 20 else get_input_axis("left", "right")
-	var targetSpeed = direction * get_max_speed() * 0.35
+	var targetSpeed = direction * 0.35 * get_max_speed()
 	
 	var speedDif = targetSpeed - velocity.x
 	
-	var movement = speedDif * 0.15
+	var movement = speedDif * (0.10 if isSwinging else 0.15)
 	
-	if hook and hook.isFixed:
+	#if hook and hook.isFixed:
+		#movement = 0
+	
+	
+	if absf(direction) < 0.1 and hook and hook.isFixed:
 		movement = 0
 	
+	if absf(direction) > 0.1 and hook and hook.isFixed:
+		movement = direction * delta * 30
 	
 	velocity.x += movement
 	velocity += dashForce
 	
 	if hook and hook.isFixed:
-		velocity = hook.get_new_velocity(velocity)
+		velocity = hook.get_new_velocity(velocity, delta)
 	
 	move_and_slide()
 
 func get_max_speed() -> float:
-	if superDashingTimer > 0.0:
-		return SPEED
-	elif isDashing:
-		return SPEED 
+	if isSwinging:
+		return SPEED * 1.5
 	else:
 		return SPEED
 

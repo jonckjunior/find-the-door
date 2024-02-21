@@ -170,6 +170,7 @@ stream = ExtResource("6_ep8wd")
 pitch_scale = 0.7
 
 [node name="RayCasts" type="Node2D" parent="."]
+visible = false
 
 [node name="UpRayCast1" type="RayCast2D" parent="RayCasts"]
 position = Vector2(-5, 0)
@@ -328,3 +329,10 @@ position = Vector2(0, 8)
 
 [node name="HookHand" type="Marker2D" parent="."]
 position = Vector2(5, 5)
+
+[node name="velocity" type="RayCast2D" parent="."]
+modulate = Color(0.596078, 0, 0.596078, 1)
+
+[node name="normal" type="RayCast2D" parent="."]
+modulate = Color(0, 1, 1, 1)
+rotation = -0.715585
