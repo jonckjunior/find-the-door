@@ -35,7 +35,7 @@ const DASH_CORRECTION_TIME_BASE = 0.1
 const DIRECTIONAL_BUFFER_TIME_BASE = 0.2
 const PLAYER_AGAINS_WALL_TIME_BASE = 10.0
 const SUPER_DASH_HORIZONTAL_BOOST = -45.0
-const SUPER_DASH_VERTICAL = 40
+const SUPER_DASH_VERTICAL = 20
 const SUPER_DASH_VERTICAL_HORIZONTAL_BOOST = -80
 const VERTICAL_GRAVITY = 80
 const IS_SUPER_DASHING_TIME = 0.25
@@ -188,7 +188,7 @@ func handle_jump() -> void:
 			print("velocity = ", velocity)
 			dashForce.x *= 1.1
 			#get_tree().create_tween().tween_property(self, "dashForce", dashForce + Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.8, 0.0), 0.1)
-			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.3, -28)
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1) * 1.3, -20)
 			velocity.y = 0
 			isJumpBuffered = false
 			
@@ -198,7 +198,7 @@ func handle_jump() -> void:
 			print("velocity = ", velocity)
 			superDashingTimer = IS_SUPER_DASHING_TIME
 			
-			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1), -34)
+			dashForce += Vector2(SUPER_DASH_VERTICAL * (-1 if $AnimatedSprite2D.flip_h else 1), -30)
 			velocity.y = 0
 			isJumpBuffered = false
 	elif canJump() and (is_on_floor() or (timeSinceFloor < 0.2 and timeSinceDash > 0.5)):
