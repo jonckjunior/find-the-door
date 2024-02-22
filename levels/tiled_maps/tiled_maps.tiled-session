@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map_17.tmx",
+    "activeFile": "map_0.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
         "."
@@ -21,8 +21,8 @@
             "scale": 0.4418,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 288.59212313263913,
-                "y": -246.7179719330013
+                "x": 491.1724762335898,
+                "y": -150.52059755545497
             }
         },
         "map_0_backup.tmx": {
@@ -33,8 +33,8 @@
             "scale": 1.5158,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 188.34938646259403,
-                "y": -106.21454017680429
+                "x": 246.73439767779388,
+                "y": -78.17654044069138
             }
         },
         "map_1.tmx": {
@@ -46,8 +46,8 @@
             "scale": 0.7982,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 368.9551490854423,
-                "y": -120.27060886995741
+                "x": 479.8296166374343,
+                "y": -67.02580806815342
             }
         },
         "map_10.tmx": {
@@ -111,14 +111,13 @@
             "expandedObjectLayers": [
                 4,
                 3,
-                6,
-                5
+                6
             ],
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 247,
-                "y": 19.333333333333343
+                "x": 305.99999999999994,
+                "y": 47.66666666666666
             }
         },
         "map_16.tmx": {
@@ -131,8 +130,8 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 0.33333333333337123,
-                "y": -128
+                "x": 59.333333333333314,
+                "y": -99.66666666666669
             }
         },
         "map_17.tmx": {
@@ -144,8 +143,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 270.5,
-                "y": -38
+                "x": 359,
+                "y": 4.5
             }
         },
         "map_18.tmx": {
@@ -158,8 +157,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 128.5,
-                "y": -384
+                "x": 217,
+                "y": -341.5
             }
         },
         "map_19.tmx": {
@@ -184,8 +183,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 225.75,
-                "y": -77
+                "x": 270,
+                "y": -55.75
             }
         },
         "map_2.tmx": {
@@ -323,7 +322,7 @@
             }
         },
         "objects.tsx": {
-            "scaleInDock": 4,
+            "scaleInDock": 1.1273,
             "scaleInEditor": 1
         }
     },
@@ -340,22 +339,26 @@
         "map_18.tmx",
         "map_15.tmx",
         "map_16.tmx",
-        "map_17.tmx"
+        "map_17.tmx",
+        "map_0_backup.tmx",
+        "map_1_backup.tmx",
+        "map_1.tmx",
+        "map_0.tmx"
     ],
     "project": "tiled_maps.tiled-project",
     "recentFiles": [
-        "map_2_backup.tmx",
-        "map_1_backup.tmx",
-        "map_18.tmx",
         "black.tsx",
         "objects.tsx",
-        "map_end_game.tmx",
-        "map_17.tmx",
-        "map_16.tmx",
+        "map_18.tmx",
         "map_15.tmx",
-        "map_14.tmx",
-        "map_13.tmx",
-        "map_12.tmx"
+        "map_16.tmx",
+        "map_17.tmx",
+        "map_0_backup.tmx",
+        "map_1_backup.tmx",
+        "map_1.tmx",
+        "map_0.tmx",
+        "map_2_backup.tmx",
+        "map_end_game.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

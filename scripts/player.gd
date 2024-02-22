@@ -104,7 +104,7 @@ func _physics_process(delta):
 	#dashForce.x *= pow(0.15, delta)
 	#dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 20 * delta, 0.0)
 	dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 100 * delta, 0.0)
-	dashForce.y = sign(dashForce.y) * max(abs(dashForce.y) - 340 * delta, 0.0)
+	dashForce.y = sign(dashForce.y) * max(abs(dashForce.y) - 220 * delta, 0.0)
 	
 	if Input.is_action_just_pressed("death"):
 		die()
@@ -307,6 +307,7 @@ func handle_dash(delta) -> void:
 		directionX = -1 if $AnimatedSprite2D.flip_h else 1
 	
 	var currentDashForce = Vector2(directionX, directionY).normalized() * DASH_FORCE * Vector2(1.0, 1.0)
+	currentDashForce.y = max(currentDashForce.y, -35)
 	
 	if sign(currentDashForce.x) != sign(dashForce.x):
 		dashForce.x = currentDashForce.x

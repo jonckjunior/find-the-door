@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://2lvm2smybiq"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_lce0q"]
-[ext_resource type="PackedScene" uid="uid://daim1om4t4a57" path="res://levels/core_world/level_1/map_1.tscn" id="2_71jk2"]
+[ext_resource type="PackedScene" uid="uid://bw1q7h2qkgwju" path="res://levels/tiled_maps_hooks/map_1.tmx" id="2_vcyya"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_h4flb"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_4jm2a"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_jk3jv"]
@@ -15,15 +15,15 @@ script = ExtResource("1_lce0q")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 
-[node name="map" parent="." instance=ExtResource("2_71jk2")]
+[node name="map" parent="." instance=ExtResource("2_vcyya")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_h4flb")]
-position = Vector2(-8, -41)
+position = Vector2(-211, 93)
 collision_layer = 1
 hook = NodePath("../Hook")
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_4jm2a")]
-position = Vector2(712, -184)
+position = Vector2(440, 24)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_jk3jv")]
 target = NodePath("../Player")
@@ -35,7 +35,7 @@ target = NodePath("../Player")
 [node name="Lighting" parent="." instance=ExtResource("11_clr4v")]
 
 [node name="Coin" parent="." instance=ExtResource("9_73nhy")]
-position = Vector2(437, -24)
+position = Vector2(-9, 142)
 
 [node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_mk1wb")]
 position = Vector2(34, -76)

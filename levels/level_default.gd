@@ -116,7 +116,7 @@ func change_camera_limits(body, cameraNumber):
 		
 		var zoom_factor = max(1.0, max(zoom_x, zoom_y))
 		
-		#camera.zoom = Vector2(zoom_factor, zoom_factor)
+		camera.zoom = Vector2(zoom_factor, zoom_factor)
 		#get_tree().create_tween().tween_property(camera, "zoom", Vector2(zoom_factor, zoom_factor), 0.5)
 
 func _on_Area2D_body_entered(body):
