@@ -13,7 +13,7 @@ func _ready():
 
 func show_dialogue(txt: String):
 	isCurrentTextFinished = false
-	text = txt.to_upper()
+	text = txt
 	reset()
 
 func _process(_delta):

@@ -45,17 +45,17 @@ offset_bottom = -9.0
 
 [node name="DeathCounter" parent="UI" instance=ExtResource("2_behc0")]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 20.0
-offset_right = 378.0
-offset_bottom = 60.0
+offset_left = 439.0
+offset_top = 23.0
+offset_right = 539.0
+offset_bottom = 63.0
 
 [node name="RunTimer" parent="UI" instance=ExtResource("3_2yv52")]
 layout_mode = 0
-offset_left = 259.0
-offset_top = 11.0
-offset_right = 351.0
-offset_bottom = 51.0
+offset_left = 420.0
+offset_top = 14.0
+offset_right = 512.0
+offset_bottom = 54.0
 
 [node name="CurrentLevel" type="RichTextLabel" parent="UI"]
 layout_mode = 0
@@ -86,7 +86,7 @@ script = ExtResource("6_22gga")
 
 [node name="Death" type="Sprite2D" parent="UI"]
 texture_filter = 1
-position = Vector2(266, 27)
+position = Vector2(427, 30)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_6y1wg")
 
@@ -94,21 +94,24 @@ texture = ExtResource("4_6y1wg")
 visible = false
 z_index = 5
 texture_filter = 1
-position = Vector2(150, 172)
+position = Vector2(240, 242)
 texture = ExtResource("6_0a5tx")
 
 [node name="Talk" type="Node2D" parent="."]
 visible = false
+texture_filter = 1
+position = Vector2(6, 97)
 
 [node name="ColorRect2" type="ColorRect" parent="Talk"]
 offset_top = 120.0
 offset_right = 40.0
 offset_bottom = 160.0
-scale = Vector2(8.02524, 1.24939)
+scale = Vector2(11.7852, 1.24939)
 color = Color(0, 0, 0, 1)
 
 [node name="Dialogue" type="Sprite2D" parent="Talk"]
-position = Vector2(160, 144)
+position = Vector2(232, 144)
+scale = Vector2(1.48, 1)
 texture = ExtResource("6_mcyyk")
 
 [node name="ZezinHead" type="Sprite2D" parent="Talk"]
@@ -120,19 +123,20 @@ texture = ExtResource("12_scv1h")
 [node name="RichTextLabel" parent="Talk" instance=ExtResource("8_qpdok")]
 offset_left = 42.0
 offset_top = 123.0
-offset_right = 592.0
+offset_right = 872.0
 offset_bottom = 203.0
 scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/normal_font_size = 20
 text = "Me, at the Door? Oh, I asked for the Guardian’s life story. It was either that or the recipe for the perfect apple pie. What I saw was a tapestry of time, a quilt sewn with the threads of eternity. A bit heavy, really, should’ve gone with the pie."
 autowrap_mode = 3
 script = ExtResource("9_sauo2")
 
 [node name="PressXText" type="RichTextLabel" parent="Talk"]
 texture_filter = 1
-offset_left = 270.0
-offset_top = 154.0
-offset_right = 360.0
-offset_bottom = 194.0
+offset_left = 416.0
+offset_top = 152.0
+offset_right = 506.0
+offset_bottom = 192.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/normal_font = ExtResource("10_46a2u")
 bbcode_enabled = true
@@ -142,7 +146,6 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ColorRect" parent="." instance=ExtResource("4_pmv11")]
-visible = false
 
 [node name="LevelTransition" type="TextureRect" parent="."]
 texture_filter = 1
@@ -159,12 +162,13 @@ visible = false
 
 [node name="PressXTextGuardian" type="RichTextLabel" parent="GuardianTalk"]
 texture_filter = 1
-offset_left = 213.0
-offset_top = 143.0
-offset_right = 303.0
-offset_bottom = 183.0
+offset_left = 393.0
+offset_top = 195.0
+offset_right = 505.0
+offset_bottom = 235.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/normal_font = ExtResource("10_46a2u")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[pulse freq=1.5] PRESS JUMP"
 fit_content = true
@@ -174,9 +178,10 @@ autowrap_mode = 0
 [node name="GuardianText" parent="GuardianTalk" instance=ExtResource("8_qpdok")]
 offset_left = 58.0
 offset_top = 18.0
-offset_right = 458.0
-offset_bottom = 268.0
+offset_right = 858.0
+offset_bottom = 418.0
 scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/normal_font_size = 30
 text = "YOUR JORNEY NECESSITATES MORE THAN WHAT LIES WITHIN. THUS, WITH RESERVATION, I BESTOW UPON YOU SURGE.
 
 PRESS 'Z' TO WIELD THIS FORCE — USE IT WISELY, FOR ITS POWER IS IMMENSE AND NOT WITHOUT CONSEQUENCE.

@@ -13,8 +13,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BlackSquare" type="Sprite2D" parent="."]
-position = Vector2(160, 90)
-scale = Vector2(20, 11.25)
+position = Vector2(231, 155)
+scale = Vector2(45.3368, -26.5786)
 texture = ExtResource("1_0imq5")
 
 [node name="GridContainer" type="GridContainer" parent="."]

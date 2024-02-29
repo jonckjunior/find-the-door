@@ -1,27 +1,24 @@
-[gd_scene load_steps=10 format=3 uid="uid://11665le87s52"]
+[gd_scene load_steps=9 format=3 uid="uid://11665le87s52"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_vtiqg"]
-[ext_resource type="PackedScene" uid="uid://r8w0c3rxsvho" path="res://levels/core_world/level_14/map_14.tscn" id="2_sco73"]
+[ext_resource type="PackedScene" uid="uid://dtjm7o3iac32o" path="res://levels/tiled_maps_hooks/map_14.tmx" id="2_j1xn2"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_0ivhc"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_siw8x"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_vurtr"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_n7vu7"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_vapl5"]
 [ext_resource type="PackedScene" uid="uid://b8c6avemwn6ql" path="res://objects/jumper.tscn" id="9_0cao7"]
-[ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="10_vn5wf"]
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_vtiqg")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("")
 
-[node name="map" parent="." instance=ExtResource("2_sco73")]
+[node name="map" parent="." instance=ExtResource("2_j1xn2")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_0ivhc")]
-position = Vector2(424, -40)
+[node name="Player" parent="." instance=ExtResource("3_0ivhc")]
+position = Vector2(595, -398)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_siw8x")]
 position = Vector2(88, -40)
@@ -35,43 +32,22 @@ target = NodePath("../Player")
 [node name="Lighting" parent="." instance=ExtResource("8_vapl5")]
 
 [node name="Jumper" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(72, -178)
+position = Vector2(488, -392)
 
 [node name="Jumper2" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(100, -178)
+position = Vector2(456, -392)
+
+[node name="Jumper3" parent="." instance=ExtResource("9_0cao7")]
+position = Vector2(424, -392)
+
+[node name="Jumper4" parent="." instance=ExtResource("9_0cao7")]
+position = Vector2(392, -392)
+
+[node name="Jumper5" parent="." instance=ExtResource("9_0cao7")]
+position = Vector2(216, -392)
 
 [node name="Jumper6" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(128, -178)
-
-[node name="Jumper7" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(156, -178)
-
-[node name="Jumper8" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(184, -178)
-
-[node name="Jumper12" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(212, -178)
-
-[node name="Jumper13" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(240, -178)
-
-[node name="Jumper14" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(268, -178)
-
-[node name="Jumper18" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(296, -178)
-
-[node name="Jumper19" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(324, -178)
-
-[node name="Jumper20" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(352, -178)
-
-[node name="Jumper24" parent="." instance=ExtResource("9_0cao7")]
-position = Vector2(380, -178)
-
-[node name="Coin" parent="." instance=ExtResource("10_vn5wf")]
-position = Vector2(419, -194)
+position = Vector2(248, -472)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

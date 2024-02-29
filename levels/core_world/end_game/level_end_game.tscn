@@ -1,43 +1,47 @@
-[gd_scene load_steps=9 format=3 uid="uid://bg658pfmadqpc"]
+[gd_scene load_steps=10 format=3 uid="uid://cr10ccr13gx27"]
 
-[ext_resource type="Script" path="res://levels/level_default.gd" id="1_g3afi"]
-[ext_resource type="PackedScene" uid="uid://ijms03r4iv0a" path="res://levels/core_world/end_game/map_end_game.tscn" id="2_aicw8"]
-[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_plkq5"]
-[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_j1gj7"]
+[ext_resource type="Script" path="res://levels/level_default.gd" id="1_07nbi"]
+[ext_resource type="PackedScene" uid="uid://c7r8buvvidj86" path="res://levels/tiled_maps_hooks/level_end_game.tmx" id="2_87mju"]
+[ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_64t8g"]
+[ext_resource type="PackedScene" uid="uid://oxgisa67b6qf" path="res://objects/typewritter.tscn" id="5_di1h5"]
 [ext_resource type="Script" path="res://levels/core_world/end_game/end_game_typewritter.gd" id="6_285sg"]
-[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_p57gq"]
-[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_wh3br"]
-[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_gqr11"]
+[ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_so02c"]
+[ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_xyw4t"]
+[ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_b82yv"]
+[ext_resource type="PackedScene" uid="uid://s0iniioc0wis" path="res://objects/hook.tscn" id="9_67wuh"]
 
-[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera", "typewritter")]
-script = ExtResource("1_g3afi")
+[node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
+script = ExtResource("1_07nbi")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
-typewritter = NodePath("DefaultTypeWritter")
 
-[node name="map" parent="." instance=ExtResource("2_aicw8")]
+[node name="map" parent="." instance=ExtResource("2_87mju")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_plkq5")]
-position = Vector2(193, -56)
+[node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_64t8g")]
+position = Vector2(-948, 344)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
+hook = NodePath("../Hook")
 
-[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_j1gj7")]
-offset_left = 83.0
-offset_top = -194.0
-offset_right = 320.0
-offset_bottom = -94.0
-text = ""
+[node name="DefaultTypeWritter" parent="." instance=ExtResource("5_di1h5")]
+offset_left = -1052.0
+offset_top = 160.0
+offset_right = -815.0
+offset_bottom = 200.0
+text = "\\"
 script = ExtResource("6_285sg")
 metadata/_edit_use_anchors_ = true
 
-[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_p57gq")]
+[node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_so02c")]
 target = NodePath("../Player")
 
-[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_wh3br")]
+[node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_xyw4t")]
 target = NodePath("../Player")
 
-[node name="Lighting" parent="." instance=ExtResource("8_gqr11")]
+[node name="Lighting" parent="." instance=ExtResource("8_b82yv")]
+
+[node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_67wuh")]
+position = Vector2(-949, 334)
+player = NodePath("../Player")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

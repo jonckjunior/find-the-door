@@ -7,7 +7,8 @@ var waitTime = 0.05
 
 
 func _ready():
-	gameManager.visible = false
+	#gameManager.visible = false
+	await get_tree().create_timer(5).timeout
 	text = "DEVELOPED BY: BRUTE STUDIOS\nYOUR BEST TIME WAS [rainbow]" + str(get_time()) + "[/rainbow] \nAND YOU COLLECTED [rainbow]" + get_coins() +  "[/rainbow] COINS \n [shake]THANK YOU FOR PLAYING![/shake]"
 	$Timer.start()
 	textWithoutBBCode = remove_bbcode(text)

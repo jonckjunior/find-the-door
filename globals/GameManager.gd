@@ -34,7 +34,7 @@ var currentScene : String = ""
 var dialoguesToShow : Dialogues
 
 func _ready():
-	for x in range(20):
+	for x in range(10):
 		coreWorld.append("res://levels/core_world/level_" + str(x) + "/level_" + str(x) + ".tscn")
 	coreWorld.append("res://levels/core_world/end_game/level_end_game.tscn")
 	load_save_file()
@@ -90,7 +90,7 @@ func load_next_level() -> void:
 	
 	gameVariables.canPlayerMove = false
 	
-	var screenDimension = Vector2(160, 93)#get_viewport().get_visible_rect().size / 2
+	var screenDimension = Vector2(240, 138)#get_viewport().get_visible_rect().size / 2
 	var oldCamera = get_tree().current_scene.camera
 	var oldPlayer = get_tree().current_scene.player
 	var playerPositionFrom = oldPlayer.global_position - oldCamera.get_screen_center_position() + screenDimension
@@ -113,7 +113,7 @@ func load_next_level() -> void:
 	var newScene = get_tree().current_scene
 	var playerPositionTo = newScene.player.global_position - (newScene.camera as Camera2D).get_screen_center_position() + screenDimension - Vector2(0, 0.5)
 
-	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", newScene.player.scale, 1.5).set_trans(Tween.TRANS_EXPO).finished
+	get_tree().create_tween().tween_property($UI/CharacterTransition, "scale", newScene.player.scale * newScene.camera.scale, 1.5).set_trans(Tween.TRANS_EXPO).finished
 	await get_tree().create_tween().tween_property($UI/CharacterTransition, "global_position", playerPositionTo, 1.5).set_trans(Tween.TRANS_EXPO).finished
 	
 	fade_in()
@@ -152,6 +152,7 @@ func load_save_file():
 		levelsCleared = node_data["levelsCleared"]
 		coinsCleared = node_data["coinsCleared"] if node_data.has("coinsCleared") else []
 		totalNumberOfDeaths = node_data["numberOfDeaths"]
+		gameVariables.hookUnlocked = node_data["hookUnlocked"]
 		gameVariables.dashUnlocked = node_data["dashUnlocked"]
 		gameVariables.wallSlideUnlocked = node_data["wallSlideUnlocked"]
 		gameVariables.wallJumpUnlocked = node_data["wallJumpUnlocked"]
@@ -188,6 +189,7 @@ func get_save_data() -> Dictionary:
 		"wallSlideUnlocked" : gameVariables.wallSlideUnlocked,
 		"wallJumpUnlocked" : gameVariables.wallJumpUnlocked,
 		"isJumpUnlocked" : gameVariables.isJumpUnlocked,
+		"hookUnlocked" : gameVariables.hookUnlocked,
 		"runTime" : runTime
 	}
 

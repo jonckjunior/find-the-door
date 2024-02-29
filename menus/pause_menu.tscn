@@ -10,8 +10,8 @@ script = ExtResource("1_gsxxr")
 
 [node name="BlackSquare" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.709804)
-position = Vector2(163, 92)
-scale = Vector2(21.9153, 12.5853)
+position = Vector2(239, 122)
+scale = Vector2(31.6427, 23.0749)
 texture = ExtResource("3_esbir")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -21,13 +21,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 124.5
-offset_top = 44.0
-offset_right = 195.5
-offset_bottom = 136.0
+offset_left = 195.0
+offset_top = 87.0
+offset_right = 266.0
+offset_bottom = 179.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
 
 [node name="ResumeButton" parent="VBoxContainer" instance=ExtResource("2_twqrr")]
 layout_mode = 2

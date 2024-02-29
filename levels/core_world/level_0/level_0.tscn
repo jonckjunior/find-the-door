@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3vy05rlph1pa"]
+[gd_scene load_steps=12 format=3 uid="uid://d3vy05rlph1pa"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_p3pm3"]
 [ext_resource type="PackedScene" uid="uid://bb0t6awljuqlc" path="res://levels/tiled_maps_hooks/map_0.tmx" id="2_ysj5p"]
@@ -7,8 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_b3nci"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_415xr"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_s4iu2"]
-[ext_resource type="PackedScene" uid="uid://s0iniioc0wis" path="res://objects/hook.tscn" id="9_0i8sh"]
+[ext_resource type="PackedScene" uid="uid://cjhfjr3jcqqem" path="res://objects/zezin_idle.tscn" id="9_wdy5y"]
+[ext_resource type="PackedScene" uid="uid://dh27n8aymxijh" path="res://objects/ZezinTrigger.tscn" id="10_ipbk7"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="11_848y1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cu66r"]
+size = Vector2(64, 392)
 
 [node name="LevelX2" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_p3pm3")
@@ -17,10 +21,9 @@ camera = NodePath("DefaultCamera")
 
 [node name="map" parent="." instance=ExtResource("2_ysj5p")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_kreax")]
-position = Vector2(-236, 131)
+[node name="Player" parent="." instance=ExtResource("3_kreax")]
+position = Vector2(-232, 136)
 collision_layer = 1
-hook = NodePath("../Hook")
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_othmo")]
 position = Vector2(632, 136)
@@ -37,9 +40,15 @@ target = NodePath("../Player")
 [node name="Coin" parent="." instance=ExtResource("11_848y1")]
 position = Vector2(6, -217)
 
-[node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_0i8sh")]
-position = Vector2(129, -88)
-player = NodePath("../Player")
+[node name="Zezin" parent="." instance=ExtResource("9_wdy5y")]
+position = Vector2(486, 135)
+
+[node name="ZezinTrigger" parent="." instance=ExtResource("10_ipbk7")]
+position = Vector2(456, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZezinTrigger"]
+position = Vector2(-29, -145)
+shape = SubResource("RectangleShape2D_cu66r")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

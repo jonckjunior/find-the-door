@@ -17,16 +17,22 @@ optionsButton = NodePath("VBoxContainer/OptionsButton")
 quitButton = NodePath("VBoxContainer/QuitButton")
 
 [node name="BlackSquare" type="Sprite2D" parent="."]
-position = Vector2(161, 93)
-scale = Vector2(-20.863, 12.3104)
+position = Vector2(215, 116)
+scale = Vector2(-41.6431, -21.5511)
 texture = ExtResource("3_nioxa")
 
 [node name="VBoxContainer" parent="." instance=ExtResource("5_b8w7w")]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 106.0
-offset_right = 118.0
-offset_bottom = 174.0
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -217.0
+offset_top = 151.0
+offset_right = -117.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
 script = null
 
 [node name="PlayButton" parent="VBoxContainer" index="0"]

@@ -20,6 +20,7 @@ func _ready():
 	for node in nodesToReset:
 		platformsToReset[node] = node.global_position
 
+
 func fade_out_player_death():
 	gameManager.fade_out()
 	gameManager.increment_death()
@@ -65,6 +66,12 @@ func configure_map():
 		if node.name == "solid_objects":
 			for child in node.get_children():
 				child.add_to_group("map")
+	
+	for node in $map.get_children():
+		if node.name == "solid_not_hook":
+			for child in node.get_children():
+				child.add_to_group("map")
+				child.add_to_group("not_hook")
 
 func configure_camera():
 	if not has_node("map"):
@@ -111,8 +118,8 @@ func change_camera_limits(body, cameraNumber):
 		var rect_width = rect.end.x - rect.position.x
 		var rect_height = rect.end.y - rect.position.y
 		
-		var zoom_x = 320.0 / rect_width
-		var zoom_y = 180.0 / rect_height
+		var zoom_x = 480.0 / rect_width
+		var zoom_y = 270.0 / rect_height
 		
 		var zoom_factor = max(1.0, max(zoom_x, zoom_y))
 		

@@ -1,13 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwkh60k1tou7n"]
+[gd_scene load_steps=9 format=3 uid="uid://dwkh60k1tou7n"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_3xiad"]
-[ext_resource type="PackedScene" uid="uid://6ivsgn5rj5r4" path="res://levels/core_world/level_6/map_6.tscn" id="2_jer4y"]
+[ext_resource type="PackedScene" uid="uid://clrotmq7p5fmh" path="res://levels/tiled_maps_hooks/map_6.tmx" id="2_x320s"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_b0rsq"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_euylm"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_5aux3"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_p2d1m"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_5yevl"]
-[ext_resource type="PackedScene" uid="uid://1qqgor4t7hgt" path="res://objects/falling_platform.tscn" id="9_1rgso"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="10_ie6wa"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
@@ -15,17 +14,17 @@ script = ExtResource("1_3xiad")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 
-[node name="map" parent="." instance=ExtResource("2_jer4y")]
+[node name="map" parent="." instance=ExtResource("2_x320s")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_b0rsq")]
-position = Vector2(424, -8)
+[node name="Player" parent="." instance=ExtResource("3_b0rsq")]
+position = Vector2(-520, 152)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_euylm")]
-position = Vector2(424, -280)
+position = Vector2(216, 152)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_5aux3")]
+visible = false
 target = NodePath("../Player")
 
 [node name="DefaultCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_p2d1m")]
@@ -33,32 +32,8 @@ target = NodePath("../Player")
 
 [node name="Lighting" parent="." instance=ExtResource("8_5yevl")]
 
-[node name="FallingPlatform" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(187, -160)
-
-[node name="FallingPlatform2" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(236, -16)
-
-[node name="FallingPlatform3" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(119, -16)
-
-[node name="FallingPlatform5" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(72, -160)
-
-[node name="FallingPlatform6" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(384, -160)
-
 [node name="Coin" parent="." instance=ExtResource("10_ie6wa")]
-position = Vector2(428, -248)
-
-[node name="FallingPlatform4" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(295, -160)
-
-[node name="FallingPlatform7" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(16, -16)
-
-[node name="FallingPlatform8" parent="." instance=ExtResource("9_1rgso")]
-position = Vector2(-16, -93)
+position = Vector2(-170, 265)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

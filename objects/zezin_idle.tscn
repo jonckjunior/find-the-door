@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjhfjr3jcqqem"]
+
+[ext_resource type="Texture2D" uid="uid://ct6rok6ynm7ly" path="res://sprites/zezinho_1.png" id="1_k8ymy"]
+[ext_resource type="Texture2D" uid="uid://dw63irdveq4ut" path="res://sprites/zezinho_2.png" id="2_0lvwc"]
+[ext_resource type="Script" path="res://scripts/Zezin.gd" id="3_e5r66"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bpusq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_k8ymy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0lvwc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Zezin" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_bpusq")
+frame_progress = 0.333512
+script = ExtResource("3_e5r66")

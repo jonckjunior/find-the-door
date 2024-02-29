@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://2lvm2smybiq"]
+[gd_scene load_steps=9 format=3 uid="uid://2lvm2smybiq"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_lce0q"]
 [ext_resource type="PackedScene" uid="uid://bw1q7h2qkgwju" path="res://levels/tiled_maps_hooks/map_1.tmx" id="2_vcyya"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_jk3jv"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_3dwga"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_73nhy"]
-[ext_resource type="PackedScene" uid="uid://s0iniioc0wis" path="res://objects/hook.tscn" id="9_mk1wb"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="11_clr4v"]
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
@@ -17,10 +16,9 @@ camera = NodePath("DefaultCamera")
 
 [node name="map" parent="." instance=ExtResource("2_vcyya")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_h4flb")]
-position = Vector2(-211, 93)
+[node name="Player" parent="." instance=ExtResource("3_h4flb")]
+position = Vector2(-216, 136)
 collision_layer = 1
-hook = NodePath("../Hook")
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_4jm2a")]
 position = Vector2(440, 24)
@@ -36,10 +34,6 @@ target = NodePath("../Player")
 
 [node name="Coin" parent="." instance=ExtResource("9_73nhy")]
 position = Vector2(-9, 142)
-
-[node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_mk1wb")]
-position = Vector2(34, -76)
-player = NodePath("../Player")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

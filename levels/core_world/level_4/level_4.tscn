@@ -17,11 +17,11 @@ camera = NodePath("DefaultCamera")
 [node name="map" parent="." instance=ExtResource("2_6wjca")]
 
 [node name="Player" parent="." instance=ExtResource("3_b8rp0")]
-position = Vector2(-282, -43)
+position = Vector2(-296, -24)
 collision_layer = 1
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_7rq1y")]
-position = Vector2(424, -56)
+position = Vector2(88, -24)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_arteg")]
 target = NodePath("../Player")

@@ -52,7 +52,7 @@ var numberOfDashes = 1
 var isDashingCooldown = 0.2
 var jumpCooldown = 0.2
 var jumpBufferTime = 0.2
-var dashCooldown = 1.0
+var dashCooldown = 0.0
 var sideParticleCooldown : float = 0.05
 var runningSoundCooldown: float = 0.2
 var trailCooldown: float = 0.05
@@ -93,14 +93,16 @@ func _ready():
 	wallJumpUnlocked = get_node("/root/GameVariables").wallJumpUnlocked
 	isJumpUnlocked = get_node("/root/GameVariables").isJumpUnlocked
 	canPlayerMove = get_node("/root/GameVariables").canPlayerMove
+	
+	hook = load("res://objects/hook.tscn").instantiate()
+	hook.player = self
+	
+	add_sibling.call_deferred(hook)
 
 func _physics_process(delta):
 	if isDying:
 		return
 	
-	if velocity.y >= 0:
-		dashForce.y = 0	
-
 	#dashForce.x *= pow(0.15, delta)
 	#dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 20 * delta, 0.0)
 	dashForce.x = sign(dashForce.x) * max(abs(dashForce.x) - 100 * delta, 0.0)
@@ -320,7 +322,7 @@ func handle_dash(delta) -> void:
 		dashForce.y += currentDashForce.y
 	
 	velocity = Vector2.ZERO
-
+	
 	dashAngle = Vector2(directionX, directionY)
 	isDashing = true
 	isDashingCooldown = 0.2
@@ -353,6 +355,7 @@ func handle_movement(delta) -> void:
 	
 	if hook and hook.isFixed:
 		velocity = hook.get_new_velocity(velocity, delta)
+	
 	
 	move_and_slide()
 
@@ -471,6 +474,8 @@ func get_input_axis(first, second):
 func die():
 	if isDying:
 		return
+	if hook:
+		hook.reset()
 	velocity = Vector2(0, 0)
 	dashForce = Vector2(0, 0)
 	player_death.emit()

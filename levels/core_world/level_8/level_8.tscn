@@ -1,49 +1,27 @@
-[gd_scene load_steps=15 format=3 uid="uid://ctm1wajecru8t"]
+[gd_scene load_steps=9 format=3 uid="uid://ctm1wajecru8t"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_gov1f"]
-[ext_resource type="PackedScene" uid="uid://boqjj7ko1mac0" path="res://levels/core_world/level_8/map_8.tscn" id="2_4j843"]
+[ext_resource type="PackedScene" uid="uid://ck44wm4ew5u8y" path="res://levels/tiled_maps_hooks/map_8.tmx" id="2_pq82v"]
 [ext_resource type="PackedScene" uid="uid://cr346cwscf8ia" path="res://objects/player.tscn" id="3_h8c7x"]
 [ext_resource type="PackedScene" uid="uid://blnfjatdvt2mg" path="res://objects/default_door.tscn" id="4_0nhnw"]
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_70k72"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_bke3b"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_pof8s"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_xg5be"]
-[ext_resource type="Texture2D" uid="uid://ct6rok6ynm7ly" path="res://sprites/zezinho_1.png" id="10_kghv1"]
-[ext_resource type="Texture2D" uid="uid://dw63irdveq4ut" path="res://sprites/zezinho_2.png" id="11_643kv"]
-[ext_resource type="Script" path="res://scripts/Zezin.gd" id="12_2gs8i"]
-[ext_resource type="PackedScene" uid="uid://dh27n8aymxijh" path="res://objects/ZezinTrigger.tscn" id="12_6r24h"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_bpusq"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_kghv1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_643kv")
-}],
-"loop": true,
-"name": &"default",
-"speed": 1.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0s46"]
-size = Vector2(49, 160.5)
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_gov1f")
 player = NodePath("Player")
 camera = NodePath("DefaultCamera")
 
-[node name="map" parent="." instance=ExtResource("2_4j843")]
+[node name="map" parent="." instance=ExtResource("2_pq82v")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_h8c7x")]
-position = Vector2(328, -8)
+[node name="Player" parent="." instance=ExtResource("3_h8c7x")]
+position = Vector2(-1352, 312)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_0nhnw")]
-position = Vector2(328, -264)
+position = Vector2(-504, 88)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_70k72")]
 target = NodePath("../Player")
@@ -54,20 +32,7 @@ target = NodePath("../Player")
 [node name="Lighting" parent="." instance=ExtResource("8_pof8s")]
 
 [node name="Coin" parent="." instance=ExtResource("9_xg5be")]
-position = Vector2(203, -168)
-
-[node name="Zezin" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-7, -170)
-sprite_frames = SubResource("SpriteFrames_bpusq")
-frame_progress = 0.333512
-script = ExtResource("12_2gs8i")
-
-[node name="ZezinTrigger" parent="." instance=ExtResource("12_6r24h")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ZezinTrigger"]
-position = Vector2(-13, -224.75)
-shape = SubResource("RectangleShape2D_x0s46")
+position = Vector2(-507, 157)
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

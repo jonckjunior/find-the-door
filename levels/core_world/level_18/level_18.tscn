@@ -27,10 +27,9 @@ camera = NodePath("DefaultCamera")
 
 [node name="map" parent="." instance=ExtResource("2_cc4ma")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("displacementRayCastsDown") instance=ExtResource("3_cn64j")]
+[node name="Player" parent="." instance=ExtResource("3_cn64j")]
 position = Vector2(152, 120)
 collision_layer = 1
-displacementRayCastsDown = [NodePath("RayCasts/DownRayCast1"), NodePath("RayCasts/DownRayCast2"), NodePath("RayCasts/DownRayCast3"), NodePath("RayCasts/DownRayCast4"), NodePath("RayCasts/DownRayCast5"), NodePath("RayCasts/DownRayCast6")]
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_eb4sb")]
 position = Vector2(152, -792)

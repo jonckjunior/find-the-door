@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://rhed1uaq33v0"]
+[gd_scene load_steps=13 format=3 uid="uid://rhed1uaq33v0"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_f4kcv"]
 [ext_resource type="PackedScene" uid="uid://vvnqaklaapyx" path="res://levels/tiled_maps_hooks/map_5.tmx" id="2_700j8"]
@@ -7,8 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://bj0dbp71w5lv3" path="res://objects/default_point_light.tscn" id="6_qe3je"]
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="7_rrjkn"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="8_iar8q"]
-[ext_resource type="PackedScene" uid="uid://s0iniioc0wis" path="res://objects/hook.tscn" id="9_3qh0x"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_trnje"]
+[ext_resource type="PackedScene" uid="uid://cjhfjr3jcqqem" path="res://objects/zezin_idle.tscn" id="10_vl3vn"]
+[ext_resource type="PackedScene" uid="uid://dh27n8aymxijh" path="res://objects/ZezinTrigger.tscn" id="11_cyff3"]
+[ext_resource type="Script" path="res://scripts/AdditionalHookGivingLogic.gd" id="12_4cdjr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcgym"]
+size = Vector2(152, 90)
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_f4kcv")
@@ -17,13 +22,12 @@ camera = NodePath("DefaultCamera")
 
 [node name="map" parent="." instance=ExtResource("2_700j8")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("hook") instance=ExtResource("3_y4tyr")]
-position = Vector2(-206, -265)
+[node name="Player" parent="." instance=ExtResource("3_y4tyr")]
+position = Vector2(-552, -152)
 collision_layer = 1
-hook = NodePath("../Hook")
 
 [node name="DefaultDoor" parent="." instance=ExtResource("4_jowyu")]
-position = Vector2(232, -216)
+position = Vector2(280, -232)
 
 [node name="DefaultPointLight" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_qe3je")]
 target = NodePath("../Player")
@@ -37,9 +41,18 @@ target = NodePath("../Player")
 [node name="Coin" parent="." instance=ExtResource("9_trnje")]
 position = Vector2(434, -289)
 
-[node name="Hook" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_3qh0x")]
-position = Vector2(-84, -90)
-player = NodePath("../Player")
+[node name="Zezin" parent="." instance=ExtResource("10_vl3vn")]
+position = Vector2(-71, 135)
+
+[node name="ZezinTrigger" parent="." instance=ExtResource("11_cyff3")]
+position = Vector2(-122, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZezinTrigger"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_tcgym")
+
+[node name="AdditionalHookGivingLogic" type="Node2D" parent="."]
+script = ExtResource("12_4cdjr")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]

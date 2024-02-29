@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://5kdkulkj2n6"]
+[gd_scene load_steps=13 format=3 uid="uid://5kdkulkj2n6"]
 
 [ext_resource type="Script" path="res://levels/level_default.gd" id="1_j5um7"]
 [ext_resource type="PackedScene" uid="uid://dpiyggqhjqo58" path="res://levels/tiled_maps_hooks/map_2.tmx" id="2_2nkto"]
@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://y5gtme1q2f3s" path="res://objects/default_camera.tscn" id="6_uud43"]
 [ext_resource type="PackedScene" uid="uid://bu2i73duk0osy" path="res://objects/lighting.tscn" id="7_4vfd6"]
 [ext_resource type="PackedScene" uid="uid://b3k6xyvigc5k" path="res://objects/coin.tscn" id="9_cy0do"]
+[ext_resource type="PackedScene" uid="uid://cjhfjr3jcqqem" path="res://objects/zezin_idle.tscn" id="9_yu6sp"]
+[ext_resource type="PackedScene" uid="uid://dh27n8aymxijh" path="res://objects/ZezinTrigger.tscn" id="10_tm6wp"]
+[ext_resource type="Script" path="res://scripts/GivePlayerDashOption.gd" id="11_nf1l3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_caoft"]
+size = Vector2(157, 196.5)
 
 [node name="LevelX" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_j5um7")
@@ -17,7 +23,7 @@ camera = NodePath("DefaultCamera")
 [node name="map" parent="." instance=ExtResource("2_2nkto")]
 
 [node name="Player" parent="." instance=ExtResource("4_8ueef")]
-position = Vector2(-446, 128)
+position = Vector2(-456, 136)
 collision_layer = 1
 
 [node name="DefaultDoor" parent="." instance=ExtResource("3_kim41")]
@@ -33,6 +39,19 @@ target = NodePath("../Player")
 
 [node name="Coin" parent="." instance=ExtResource("9_cy0do")]
 position = Vector2(217, -56)
+
+[node name="Zezin" parent="." instance=ExtResource("9_yu6sp")]
+position = Vector2(486, -9)
+
+[node name="ZezinTrigger" parent="." instance=ExtResource("10_tm6wp")]
+position = Vector2(384, -28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZezinTrigger"]
+position = Vector2(65.5, -63.75)
+shape = SubResource("RectangleShape2D_caoft")
+
+[node name="GivePlayerDash" type="Node2D" parent="."]
+script = ExtResource("11_nf1l3")
 
 [connection signal="dash" from="Player" to="." method="_on_player_dash"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
